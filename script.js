@@ -32,4 +32,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { threshold: 0.5 });
     document.querySelectorAll('[data-count]').forEach(el => co.observe(el));
+
+    // Hover-to-play BGM on member cards with data-bgm
+    document.querySelectorAll('[data-bgm]').forEach(card => {
+        const audio = new Audio(card.dataset.bgm);
+        audio.preload = 'auto';
+
+        card.addEventListener('mouseenter', () => {
+            audio.currentTime = 0;
+            audio.play().catch(() => { /* autoplay may be blocked until first user gesture */ });
+        });
+        const stop = () => { audio.pause(); audio.currentTime = 0; };
+        card.addEventListener('mouseleave', stop);
+    });
 });
