@@ -1,296 +1,189 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="zh-Hant">
 
 <head>
-    <meta name="author" content="Luka Cvrk (www.solucija.com)" />
-    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" href="style.css" type="text/css" />
-    <title>Ubiquitous Sensing and Cloud Computing Lab </title>
-    <style type="text/css">
-        .hover-container {
-            position: relative;
-            display: inline-block;
-        }
-
-        .hover-image {
-            display: none;
-            position: absolute;
-            top: 100%;
-            /* 讓圖片出現在連結下方 */
-            left: 0;
-            width: 200px;
-            /* 設定圖片大小 */
-            border: 1px solid #ddd;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-
-            z-index: 9999;
-            /* 讓圖片浮到最上層 */
-        }
-
-        .hover-container:hover .hover-image {
-            display: block;
-            /* 滑鼠移入時顯示圖片 */
-        }
-
-        < !-- .style1 {
-            font-size: 2.7em;
-            font-weight: bold;
-        }
-
-        .style2 {
-            font-size: 1.2em
-        }
-
-        .style5 {
-            color: #4C8734
-        }
-
-        .style7 {
-            color: #4C8734;
-            font-size: 1.64em;
-        }
-
-        .style8 {
-            font-size: 1.24em;
-            color: #4C8734;
-        }
-
-        .style12 {
-            color: #4C8734;
-            font-size: 1.3em;
-        }
-
-        .style21 {
-            font-size: 1.24em
-        }
-
-        .style16 {
-            color: #4C8734;
-            font-size: 19px;
-        }
-
-        .style29 {
-            font-family: Verdana, Arial, Helvetica, sans-serif;
-            font-size: 1.34em;
-            font-weight: bold;
-            color: #317584;
-        }
-
-        .style31 {
-            font-size: 1.68em;
-            color: #317584;
-            font-family: Verdana, Arial, Helvetica, sans-serif;
-        }
-    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>指導教授 · USCC Lab</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
 </head>
 
 <body>
-    <div id="content">
-        <div id="logo">
-            <h1><a href="index.html">Welcome to USCC Lab.</a></h1>
+    <div class="bg-grid"></div>
+
+    <!-- Navbar -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">U</span>
+                <span class="brand-text">
+                    <b>USCC Lab</b>
+                    <span>Sensing · Cloud · AI</span>
+                </span>
+            </a>
+            <ul class="menu">
+                <li><a href="index.html">首頁</a></li>
+                <li><a class="active" href="professor.html">指導教授</a></li>
+                <li><a href="member.html">實驗室成員</a></li>
+                <li class="lang"><a href="professor_e.html">EN</a></li>
+            </ul>
         </div>
-        <ul id="menu">
-            <li><a href="index.html">首頁</a></li>
-            <li><a href="professor.html">指導教授</a></li>
-            <li><a href="member.html">實驗室成員</a></li>
-            <li><a href="index_e.html">English</a></li>
-        </ul>
-        <div id="intro">
-            <h1 class="style1">塵間感知與雲端計算實驗室</h1>
-            <p class="style2"> </p>
-            <p class="style2">Ubiquitous Sensing and Cloud Computing Lab</p>
-        </div>
-        <div>
-            <h2><span style="font-size: 1.9em"> </span><span style="font-size: 1.65em">指導教授</span></h2>
-            <p><span style="font-size: 1.65em"> <span style="font-size: 1.24em"> <img border="0" src="images/bullet.gif"
-                            width="6" height="9" /></span></span><span class="style31">ADVISOR</span><span
-                    class="style29">：</span><span style="font-size: 1.65em"><br />
-                </span></p>
-            <div align="center" id="col1">
-                <p align="left"><span style="font-size: 1.24em"><img border="0" src="images/bullet.gif" width="6"
-                            height="9" /></span><span class="style16">聯絡方式</span><span style="font-size: 19px"><span
-                            class="style5">:</span></span></p>
-                <p align="left"><span style="font-size: 1.24em">電話: +886-6-275-7575 ext.62529<br />
-                        傳真: 2747076<br />
-                        E-mail <a href="mailto:stevecheng1688@gmail.com"
-                            target="_blank">stevecheng1688@gmail.com</a><br />
-                        實驗室:塵間感知與雲端計算實驗室</span><br />
-                </p>
-                <p align="left"><span style="font-size: 1.24em"> <img border="0" src="images/bullet.gif" width="6"
-                            height="9" /><span class="style16">專長及研究領域</span><span class="style5">:</span><br />
-                        <br />
-                        資訊安全、網路安全<br />
-                        人工智慧<br />
-                        量子電腦<br />
-                        無線通訊 <br />
-                        行動計算 <br />
-                        數位生活科技 <br />
-                        電腦網路 <br />
-                        機器學習</span><br />
-                </p>
-            </div>
-            <div align="center" id="col1">
-                <p> <span style="font-size: 1.24em">      </span><span style="font-size: 1.24em">          </span><img
-                        src="images/766679109.jpg" alt="" height="200px" /></p>
-                <p> </p>
-            </div>
-            <p><span style="font-size: 1.24em"><br />
-                    <br />
-                          <br />
-                    <br />
-                </span></p>
-            <p><span style="font-size: 1.24em">       </span></p>
-            <p> </p>
-            <p> </p>
-            <p> </p>
-            <p><span style="font-size: 1.24em"><br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <br>
-                        <img border="0" src="images/bullet.gif" width="6" height="9" /><span
-                        class="style12">重要學歷</span><span class="style5">:</span><br />
-                    <br />
-                       1995/06 : 美國馬里蘭大學計算機科學博士<br />
-                       Ph.D. Dept. of Computer Science, the University of Maryland, College Park, U.S.A.<br />
-                       1993/12 : 美國馬里蘭大學計算機科學碩士<br />
-                       M.S. Dept. of Computer Science, the University of Maryland, College Park, U.S.A.<br />
-                       1987/06 : 國立台灣大學電機工程碩士<br />
-                       M.S. Dept. of Electrical Engineering, National Taiwan University, R.O.C.<br />
-                       1985/06 : 國立台灣大學電機工程學士<br />
-                       B.S. Dept. of Electrical Engineering, National Taiwan University, R.O.C.<br />
-                       <br>
-                        <img border="0" src="images/bullet.gif" width="6" height="9"></span><span class="style7"
-                    style="font-size: 1.64em">重要經歷</span><span class="style8">:</span></p>
+    </nav>
 
+    <main class="wrap" style="padding-top:56px">
 
-            <p>   國立臺東大學\ 校長 (2024 ~ now)</p>
-            <p>   朝陽科技大學 \ 講座教授 (2021 ~ now)</p>
-            <p>   台灣野村總研諮詢顧問股份有限公司 \ 「115年在宅醫療照護資訊平台規劃及專業技術服務案」委託研究案 \ 計畫顧問 (2026 ~ now)</p>
-            <p>   台灣野村總研諮詢顧問股份有限公司 \ 「通訊網路異質備援韌性評估與策略研究」委託研究案 \ 計畫顧問 (2026 ~ now)</p>
-            <p>   數位發展部數位產業署 \ DIGITAL+數位創新補助平台計畫 \ 審查委員 (2023 ~ now)</p>
-            <p>   A special issue of Mathematics \Special Issue Editor (2022 ~ now)</p>
-            <p>   科技部 \ 資訊工程學門 \ 召集人 (2019 ~ 2021)</p>
-            <p>   國立台北護理健康大學 \ 健康科技學院院長 \ 遴選委員 (2021) </p>
-            <p>   中國工程師學會 \ 教育委員會 \ 委員 (2021 ~ now) </p>
-            <p>   國家實驗研究院 \ 科技政策研究與資料中心 \ 專家代表 (2021 ~ now) </p>
-            <p>   國家實驗研究院 \ 人工智慧產學研聯盟 \ 諮詢專家 (2021 ~ now) </p>
-
-            <p>   中國電機工程學會 \ 中國電機工程學會 \ editor (2017 ~ now)</p>
-
-            <p>   International Journal \ Electrical and Engineering \ editor (2012 ~ now)</p>
-
-            <p>   IEEE \ Tainan Section \ 理事 (2009 ~ now)</p>
-
-            <p>   台南軟體協會 \ 台南軟體協會 \ 理事 (2009 ~ now)</p>
-
-            <p>   國立成功大學 \ 資訊工程學系(所) \ 教授 (2004 ~ now)</p>
-
-            <p>   國科會 \ 科學報導 \ Guest Editor (2011 ~ 2011)</p>
-
-            <p>   國立成功大學 \ 資訊工程學系(所) \ 系主任 (2009 ~ 2012)</p>
-
-            <p>   IEEE ComSoc \ Tainan Sector \ Vice chair (2009 ~ 2012)</p>
-
-            <p>   美國華盛頓大學西雅圖分校 \ 電機工程學系 \ 訪問學者 (2007 ~ 2008)</p>
-
-            <p>   資訊工業策進會 \ 創新前瞻技術規劃委員會 \ 規劃委員 (2005 ~ 2008)</p>
-
-            <p>   國科會 \ 推動自由軟體研發專案 \ 諮詢委員 (2004 ~ 2008)</p>
-
-            <p>   資訊工業策進會 \ 產學研合作委員會 \ 委員 (2004 ~ 2008)</p>
-
-            <p>   國立成功大學 \ 資訊工程學系(所) \ 副教授 (1999 ~ 2004)</p>
-
-            <p>   國立成功大學 \ 資訊工程學系(所) \ 助理教授 (1997 ~ 1999)</p>
-
-            <p>   國立東華大學 \ 資訊工程學系(所) \ 副教授 (1996 ~ 1997)</p>
-
-
-            <p><span style="font-size: 1.24em">    <img border="0" src="images/bullet.gif" width="6"
-                        height="9" /></span><span class="style7">榮譽與獎勵</span><span class="style8">:</span></p>
-
-
-            <p><span style="font-size: 1.24em">   
-                    獲得「ECEI 2026 BEST CONFERENCE PAPER AWARD」、「SEGE 2025 BEST PRESENTATION」、「ECEI 2025 BEST CONFERENCE
-                    PAPER AWARD」、「EAI SGIoT 2023 Best paper award」、「ICS 2020 Best paper award」等國際會議最佳論文獎
-
-                </span></p>
-            <p><span style="font-size: 1.24em">   2025年8月獲得
-                    <a href="#" class="hover-container">日本仙台大學名譽特別功勞教授
-                        <img src="images/S__24723467.jpg" alt="日本仙台大學名譽特別功勞教授" class="hover-image">
-                    </a> </span></p>
-
-            <p><span style="font-size: 1.24em">   
-                    2019-2025年連續7年上榜美國史丹佛大學公布之全球前2%頂尖科學家(World’s Top 2% Scientists)「終身科學影響力」榜單
-                </span></p>
-
-
-            <p><span style="font-size: 1.24em">   </span><span class="style21">2024年指導碩士班學生參加「AICUP 2024
-                    根據區域微氣候資料預測發電量競賽」，獲得佳作</span></p>
-
-
-
-
-            <p><span style="font-size: 1.24em">   </span><span class="style21">2024年指導專題生參加「國立成功大學資訊工程學系大學部114級
-                    畢業專題展」，獲得第三名</span></p>
-            <p><span style="font-size: 1.24em">   </span><span
-                    class="style21">2024年指導碩士班學生參加「台積電校園黑客松」，獲得廠務知識機器人組第一名</span></p>
-
-
-            <p><span style="font-size: 1.24em">   2020年獲國立成功大學108學年度教學優良教師</span></p>
-
-            <p><span style="font-size: 1.24em">   2018年獲 國防部 與 科技部 合頒 「優質計畫」獎座</span></p>
-            <p><span style="font-size: 1.24em">   2007年教育部95學年度大學院校前瞻晶體系統設計相關競賽 嵌入式軟體製作競賽軟硬體整合組優等</span></p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">2005年榮獲2005資深優良教師</span></p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">2005年成立成大電機資訊學院
-                    量子計算研究中心團隊，並擔任中心副主任</span><strong> </strong></p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">2004年無線行動夢想家競賽之Intel金質獎</span> </p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">2004年行動創意大賽銅牌獎</span> </p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">2003年教育部嵌入式軟體競賽優等獎</span> </p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">2002年
-                    指導碩士班與大學生參加「無線行動夢想家」全國競賽，獲得佳作</span> </p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">2002年李國鼎科技研究獎</span>. </p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">2002年受聘為資策會多媒體實驗室技術顧問</span>. </p>
-            <p><span style="font-size: 1.24em">   </span><span
-                    class="style21">2001年資策會與中華民國資訊學會第一屆「手持式資訊家電產品應用程式開發暨應用創意大賽」榮獲 第一名。</span> </p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">2000年教育部八十九學年度大專院校通訊科技專題競賽優等獎。</span> 
-            </p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">1999年指導碩士班學生鄭燁禧 榮獲
-                    1999年宏碁龍騰論文獎佳作。</span> </p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">1996年受聘為教育部「85年度暑期研訪企業」教師，前往工業技術研究院，協助
-                    企業界解決問題.</span>  </p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">1995年接受美國Honeywell Inc.位於Minneapolis
-                    city之總部邀請，對個人博士論文作專題演講。</span> </p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">國科會甲等研究獎.</span> </p>
-            <p><span style="font-size: 1.24em">   </span><span class="style21">國立成功大學創新育成中心，技術審查委員。</span> </p>
-            <p><span><span style="font-size: 1.24em">   </span><span
-                        class="style21">資策會「通訊軟體關鍵技術開發五年計畫」技術顧問。</span></span><br />
-                <span style="font-size: 1.24em">      </span>
-            </p>
-            <div style="clear: both"></div>
+        <div class="section-head reveal">
+            <div class="eyebrow">Advisor</div>
+            <h2>指導教授</h2>
         </div>
 
-        <div id="footer">
-            <div id="col1">
-                <p><a href="#">Terms and Conditions</a> · <a href="#">Privacy</a><br />
-                    © Copyright 2007 <a href="#">國立成功大學資訊工程研究所</a></p>
+        <!-- Profile hero -->
+        <section class="prof-hero reveal">
+            <div class="prof-photo">
+                <img src="images/766679109.jpg" alt="指導教授" />
             </div>
-            <div id="col2">
-                <p>Address:<strong>台南市大學路1號</strong><br />
-                    Phone: <strong>+886 (6) 275 7575 </strong></p>
+            <div>
+                <h1>指導教授</h1>
+                <div class="role">Professor · Advisor</div>
+                <ul class="contact-list">
+                    <li><b>電話</b> +886-6-275-7575 ext. 62529</li>
+                    <li><b>傳真</b> 2747076</li>
+                    <li><b>Email</b> <a href="mailto:stevecheng1688@gmail.com">stevecheng1688@gmail.com</a></li>
+                    <li><b>實驗室</b> 塵間感知與雲端計算實驗室</li>
+                </ul>
             </div>
-            <div id="col3">
-                <p>Design: <a href="http://www.solucija.com">Luka Cvrk</a><br />
-                    Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> and <a
-                        href="http://validator.w3.org/check?uri=referer">XHTML</a></p>
+        </section>
+
+        <!-- Research fields -->
+        <section class="block">
+            <div class="section-head reveal">
+                <div class="eyebrow">Research Fields</div>
+                <h2 style="font-size:1.6rem">專長及研究領域</h2>
+            </div>
+            <div class="chips reveal">
+                <span class="chip">資訊安全</span>
+                <span class="chip">網路安全</span>
+                <span class="chip">人工智慧</span>
+                <span class="chip">量子電腦</span>
+                <span class="chip">無線通訊</span>
+                <span class="chip">行動計算</span>
+                <span class="chip">數位生活科技</span>
+                <span class="chip">電腦網路</span>
+                <span class="chip">機器學習</span>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="block">
+            <div class="section-head reveal">
+                <div class="eyebrow">Education</div>
+                <h2 style="font-size:1.6rem">重要學歷</h2>
+            </div>
+            <div class="card reveal">
+                <ul class="timeline">
+                    <li><b>1995 · 美國馬里蘭大學 計算機科學博士</b><br />Ph.D., Dept. of Computer Science, University of Maryland, College Park, U.S.A.</li>
+                    <li><b>1993 · 美國馬里蘭大學 計算機科學碩士</b><br />M.S., Dept. of Computer Science, University of Maryland, College Park, U.S.A.</li>
+                    <li><b>1987 · 國立台灣大學 電機工程碩士</b><br />M.S., Dept. of Electrical Engineering, National Taiwan University, R.O.C.</li>
+                    <li><b>1985 · 國立台灣大學 電機工程學士</b><br />B.S., Dept. of Electrical Engineering, National Taiwan University, R.O.C.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section class="block">
+            <div class="section-head reveal">
+                <div class="eyebrow">Experience</div>
+                <h2 style="font-size:1.6rem">重要經歷</h2>
+            </div>
+            <div class="card reveal">
+                <ul class="timeline">
+                    <li><b>國立臺東大學</b> · 校長 <span style="color:var(--cyan)">(2024 ~ now)</span></li>
+                    <li><b>朝陽科技大學</b> · 講座教授 <span style="color:var(--cyan)">(2021 ~ now)</span></li>
+                    <li><b>台灣野村總研諮詢顧問股份有限公司</b> · 「115年在宅醫療照護資訊平台規劃及專業技術服務案」計畫顧問 <span style="color:var(--cyan)">(2026 ~ now)</span></li>
+                    <li><b>台灣野村總研諮詢顧問股份有限公司</b> · 「通訊網路異質備援韌性評估與策略研究」計畫顧問 <span style="color:var(--cyan)">(2026 ~ now)</span></li>
+                    <li><b>數位發展部數位產業署</b> · DIGITAL+數位創新補助平台計畫審查委員 <span style="color:var(--cyan)">(2023 ~ now)</span></li>
+                    <li><b>A special issue of Mathematics</b> · Special Issue Editor <span style="color:var(--cyan)">(2022 ~ now)</span></li>
+                    <li><b>科技部</b> · 資訊工程學門召集人 <span style="color:var(--cyan)">(2019 ~ 2021)</span></li>
+                    <li><b>國立台北護理健康大學</b> · 健康科技學院院長遴選委員 <span style="color:var(--cyan)">(2021)</span></li>
+                    <li><b>中國工程師學會</b> · 教育委員會委員 <span style="color:var(--cyan)">(2021 ~ now)</span></li>
+                    <li><b>國家實驗研究院</b> · 科技政策研究與資料中心專家代表 <span style="color:var(--cyan)">(2021 ~ now)</span></li>
+                    <li><b>國家實驗研究院</b> · 人工智慧產學研聯盟諮詢專家 <span style="color:var(--cyan)">(2021 ~ now)</span></li>
+                    <li><b>中國電機工程學會</b> · editor <span style="color:var(--cyan)">(2017 ~ now)</span></li>
+                    <li><b>International Journal of Electrical and Engineering</b> · editor <span style="color:var(--cyan)">(2012 ~ now)</span></li>
+                    <li><b>IEEE Tainan Section</b> · 理事 <span style="color:var(--cyan)">(2009 ~ now)</span></li>
+                    <li><b>台南軟體協會</b> · 理事 <span style="color:var(--cyan)">(2009 ~ now)</span></li>
+                    <li><b>國立成功大學</b> · 資訊工程學系(所) 教授 <span style="color:var(--cyan)">(2004 ~ now)</span></li>
+                    <li><b>國科會</b> · 科學報導 Guest Editor <span style="color:var(--cyan)">(2011)</span></li>
+                    <li><b>國立成功大學</b> · 資訊工程學系(所) 系主任 <span style="color:var(--cyan)">(2009 ~ 2012)</span></li>
+                    <li><b>IEEE ComSoc Tainan Sector</b> · Vice chair <span style="color:var(--cyan)">(2009 ~ 2012)</span></li>
+                    <li><b>美國華盛頓大學西雅圖分校</b> · 電機工程學系訪問學者 <span style="color:var(--cyan)">(2007 ~ 2008)</span></li>
+                    <li><b>資訊工業策進會</b> · 創新前瞻技術規劃委員會規劃委員 <span style="color:var(--cyan)">(2005 ~ 2008)</span></li>
+                    <li><b>國科會</b> · 推動自由軟體研發專案諮詢委員 <span style="color:var(--cyan)">(2004 ~ 2008)</span></li>
+                    <li><b>資訊工業策進會</b> · 產學研合作委員會委員 <span style="color:var(--cyan)">(2004 ~ 2008)</span></li>
+                    <li><b>國立成功大學</b> · 資訊工程學系(所) 副教授 <span style="color:var(--cyan)">(1999 ~ 2004)</span></li>
+                    <li><b>國立成功大學</b> · 資訊工程學系(所) 助理教授 <span style="color:var(--cyan)">(1997 ~ 1999)</span></li>
+                    <li><b>國立東華大學</b> · 資訊工程學系(所) 副教授 <span style="color:var(--cyan)">(1996 ~ 1997)</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Awards -->
+        <section class="block">
+            <div class="section-head reveal">
+                <div class="eyebrow">Honors &amp; Awards</div>
+                <h2 style="font-size:1.6rem">榮譽與獎勵</h2>
+            </div>
+            <ul class="award-list reveal">
+                <li>獲「ECEI 2026 BEST CONFERENCE PAPER AWARD」、「SEGE 2025 BEST PRESENTATION」、「ECEI 2025 BEST CONFERENCE PAPER AWARD」、「EAI SGIoT 2023 Best Paper Award」、「ICS 2020 Best Paper Award」等國際會議最佳論文獎</li>
+                <li>2025 年 8 月獲
+                    <span class="hover-container">日本仙台大學名譽特別功勞教授<img src="images/S__24723467.jpg" alt="日本仙台大學名譽特別功勞教授" class="hover-image" /></span>
+                </li>
+                <li>2019–2025 年連續 7 年上榜美國史丹佛大學公布之全球前 2% 頂尖科學家（World's Top 2% Scientists）「終身科學影響力」榜單</li>
+                <li>2024 年指導碩士班學生參加「AICUP 2024 根據區域微氣候資料預測發電量競賽」，獲佳作</li>
+                <li>2024 年指導專題生參加「國立成功大學資訊工程學系大學部 114 級畢業專題展」，獲第三名</li>
+                <li>2024 年指導碩士班學生參加「台積電校園黑客松」，獲廠務知識機器人組第一名</li>
+                <li>2020 年獲國立成功大學 108 學年度教學優良教師</li>
+                <li>2018 年獲國防部與科技部合頒「優質計畫」獎座</li>
+                <li>2007 年教育部 95 學年度大學院校前瞻晶體系統設計相關競賽 嵌入式軟體製作競賽軟硬體整合組優等</li>
+                <li>2005 年榮獲 2005 資深優良教師</li>
+                <li>2005 年成立成大電機資訊學院量子計算研究中心團隊，並擔任中心副主任</li>
+                <li>2004 年無線行動夢想家競賽之 Intel 金質獎</li>
+                <li>2004 年行動創意大賽銅牌獎</li>
+                <li>2003 年教育部嵌入式軟體競賽優等獎</li>
+                <li>2002 年指導碩士班與大學生參加「無線行動夢想家」全國競賽，獲佳作</li>
+                <li>2002 年李國鼎科技研究獎</li>
+                <li>2002 年受聘為資策會多媒體實驗室技術顧問</li>
+                <li>2001 年資策會與中華民國資訊學會第一屆「手持式資訊家電產品應用程式開發暨應用創意大賽」榮獲第一名</li>
+                <li>2000 年教育部 89 學年度大專院校通訊科技專題競賽優等獎</li>
+                <li>1999 年指導碩士班學生鄭燁禧榮獲 1999 年宏碁龍騰論文獎佳作</li>
+                <li>1996 年受聘為教育部「85 年度暑期研訪企業」教師，前往工業技術研究院協助企業界解決問題</li>
+                <li>1995 年接受美國 Honeywell Inc. (Minneapolis 總部) 邀請，對個人博士論文作專題演講</li>
+                <li>國科會甲等研究獎</li>
+                <li>國立成功大學創新育成中心技術審查委員</li>
+                <li>資策會「通訊軟體關鍵技術開發五年計畫」技術顧問</li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <b>USCC Lab</b>
+                <p style="margin-top:8px">塵間感知與雲端計算實驗室<br />Ubiquitous Sensing &amp; Cloud Computing Lab</p>
+            </div>
+            <div>
+                <h4>聯絡資訊</h4>
+                <p>台南市大學路 1 號<br />資訊系新館 6 樓 65607 室<br />Phone: +886 (6) 275 7575</p>
+            </div>
+            <div>
+                <h4>導覽</h4>
+                <p><a href="index.html">首頁</a><br /><a href="professor.html">指導教授</a><br /><a href="member.html">實驗室成員</a><br /><a href="professor_e.html">English</a></p>
             </div>
         </div>
-    </div>
+        <div class="footer-bottom">© 2026 國立成功大學資訊工程學系 · USCC Lab. All rights reserved.</div>
+    </footer>
 </body>
 
 </html>

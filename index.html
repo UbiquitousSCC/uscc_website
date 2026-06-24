@@ -1,106 +1,141 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="zh-Hant">
 
 <head>
-	<meta http-equiv="content-type" content="text/html;charset=utf-8" />
-	<meta name="author" content="Luka Cvrk (www.solucija.com)" />
-
-	<link rel="stylesheet" href="style.css" type="text/css" />
-	<title>Ubiquitous Sensing and Cloud Computing Lab </title>
-	<style type="text/css">
-		<!--
-		.style1 {
-			font-size: 2.7em;
-			font-weight: bold;
-		}
-
-		.style2 {
-			font-size: 1.2em
-		}
-
-		.style3 {
-			font-size: 1.65em
-		}
-
-		.style4 {
-			font-size: 1.24em
-		}
-
-		.style5 {
-			color: #4C8734
-		}
-
-		.style6 {
-			color: #000000
-		}
-		-->
-	</style>
-	<script src="script.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>USCC Lab · 塵間感知與雲端計算實驗室</title>
+    <meta name="description"
+        content="國立成功大學 塵間感知與雲端計算實驗室 — 致力於人工智慧、機器學習與深度學習技術之研發與產業落地應用。" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
 </head>
 
 <body>
-	<div id="content">
-		<div id="logo">
-			<h1><a href="index.html">Welcome to USCC Lab.</a></h1>
-		</div>
-		<ul id="menu">
-			<li><a href="index.html">首頁</a></li>
-			<li><a href="professor.html">指導教授</a></li>
-			<li><a href="member.html">實驗室成員</a></li>
-			<li><a href="index_e.html">English</a></li>
-		</ul>
-		<div id="intro">
-			<h1 class="style1">塵間感知與雲端計算實驗室</h1>
-			<p class="style2"> </p>
-			<p class="style2">Ubiquitous Sensing and Cloud Computing Lab</p>
-		</div>
-		<div>
-			<h2><span style="font-size: 1.9em"> </span><span class="style3">歡迎!</span></h2>
-			<p><span style="font-size: 1.24em"> <img border="0" src="images/bullet.gif" width="6"
-						height="9"></span><span style="font-size: 1.64em">本</span><span
-					style="font-size: 1.24em">實驗室致力於人工智慧（AI）技術之研發與應用，專注於將機器學習與深度學習技術落實於實際場域。 近年來，實驗室積極投入
-					AI 專案開發，並與業界公司合作推動產學合作計畫，包含行動應用程式（App）開發、資料分析平台設計，強調技術落地與產業實務接軌，提升學生實作能力與產業競爭力。<br />
-					   
-				</span><span style="font-size: 1.24em"><br />
-					       
+    <div class="bg-grid"></div>
 
+    <!-- Navbar -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark">U</span>
+                <span class="brand-text">
+                    <b>USCC Lab</b>
+                    <span>Sensing · Cloud · AI</span>
+                </span>
+            </a>
+            <ul class="menu">
+                <li><a class="active" href="index.html">首頁</a></li>
+                <li><a href="professor.html">指導教授</a></li>
+                <li><a href="member.html">實驗室成員</a></li>
+                <li class="lang"><a href="index_e.html">EN</a></li>
+            </ul>
+        </div>
+    </nav>
 
+    <!-- Hero -->
+    <header class="hero">
+        <div class="badge"><span class="dot"></span> 國立成功大學 · 資訊工程學系</div>
+        <h1>塵間感知與<span class="grad">雲端計算</span>實驗室</h1>
+        <div class="subtitle">Ubiquitous Sensing &amp; Cloud Computing Lab</div>
+        <p class="lead">
+            以人工智慧為核心，將機器學習與深度學習技術落實於真實場域。
+            我們打造可落地的 AI 解決方案，並與產業攜手推動創新。
+        </p>
+        <div class="cta-row">
+            <a class="btn btn-primary" href="#about">了解實驗室 →</a>
+            <a class="btn btn-ghost" href="member.html">認識團隊</a>
+        </div>
+    </header>
 
+    <!-- Stats -->
+    <div class="stats">
+        <div class="stat reveal"><div class="num" data-count="18">0</div><div class="lbl">實驗室成員</div></div>
+        <div class="stat reveal"><div class="num" data-count="2">0</div><div class="lbl">博士生</div></div>
+        <div class="stat reveal"><div class="num" data-count="11">0</div><div class="lbl">碩士生</div></div>
+        <div class="stat reveal"><div class="num" data-count="5">0</div><div class="lbl">碩零新生</div></div>
+    </div>
 
-					歡迎有程式設計專長的同學加入我們實驗室<span class="style4">!</span><br />
-					   也歡迎有興趣肯吃苦的同學一起探索這塊深度學習應用的領域。</span><br />
-				<span style="font-size: 1.24em"> </span>
-			</p> 
-			<p><span style="font-size: 1.24em"><br>
-					 <img border="0" src="images/bullet.gif" width="6" height="9"></span><span
-					style="font-size: 1.64em">本</span><span
-					style="font-size: 1.24em">實驗室位置在成功校區資訊系新館6樓65607室，有任何實驗室的最新消息及成員資料會不定期在網站作更新發布。<br />
-				</span>    <span class="style4">若有任何批評與指教歡迎您的來信</span><span class="style4">!</span><br />
-				<br />
-				   
-				<img src="images/1.jpg" alt="" width="238" height="176" />        <img src="images/Zesus.jpg" alt=""
-					width="238" height="176" />           <img src="images/wimax_tower.JPG" alt="" width="238"
-					height="175" />
-			</p>
-			<div style="clear: both"></div>
-		</div>
+    <!-- About -->
+    <section id="about" class="wrap block">
+        <div class="section-head reveal">
+            <div class="eyebrow">About the Lab</div>
+            <h2>歡迎來到 USCC Lab</h2>
+            <p>本實驗室致力於人工智慧（AI）技術之研發與應用，專注於將機器學習與深度學習技術落實於實際場域。</p>
+        </div>
 
-		<div id="footer">
-			<div id="col1">
-				<p><a href="#">Terms and Conditions</a> · <a href="#">Privacy</a><br />
-					© Copyright 2007 <a href="#">國立成功大學資訊工程研究所</a></p>
-			</div>
-			<div id="col2">
-				<p>Address:<strong>台南市大學路1號</strong><br />
-					Phone: <strong>+886 (6) 275 7575 </strong></p>
-			</div>
-			<div id="col3">
-				<p>Design: <a href="http://www.solucija.com">Luka Cvrk</a><br />
-					Valid <a href="http://jigsaw.w3.org/css-validator/check/referer">CSS</a> and <a
-						href="http://validator.w3.org/check?uri=referer">XHTML</a></p>
-			</div>
-		</div>
-	</div>
+        <div class="grid-2">
+            <div class="card reveal prose">
+                <p>近年來，實驗室積極投入 <strong>AI 專案開發</strong>，並與業界公司合作推動產學合作計畫，包含
+                    <strong>行動應用程式（App）開發</strong>、<strong>資料分析平台設計</strong>，強調技術落地與產業實務接軌，
+                    提升學生實作能力與產業競爭力。</p>
+                <p>歡迎有程式設計專長的同學加入我們，也歡迎有興趣、肯吃苦的同學一起探索深度學習應用的領域！</p>
+            </div>
+            <div class="card reveal prose">
+                <p><strong>實驗室位置</strong></p>
+                <p>成功校區 · 資訊系新館 6 樓 <strong>65607 室</strong></p>
+                <p>實驗室的最新消息及成員資料會不定期在網站更新發布。
+                    若有任何批評與指教，歡迎您的來信 <a href="professor.html">聯絡我們 →</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research focus -->
+    <section class="wrap block">
+        <div class="section-head reveal">
+            <div class="eyebrow">Research Focus</div>
+            <h2>研究方向</h2>
+        </div>
+        <div class="grid-3">
+            <div class="card feature reveal">
+                <div class="ic">🧠</div>
+                <h3>人工智慧 &amp; 深度學習</h3>
+                <p>機器學習與深度學習模型之研發，從演算法設計到實際場域部署。</p>
+            </div>
+            <div class="card feature reveal">
+                <div class="ic">📡</div>
+                <h3>塵間感知 Sensing</h3>
+                <p>無線通訊、行動計算與感測技術，建構無所不在的智慧感知系統。</p>
+            </div>
+            <div class="card feature reveal">
+                <div class="ic">☁️</div>
+                <h3>雲端計算 &amp; 平台</h3>
+                <p>資料分析平台與雲端服務設計，支撐大規模 AI 應用落地。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="wrap block">
+        <div class="section-head reveal">
+            <div class="eyebrow">Gallery</div>
+            <h2>實驗室剪影</h2>
+        </div>
+        <div class="gallery reveal">
+            <figure><img src="images/1.jpg" alt="Lab" /></figure>
+            <figure><img src="images/2.jpg" alt="Lab" /></figure>
+            <figure><img src="images/3.jpg" alt="WiMAX Tower" /></figure>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <b>USCC Lab</b>
+                <p style="margin-top:8px">塵間感知與雲端計算實驗室<br />Ubiquitous Sensing &amp; Cloud Computing Lab</p>
+            </div>
+            <div>
+                <h4>聯絡資訊</h4>
+                <p>台南市大學路 1 號<br />資訊系新館 6 樓 65607 室<br />Phone: +886 (6) 275 7575</p>
+            </div>
+            <div>
+                <h4>導覽</h4>
+                <p><a href="index.html">首頁</a><br /><a href="professor.html">指導教授</a><br /><a href="member.html">實驗室成員</a><br /><a href="index_e.html">English</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">© 2026 國立成功大學資訊工程學系 · USCC Lab. All rights reserved.</div>
+    </footer>
 </body>
 
 </html>
