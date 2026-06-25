@@ -1103,3 +1103,339 @@ footer.site {
     z-index: 1;
 }
 
+/* ============================================================
+   AI Visitor Counter — Futuristic Analytics Panel
+   ============================================================ */
+.ai-counter-section {
+    position: relative;
+    padding: 80px 0 40px;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.ai-counter-neural {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: .45;
+}
+
+.ai-counter-wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* AI badge */
+.ai-counter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 18px;
+    border-radius: 999px;
+    background: rgba(111, 125, 78, .08);
+    border: 1px solid rgba(111, 125, 78, .25);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .82rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--cyan);
+}
+
+.ai-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #6f7d4e;
+    box-shadow: 0 0 8px 2px rgba(111, 125, 78, .7);
+    animation: aiDotPulse 2s ease-in-out infinite;
+}
+
+@keyframes aiDotPulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px 2px rgba(111, 125, 78, .7); }
+    50% { opacity: .4; box-shadow: 0 0 4px 1px rgba(111, 125, 78, .3); }
+}
+
+/* Main card — glassmorphism with holographic border */
+.ai-counter-card {
+    position: relative;
+    width: 100%;
+    background: rgba(255, 252, 244, .06);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border-radius: 20px;
+    border: 1px solid rgba(169, 128, 60, .2);
+    padding: 32px 28px;
+    overflow: hidden;
+    box-shadow:
+        0 0 0 1px rgba(111, 125, 78, .08) inset,
+        0 30px 60px -20px rgba(60, 42, 24, .25),
+        0 0 80px -20px rgba(111, 125, 78, .08);
+    animation: aiCardIn .8s cubic-bezier(.2, .7, .2, 1) forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes aiCardIn {
+    to { opacity: 1; transform: none; }
+}
+
+/* Ambient glow behind card */
+.ai-counter-glow {
+    position: absolute;
+    top: -60%;
+    left: -30%;
+    width: 160%;
+    height: 160%;
+    background: radial-gradient(
+        ellipse at 50% 50%,
+        rgba(111, 125, 78, .06) 0%,
+        rgba(169, 128, 60, .03) 40%,
+        transparent 70%
+    );
+    pointer-events: none;
+    animation: aiGlowPulse 6s ease-in-out infinite;
+}
+
+@keyframes aiGlowPulse {
+    0%, 100% { opacity: .6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Horizontal scanline */
+.ai-counter-scanline {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, rgba(111, 125, 78, .35) 30%, rgba(169, 128, 60, .4) 50%, rgba(111, 125, 78, .35) 70%, transparent 100%);
+    animation: aiScanline 4s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes aiScanline {
+    0%   { top: -2px; opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { top: calc(100% + 2px); opacity: 0; }
+}
+
+/* Header row */
+.ai-counter-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+}
+
+.ai-counter-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(150deg, rgba(111, 125, 78, .15), rgba(169, 128, 60, .1));
+    border: 1px solid rgba(111, 125, 78, .2);
+    display: grid;
+    place-items: center;
+    color: var(--cyan);
+    flex-shrink: 0;
+}
+
+.ai-counter-icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.ai-counter-label {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ai-counter-label-main {
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--text);
+    letter-spacing: .5px;
+}
+
+.ai-counter-label-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: .78rem;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+}
+
+/* Digit display */
+.ai-counter-display {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-bottom: 22px;
+    padding: 22px 0;
+    border-radius: 14px;
+    background: rgba(44, 32, 24, .04);
+    border: 1px solid rgba(74, 56, 38, .08);
+}
+
+.ai-counter-digits {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    position: relative;
+}
+
+.ai-digit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 68px;
+    border-radius: 10px;
+    background:
+        linear-gradient(180deg, rgba(255, 252, 244, .9) 0%, rgba(246, 241, 231, .95) 100%);
+    border: 1px solid rgba(74, 56, 38, .12);
+    font-family: 'Noto Serif TC', serif;
+    font-weight: 900;
+    font-size: 2.2rem;
+    background-clip: padding-box;
+    color: transparent;
+    background-image: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    position: relative;
+    transition: transform .4s cubic-bezier(.2, .7, .2, 1);
+    box-shadow:
+        0 4px 16px -6px rgba(60, 42, 24, .15),
+        inset 0 1px 0 rgba(255, 255, 255, .6);
+}
+
+.ai-digit.flip {
+    animation: aiDigitFlip .5s cubic-bezier(.2, .7, .2, 1);
+}
+
+@keyframes aiDigitFlip {
+    0%   { transform: perspective(300px) rotateX(0deg); }
+    40%  { transform: perspective(300px) rotateX(-90deg); opacity: .4; }
+    60%  { transform: perspective(300px) rotateX(90deg); opacity: .4; }
+    100% { transform: perspective(300px) rotateX(0deg); }
+}
+
+/* Pulse ring around digits */
+.ai-counter-pulse {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 80%;
+    height: 120%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    border: 1px solid rgba(111, 125, 78, .15);
+    animation: aiPulseRing 3s ease-in-out infinite;
+    pointer-events: none;
+}
+
+@keyframes aiPulseRing {
+    0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(.95); }
+    50% { opacity: 1; transform: translate(-50%, -50%) scale(1.02); }
+}
+
+/* Meta row */
+.ai-counter-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    padding-top: 14px;
+    border-top: 1px solid rgba(74, 56, 38, .08);
+}
+
+.ai-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .78rem;
+    color: var(--text-muted);
+    letter-spacing: .5px;
+}
+
+.ai-meta-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #999;
+}
+
+.ai-meta-dot.online {
+    background: #6f7d4e;
+    box-shadow: 0 0 6px rgba(111, 125, 78, .6);
+    animation: aiDotPulse 2s ease-in-out infinite;
+}
+
+.ai-meta-icon {
+    font-size: .72rem;
+}
+
+/* Holographic shimmer overlay on card */
+.ai-counter-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(
+        105deg,
+        transparent 40%,
+        rgba(169, 128, 60, .05) 45%,
+        rgba(111, 125, 78, .06) 50%,
+        rgba(169, 128, 60, .05) 55%,
+        transparent 60%
+    );
+    background-size: 200% 100%;
+    animation: aiHoloShimmer 5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes aiHoloShimmer {
+    0%   { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Card bottom edge gradient */
+.ai-counter-card::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--grad);
+    opacity: .6;
+    border-radius: 0 0 20px 20px;
+}
+
+/* Responsive */
+@media (max-width: 620px) {
+    .ai-counter-section { padding: 56px 0 28px; }
+    .ai-counter-card { padding: 24px 18px; }
+    .ai-digit { width: 40px; height: 54px; font-size: 1.7rem; }
+    .ai-counter-digits { gap: 4px; }
+    .ai-counter-label-main { font-size: .95rem; }
+    .ai-counter-meta { flex-direction: column; gap: 8px; align-items: flex-start; }
+}
+
+

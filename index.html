@@ -131,6 +131,51 @@
         </div>
     </section>
 
+    <!-- AI Visitor Counter -->
+    <section class="ai-counter-section">
+        <canvas class="ai-counter-neural" id="neuralCanvas"></canvas>
+        <div class="ai-counter-wrap">
+            <div class="ai-counter-badge"><span class="ai-dot"></span>Analytics</div>
+            <div class="ai-counter-card">
+                <div class="ai-counter-glow"></div>
+                <div class="ai-counter-scanline"></div>
+                <div class="ai-counter-header">
+                    <div class="ai-counter-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2a5 5 0 0 1 5 5v1a5 5 0 0 1-10 0V7a5 5 0 0 1 5-5z"/>
+                            <path d="M2 21a10 10 0 0 1 20 0"/>
+                            <circle cx="12" cy="7" r="1" fill="currentColor" stroke="none"/>
+                        </svg>
+                    </div>
+                    <div class="ai-counter-label">
+                        <span class="ai-counter-label-main">訪客造訪次數</span>
+                        <span class="ai-counter-label-sub">Visitor Count · Real-time Tracking</span>
+                    </div>
+                </div>
+                <div class="ai-counter-display">
+                    <div class="ai-counter-digits" id="visitorCount">
+                        <span class="ai-digit" data-digit="0">0</span>
+                        <span class="ai-digit" data-digit="0">0</span>
+                        <span class="ai-digit" data-digit="0">0</span>
+                        <span class="ai-digit" data-digit="0">0</span>
+                        <span class="ai-digit" data-digit="0">0</span>
+                    </div>
+                    <div class="ai-counter-pulse"></div>
+                </div>
+                <div class="ai-counter-meta">
+                    <div class="ai-meta-item">
+                        <span class="ai-meta-dot online"></span>
+                        <span>系統運行中</span>
+                    </div>
+                    <div class="ai-meta-item">
+                        <span class="ai-meta-icon">⚡</span>
+                        <span id="aiStatus">正在連線...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer class="site">
         <div class="footer-inner">

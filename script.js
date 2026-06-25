@@ -112,6 +112,204 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
     onScroll();
 
+    // ---- AI Visitor Counter ----
+    // Shows a real, shared visit total via counterapi.dev (free, no auth, CORS-open).
+    // If the service is unreachable it falls back to the last value cached in
+    // localStorage (or a baseline), so the display never looks broken.
+    (function aiVisitorCounter() {
+        const canvas = document.getElementById('neuralCanvas');
+        if (canvas) initNeural(canvas);
+
+        const countEl = document.getElementById('visitorCount');
+        const statusEl = document.getElementById('aiStatus');
+        if (!countEl) return;
+
+        const digitEls = Array.from(countEl.querySelectorAll('.ai-digit'));
+        const slots = digitEls.length;                 // 5 tiles → shows last 5 digits
+        const setStatus = (t) => { if (statusEl) statusEl.textContent = t; };
+
+        // Status text follows the page language (<html lang>); labels live in the markup.
+        const en = (document.documentElement.lang || '').toLowerCase().startsWith('en');
+        const TXT = {
+            synced:  en ? 'live analysis · synced' : '即時分析 · 已同步',
+            offline: en ? 'Offline · local cache'     : '離線統計 · 本機快取',
+        };
+
+        // Paint a number across the digit tiles; flip any tile whose value changed.
+        const renderDigits = (value, flip) => {
+            const str = String(Math.max(0, Math.round(value))).padStart(slots, '0').slice(-slots);
+            digitEls.forEach((el, i) => {
+                const ch = str[i];
+                if (el.textContent === ch) return;
+                el.textContent = ch;
+                el.dataset.digit = ch;
+                if (flip && !reduceMotion) {
+                    el.classList.remove('flip');
+                    void el.offsetWidth;                // restart the CSS flip animation
+                    el.classList.add('flip');
+                }
+            });
+        };
+
+        // Odometer-style count-up to the total, then a staggered flip flourish.
+        const revealTo = (total) => {
+            if (reduceMotion) { renderDigits(total, false); return; }
+            const dur = 1600, start = performance.now();
+            const tick = (now) => {
+                const p = Math.min((now - start) / dur, 1);
+                const eased = 1 - Math.pow(1 - p, 3);
+                renderDigits(total * eased, false);
+                if (p < 1) { requestAnimationFrame(tick); return; }
+                renderDigits(total, false);
+                digitEls.forEach((el, i) => setTimeout(() => {
+                    el.classList.remove('flip'); void el.offsetWidth; el.classList.add('flip');
+                }, i * 90));
+            };
+            requestAnimationFrame(tick);
+        };
+
+        // counterapi.dev: `/up` increments + returns the total; trailing `/` reads it.
+        const NS = 'usccncku', KEY = 'site-visits';
+        const BASE = 'https://api.counterapi.dev/v1/' + NS + '/' + KEY;
+        const CACHE = 'uscc_visits_cache';
+        const firstThisSession = !sessionStorage.getItem('uscc_visit_counted');
+        const url = firstThisSession ? BASE + '/up' : BASE + '/';
+
+        const fallback = () => {
+            const cached = parseInt(localStorage.getItem(CACHE) || '', 10);
+            setStatus(TXT.offline);
+            revealTo(Number.isFinite(cached) ? cached : 1000);   // baseline if never synced
+        };
+
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), 6000);
+        fetch(url, { signal: ctrl.signal, cache: 'no-store' })
+            .then(r => r.ok ? r.json() : Promise.reject(r.status))
+            .then(data => {
+                clearTimeout(timer);
+                const total = parseInt(data.count, 10);
+                if (!Number.isFinite(total)) return fallback();
+                sessionStorage.setItem('uscc_visit_counted', '1');
+                localStorage.setItem(CACHE, String(total));
+                setStatus(TXT.synced);
+                revealTo(total);
+            })
+            .catch(() => { clearTimeout(timer); fallback(); });
+    })();
+
+    // Neural-network background for the visitor counter: drifting nodes, proximity
+    // links, and the occasional "signal" pulse travelling along an edge.
+    function initNeural(canvas) {
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+        const LINE = '111, 125, 78';   // sage green (links)
+        const NODE = '169, 128, 60';   // antique gold (nodes / pulses)
+        const LINK = 150;              // px: max distance to draw a connection
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        let w = 0, h = 0, nodes = [], pulses = [], raf = null, running = false;
+
+        const build = () => {
+            const rect = canvas.getBoundingClientRect();
+            w = rect.width; h = rect.height;
+            if (!w || !h) return;
+            canvas.width = Math.round(w * dpr);
+            canvas.height = Math.round(h * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            const count = Math.max(14, Math.min(46, Math.round(w * h / 18000)));
+            nodes = Array.from({ length: count }, () => ({
+                x: Math.random() * w, y: Math.random() * h,
+                vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25,
+                r: Math.random() * 1.6 + 1.1,
+            }));
+            pulses = [];
+        };
+
+        const spawnPulse = () => {
+            if (nodes.length < 2 || pulses.length > 5) return;
+            const a = Math.floor(Math.random() * nodes.length);
+            let b = Math.floor(Math.random() * nodes.length);
+            if (a === b) b = (b + 1) % nodes.length;
+            pulses.push({ a, b, t: 0, speed: Math.random() * 0.012 + 0.006 });
+        };
+
+        const drawLinks = (maxAlpha) => {
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const a = nodes[i], b = nodes[j];
+                    const d = Math.hypot(a.x - b.x, a.y - b.y);
+                    if (d > LINK) continue;
+                    ctx.strokeStyle = `rgba(${LINE}, ${(1 - d / LINK) * maxAlpha})`;
+                    ctx.lineWidth = 1;
+                    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+                }
+            }
+        };
+
+        const drawNodes = () => {
+            ctx.fillStyle = `rgba(${NODE}, 0.75)`;
+            for (const n of nodes) {
+                ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill();
+            }
+        };
+
+        const frame = () => {
+            ctx.clearRect(0, 0, w, h);
+            for (const n of nodes) {
+                n.x += n.vx; n.y += n.vy;
+                if (n.x < 0 || n.x > w) n.vx *= -1;
+                if (n.y < 0 || n.y > h) n.vy *= -1;
+                n.x = Math.max(0, Math.min(w, n.x));
+                n.y = Math.max(0, Math.min(h, n.y));
+            }
+            drawLinks(0.5);
+            for (let k = pulses.length - 1; k >= 0; k--) {
+                const p = pulses[k];
+                p.t += p.speed;
+                const a = nodes[p.a], b = nodes[p.b];
+                if (p.t >= 1 || !a || !b) { pulses.splice(k, 1); continue; }
+                const x = a.x + (b.x - a.x) * p.t, y = a.y + (b.y - a.y) * p.t;
+                const glow = Math.sin(p.t * Math.PI);
+                ctx.beginPath(); ctx.arc(x, y, 2.2, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(${NODE}, ${0.9 * glow})`;
+                ctx.shadowBlur = 8; ctx.shadowColor = `rgba(${NODE}, ${glow})`;
+                ctx.fill(); ctx.shadowBlur = 0;
+            }
+            drawNodes();
+            if (Math.random() < 0.03) spawnPulse();
+            raf = requestAnimationFrame(frame);
+        };
+
+        const start = () => {
+            if (running || reduceMotion) return;
+            if (!nodes.length || !w) build();
+            if (!nodes.length) return;
+            running = true;
+            raf = requestAnimationFrame(frame);
+        };
+        const stop = () => { running = false; if (raf) cancelAnimationFrame(raf); raf = null; };
+
+        build();
+        if (reduceMotion) {
+            ctx.clearRect(0, 0, w, h); drawLinks(0.45); drawNodes();   // single static frame
+        } else {
+            // Only animate while the section is on-screen.
+            new IntersectionObserver((entries) => {
+                entries.forEach(e => e.isIntersecting ? start() : stop());
+            }, { threshold: 0 }).observe(canvas);
+        }
+
+        let rt;
+        window.addEventListener('resize', () => {
+            clearTimeout(rt);
+            rt = setTimeout(() => {
+                const wasRunning = running;
+                stop(); build();
+                if (reduceMotion) { ctx.clearRect(0, 0, w, h); drawLinks(0.45); drawNodes(); }
+                else if (wasRunning) start();
+            }, 200);
+        }, { passive: true });
+    }
+
     // ---- Easter Eggs ----
     // "uscc" (lowercase) → cinematic overlay
     // "USCC" (uppercase) → hyperspace jump to Facebook
