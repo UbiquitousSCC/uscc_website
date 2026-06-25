@@ -1,4 +1,10 @@
 // USCC Lab — UI interactions (heritage tea-house redesign)
+
+// Flag JS as available *before* first paint (this script is render-blocking in <head>),
+// so reveal-on-scroll hiding only applies when JS is present to un-hide it.
+// If this file fails to load/parse, .reveal elements stay visible — no blank sections.
+document.documentElement.classList.add('js-reveal');
+
 document.addEventListener('DOMContentLoaded', () => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -53,6 +59,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const stop = () => { audio.pause(); audio.currentTime = 0; };
         card.addEventListener('mouseleave', stop);
+    });
+
+    // ---- Lazy-load YouTube: swap the lightweight facade for the real iframe on click ----
+    document.querySelectorAll('.yt-facade').forEach(facade => {
+        facade.addEventListener('click', (e) => {
+            e.preventDefault();   // with JS: load inline. Without JS: the href opens YouTube.
+            const id = facade.dataset.yt;
+            if (!id) return;
+            const iframe = document.createElement('iframe');
+            iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+            iframe.title = 'YouTube video player';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+            iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+            iframe.allowFullscreen = true;
+            iframe.style.cssText = 'width:100%;aspect-ratio:16/9;border:1px solid var(--border);border-radius:12px;display:block';
+            facade.replaceWith(iframe);
+        });
     });
 
     // ---- Sticky-nav shrink + reading-progress bar + back-to-top ----
