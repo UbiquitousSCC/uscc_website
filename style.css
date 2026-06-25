@@ -28,7 +28,7 @@
 
     --deep:   #4f5a37;   /* deep tea green (buttons / active) */
 
-    --grad:      linear-gradient(120deg, #f099e8 10%, #c547b0 55%, #c35ac7 100%);
+    --grad:      linear-gradient(120deg, #6f7d4e 8%, #a9803c 55%, #9c4f2c 100%);
     --grad-soft: linear-gradient(120deg, rgba(111,125,78,.14), rgba(169,128,60,.14));
 
     --radius: 16px;
@@ -505,7 +505,7 @@ section { position: relative; }
 .feature p { color: var(--text-soft); font-size: .96rem; }
 
 /* gallery */
-.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .gallery figure {
     border-radius: var(--radius-sm);
     overflow: hidden;
