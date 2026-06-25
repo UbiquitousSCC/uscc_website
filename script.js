@@ -111,4 +111,272 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
     }, { passive: true });
     onScroll();
+
+    // ---- Easter Eggs ----
+    // "uscc" (lowercase) → cinematic overlay
+    // "USCC" (uppercase) → hyperspace jump to Facebook
+    const eggCodeLower = 'uscc';
+    const eggCodeUpper = 'USCC';
+    let eggBufRaw = '';   // preserves case
+    let eggActive = false;
+
+    const dismissEgg = () => {
+        const overlay = document.getElementById('uscc-egg');
+        if (!overlay) return;
+        overlay.classList.add('egg-out');
+        setTimeout(() => { overlay.remove(); eggActive = false; }, 700);
+    };
+
+    document.addEventListener('keydown', (e) => {
+        // If egg is showing, Escape dismisses it
+        if (eggActive) {
+            if (e.key === 'Escape') dismissEgg();
+            return;
+        }
+        // Ignore if user is typing in an input/textarea
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+        // Ignore modifier keys themselves
+        if (e.key.length > 1) return;
+
+        eggBufRaw += e.key;
+        // Keep buffer trimmed
+        if (eggBufRaw.length > eggCodeUpper.length) eggBufRaw = eggBufRaw.slice(-eggCodeUpper.length);
+
+        // Check uppercase first (USCC → hyperspace jump)
+        if (eggBufRaw === eggCodeUpper) {
+            eggBufRaw = '';
+            eggActive = true;
+            showHyperspaceJump();
+        }
+        // Then check lowercase (uscc → cinematic overlay)
+        else if (eggBufRaw.toLowerCase() === eggCodeLower) {
+            eggBufRaw = '';
+            eggActive = true;
+            showEasterEgg();
+        }
+    });
+
+    function showEasterEgg() {
+        // Build overlay
+        const overlay = document.createElement('div');
+        overlay.id = 'uscc-egg';
+        overlay.className = 'egg-overlay';
+        overlay.innerHTML = `
+            <canvas class="egg-particles"></canvas>
+            <div class="egg-content">
+                <div class="egg-seal">U</div>
+                <h1 class="egg-title">USCC Lab</h1>
+                <div class="egg-subtitle">Ubiquitous Sensing &amp; Cloud Computing</div>
+                <div class="egg-divider"></div>
+                <p class="egg-motto">「 以技術淬鍊智慧，用程式碼書寫未來 」</p>
+                <p class="egg-motto-en">Forging intelligence through technology,<br>writing the future in code.</p>
+                <div class="egg-hint">Press <kbd>ESC</kbd> or click to close</div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        // Click to dismiss
+        overlay.addEventListener('click', dismissEgg);
+
+        // ---- Particle canvas animation ----
+        const canvas = overlay.querySelector('.egg-particles');
+        const ctx = canvas.getContext('2d');
+        let raf;
+
+        const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+        resize();
+        window.addEventListener('resize', resize);
+
+        // Generate particles (tea-leaf greens, golds, warm tones)
+        const colors = [
+            'rgba(111,125,78,.6)', 'rgba(169,128,60,.5)', 'rgba(156,79,44,.4)',
+            'rgba(246,241,231,.35)', 'rgba(111,125,78,.3)', 'rgba(169,128,60,.3)'
+        ];
+        const particles = Array.from({ length: 80 }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            r: Math.random() * 3 + 1,
+            dx: (Math.random() - 0.5) * 0.6,
+            dy: -(Math.random() * 0.8 + 0.2),
+            color: colors[Math.floor(Math.random() * colors.length)],
+            alpha: Math.random() * 0.6 + 0.2,
+            pulse: Math.random() * Math.PI * 2
+        }));
+
+        const drawParticles = () => {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.dx;
+                p.y += p.dy;
+                p.pulse += 0.025;
+                const glow = 0.5 + Math.sin(p.pulse) * 0.5;
+
+                // Wrap around
+                if (p.y < -10) { p.y = canvas.height + 10; p.x = Math.random() * canvas.width; }
+                if (p.x < -10) p.x = canvas.width + 10;
+                if (p.x > canvas.width + 10) p.x = -10;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r * (0.8 + glow * 0.4), 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.alpha * glow;
+                ctx.fill();
+
+                // Glow effect
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = p.alpha * glow * 0.15;
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1;
+            if (eggActive) raf = requestAnimationFrame(drawParticles);
+        };
+        raf = requestAnimationFrame(drawParticles);
+
+        // Cleanup when removed
+        const mo = new MutationObserver(() => {
+            if (!document.getElementById('uscc-egg')) {
+                cancelAnimationFrame(raf);
+                window.removeEventListener('resize', resize);
+                mo.disconnect();
+            }
+        });
+        mo.observe(document.body, { childList: true });
+    }
+
+    // ---- Hyperspace Jump (uppercase USCC) ----
+    function showHyperspaceJump() {
+        const overlay = document.createElement('div');
+        overlay.id = 'uscc-egg';
+        overlay.className = 'hyper-overlay';
+        overlay.innerHTML = '<canvas class="hyper-canvas"></canvas><div class="hyper-flash"></div>';
+        document.body.appendChild(overlay);
+
+        const canvas = overlay.querySelector('.hyper-canvas');
+        const ctx = canvas.getContext('2d');
+        const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
+        resize();
+        window.addEventListener('resize', resize);
+
+        const cx = () => canvas.width / 2;
+        const cy = () => canvas.height / 2;
+
+        // Generate star particles
+        const stars = Array.from({ length: 300 }, () => {
+            const angle = Math.random() * Math.PI * 2;
+            const dist = Math.random() * 0.4 + 0.05; // 5%–45% from center
+            return {
+                angle,
+                dist,
+                speed: Math.random() * 0.003 + 0.001,
+                len: 1,
+                brightness: Math.random() * 0.5 + 0.5,
+                hue: Math.random() < 0.3 ? 200 + Math.random() * 40 : 0, // some bluish
+                white: Math.random() > 0.3
+            };
+        });
+
+        let phase = 0; // 0 = stars idle, 1 = accelerating, 2 = streaking, 3 = flash
+        let t = 0;
+        let raf;
+        const totalDuration = 2800; // ms total before redirect
+
+        const startTime = performance.now();
+
+        const draw = (now) => {
+            const elapsed = now - startTime;
+            t = elapsed / totalDuration;
+
+            ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            const centerX = cx();
+            const centerY = cy();
+            const maxR = Math.sqrt(centerX * centerX + centerY * centerY);
+
+            // Phase transitions
+            if (t < 0.15) phase = 0;       // idle twinkling stars
+            else if (t < 0.55) phase = 1;  // accelerating
+            else if (t < 0.85) phase = 2;  // full hyperspace streaks
+            else phase = 3;                // white flash + redirect
+
+            stars.forEach(s => {
+                const x1 = centerX + Math.cos(s.angle) * s.dist * maxR;
+                const y1 = centerY + Math.sin(s.angle) * s.dist * maxR;
+
+                if (phase === 0) {
+                    // Twinkling dots
+                    const twinkle = 0.5 + Math.sin(now * 0.003 + s.angle * 10) * 0.5;
+                    ctx.beginPath();
+                    ctx.arc(x1, y1, 1.2 * s.brightness, 0, Math.PI * 2);
+                    ctx.fillStyle = s.white
+                        ? `rgba(255,255,255,${s.brightness * twinkle})`
+                        : `hsla(${s.hue},70%,75%,${s.brightness * twinkle})`;
+                    ctx.fill();
+                } else {
+                    // Streaking phase
+                    let accel;
+                    if (phase === 1) {
+                        const pt = (t - 0.15) / 0.4;
+                        accel = pt * pt * pt; // cubic ease-in
+                    } else {
+                        accel = 1;
+                    }
+
+                    const streakLen = s.dist * maxR * accel * 0.6 + 2;
+                    const x2 = centerX + Math.cos(s.angle) * (s.dist * maxR + streakLen);
+                    const y2 = centerY + Math.sin(s.angle) * (s.dist * maxR + streakLen);
+
+                    const lineWidth = (phase === 2) ? 2.5 * s.brightness : 1.5 * s.brightness * (0.5 + accel * 0.5);
+
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.strokeStyle = s.white
+                        ? `rgba(255,255,255,${s.brightness * (0.4 + accel * 0.6)})`
+                        : `hsla(${s.hue},80%,80%,${s.brightness * (0.4 + accel * 0.6)})`;
+                    ctx.lineWidth = lineWidth;
+                    ctx.stroke();
+                }
+
+                // Move stars outward during streaking
+                if (phase >= 1) {
+                    const speedMult = phase === 2 ? 8 : (1 + ((t - 0.15) / 0.4) * 7);
+                    s.dist += s.speed * speedMult;
+                    if (s.dist > 1.5) {
+                        s.dist = 0.01;
+                        s.angle = Math.random() * Math.PI * 2;
+                    }
+                }
+            });
+
+            // Central glow
+            if (phase >= 1) {
+                const glowIntensity = phase === 2 ? 0.35 : Math.min((t - 0.15) / 0.4, 1) * 0.2;
+                const grad = ctx.createRadialGradient(centerX, centerY, 0, centerX, centerY, maxR * 0.3);
+                grad.addColorStop(0, `rgba(200, 220, 255, ${glowIntensity})`);
+                grad.addColorStop(1, 'transparent');
+                ctx.fillStyle = grad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+
+            // Flash phase
+            if (phase === 3) {
+                const flashT = (t - 0.85) / 0.15;
+                overlay.querySelector('.hyper-flash').style.opacity = flashT;
+            }
+
+            if (t < 1) {
+                raf = requestAnimationFrame(draw);
+            } else {
+                // Redirect!
+                cancelAnimationFrame(raf);
+                window.removeEventListener('resize', resize);
+                window.location.href = 'https://www.facebook.com/cheng.steve.58/?locale=zh_TW';
+            }
+        };
+
+        raf = requestAnimationFrame(draw);
+    }
 });
