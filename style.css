@@ -527,6 +527,44 @@ section { position: relative; }
     background: linear-gradient(180deg, transparent 55%, rgba(44, 32, 24, .5));
 }
 
+/* ---- Lazy YouTube facade (only a thumbnail until clicked) ---- */
+.yt-facade {
+    display: block; width: 100%;
+    aspect-ratio: 16 / 9;
+    position: relative;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    background: var(--bg-2);
+    text-decoration: none; color: inherit;
+}
+.yt-facade img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform .5s ease;
+}
+.yt-facade:hover img { transform: scale(1.04); }
+.yt-play {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 72px; height: 50px;
+    border-radius: 13px;
+    background: rgba(30, 21, 12, .68);
+    transition: background .25s ease, transform .25s ease;
+}
+.yt-play::before {
+    content: "";
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-40%, -50%);
+    border-style: solid;
+    border-width: 11px 0 11px 19px;
+    border-color: transparent transparent transparent #fbf4e3;
+}
+.yt-facade:hover .yt-play { background: var(--deep); transform: translate(-50%, -50%) scale(1.06); }
+.yt-facade:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+
 /* ---- Lab text content ---- */
 .prose { color: var(--text-soft); font-size: 1.04rem; }
 .prose p { margin-bottom: 16px; }
@@ -781,19 +819,21 @@ footer.site {
 /* ============================================================
    Reveal on scroll
    ============================================================ */
-.reveal {
+/* Hidden only when JS is present (html.js-reveal). Without JS the elements stay
+   visible, so a failed or slow script never leaves a section permanently blank. */
+.js-reveal .reveal {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity .8s ease var(--rd, 0s), transform .8s cubic-bezier(.2, .7, .2, 1) var(--rd, 0s);
 }
-.reveal.reveal-left  { transform: translateX(-40px); }
-.reveal.reveal-right { transform: translateX(40px); }
-.reveal.reveal-scale { transform: scale(.94); }
-.reveal.in { opacity: 1; transform: none; }
+.js-reveal .reveal.reveal-left  { transform: translateX(-40px); }
+.js-reveal .reveal.reveal-right { transform: translateX(40px); }
+.js-reveal .reveal.reveal-scale { transform: scale(.94); }
+.js-reveal .reveal.in { opacity: 1; transform: none; }
 
 /* respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
-    .reveal { opacity: 1; transform: none; transition: none; }
+    .js-reveal .reveal { opacity: 1; transform: none; transition: none; }
     .hero-bg { animation: none; }
     .hero-content > *, .hero-scroll { opacity: 1; transform: none; animation: none; }
     .hero-scroll span { animation: none; }
