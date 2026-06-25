@@ -40,7 +40,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; }
 
 body {
     font-family: 'Noto Sans TC', system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -49,7 +49,7 @@ body {
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    overflow-x: hidden;
+    overflow-x: clip;
     position: relative;
     min-height: 100vh;
 }
@@ -266,7 +266,7 @@ section { position: relative; }
         linear-gradient(180deg, rgba(30, 21, 12, .66) 0%, rgba(30, 21, 12, .5) 45%, rgba(24, 16, 9, .84) 100%),
         radial-gradient(135% 95% at 50% 38%, rgba(26, 18, 10, .18) 0%, rgba(22, 15, 8, .64) 100%);
 }
-.hero-content { position: relative; z-index: 2; max-width: 940px; }
+.hero-content { position: relative; z-index: 2; width: 100%; max-width: 940px; }
 
 /* staggered entrance for hero text */
 .hero-content > *, .hero-scroll { opacity: 0; transform: translateY(28px); animation: heroIn .95s cubic-bezier(.2, .7, .2, 1) forwards; }
@@ -335,8 +335,9 @@ section { position: relative; }
 .hero h1 {
     font-family: 'Noto Serif TC', serif;
     font-weight: 900;
-    font-size: clamp(2.3rem, 6vw, 4.1rem);
+    font-size: clamp(1.85rem, 6vw, 4.1rem);
     line-height: 1.18;
+    overflow-wrap: break-word;
     letter-spacing: .5px;
     margin-bottom: 14px;
 }
@@ -401,14 +402,16 @@ section { position: relative; }
 
 /* ---- Stat strip ---- */
 .stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 16px;
     margin: 8px auto 88px;
     max-width: var(--maxw);
     padding: 0 24px;
 }
 .stat {
+    flex: 0 1 230px;
     background: var(--surface);
     border: 1px solid var(--border-soft);
     border-radius: var(--radius);
@@ -417,14 +420,14 @@ section { position: relative; }
     backdrop-filter: blur(8px);
 }
 .stat .num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2.6rem;
-    font-weight: 700;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 2.7rem;
+    font-weight: 900;
     background: var(--grad);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    line-height: 1.1;
+    line-height: 1.15;
 }
 .stat .lbl { font-size: .84rem; color: var(--text-muted); margin-top: 6px; letter-spacing: .5px; }
 
@@ -564,9 +567,9 @@ section { position: relative; }
     margin-bottom: 18px;
 }
 .contact-list { list-style: none; display: grid; gap: 9px; }
-.contact-list li { color: var(--text-soft); font-size: .96rem; display: flex; gap: 12px; }
+.contact-list li { color: var(--text-soft); font-size: .96rem; display: flex; flex-wrap: wrap; gap: 4px 12px; overflow-wrap: anywhere; }
 .contact-list li b { color: var(--text-muted); min-width: 64px; font-weight: 500; }
-.contact-list a { color: var(--cyan); text-decoration: none; }
+.contact-list a { color: var(--cyan); text-decoration: none; overflow-wrap: anywhere; }
 .contact-list a:hover { color: var(--blue); }
 
 .chips { display: flex; flex-wrap: wrap; gap: 10px; }
@@ -721,6 +724,31 @@ section { position: relative; }
 .member .info b { display: block; font-family: 'Noto Serif TC', serif; font-size: 1.05rem; color: var(--text); }
 .member .info span { font-size: .82rem; color: var(--text-muted); }
 
+/* hover-to-reveal popup image on a member card.
+   The host wraps the (overflow:hidden) .member so the popup can float above it. */
+.member-pop-host { position: relative; }
+.member-pop-host .member-pop {
+    position: absolute;
+    left: 50%; bottom: 100%;
+    transform: translate(-50%, 18px) scale(.4);
+    transform-origin: center bottom;
+    width: 240px;
+    max-width: 84vw;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity .3s ease, transform .42s cubic-bezier(.34, 1.56, .64, 1), visibility .42s;
+    z-index: 60;
+}
+.member-pop-host:hover .member-pop {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -14px) scale(1);
+}
+
 /* ============================================================
    Footer
    ============================================================ */
@@ -776,17 +804,38 @@ footer.site {
    Responsive
    ============================================================ */
 @media (max-width: 900px) {
-    .stats { grid-template-columns: repeat(2, 1fr); }
     .grid-2, .grid-3, .gallery { grid-template-columns: 1fr; }
     .prof-hero { grid-template-columns: 1fr; text-align: center; }
     .prof-photo { max-width: 260px; margin: 0 auto; }
     .contact-list li { justify-content: center; }
+    .chips { justify-content: center; }
     .footer-inner { grid-template-columns: 1fr; }
 }
 @media (max-width: 620px) {
-    .menu { gap: 0; }
-    .menu a { padding: 7px 10px; font-size: .84rem; }
+    /* compact navbar so it never overflows narrow screens */
+    .nav-inner { padding: 12px 16px; gap: 10px; }
+    .brand { gap: 9px; }
+    .brand-mark { width: 34px; height: 34px; font-size: 1rem; }
+    .brand-text b { font-size: .92rem; }
     .brand-text span { display: none; }
-    .hero { padding: 64px 18px 52px; }
+    .menu { gap: 2px; }
+    .menu a { padding: 6px 9px; font-size: .8rem; }
+
+    .hero { padding: 64px 18px 52px; min-height: 80vh; }
     .hero .subtitle::before, .hero .subtitle::after { width: 22px; margin: 0 9px; }
+
+    /* two even columns that shrink to fit — no forced 180px track */
+    .member-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .member { min-width: 0; }
+    .member .photo .ph-init { font-size: 2.6rem; }
+
+    /* stat strip: three even cells across, never wider than the screen */
+    .stats { gap: 10px; }
+    .stat { flex: 1 1 0; min-width: 0; padding: 18px 8px; }
+    .stat .num { font-size: 2.1rem; }
+}
+@media (max-width: 430px) {
+    /* keep just the seal mark; drop the wordmark to guarantee the menu fits */
+    .brand-text b { display: none; }
+    .menu a { font-size: .78rem; padding: 6px 7px; }
 }
