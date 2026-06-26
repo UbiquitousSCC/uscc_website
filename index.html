@@ -17,23 +17,26 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="USCC Lab" />
     <meta property="og:locale" content="zh_TW" />
+    <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:title" content="USCC Lab · 塵間感知與雲端計算實驗室" />
     <meta property="og:description" content="國立成功大學 塵間感知與雲端計算實驗室 — 致力於人工智慧、機器學習與深度學習技術之研發與產業落地應用。" />
     <meta property="og:url" content="https://ubiquitousscc.github.io/uscc_website/index.html" />
     <meta property="og:image" content="https://ubiquitousscc.github.io/uscc_website/images/og.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="USCC Lab — 塵間感知與雲端計算實驗室，國立成功大學" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="USCC Lab · 塵間感知與雲端計算實驗室" />
     <meta name="twitter:description" content="國立成功大學 塵間感知與雲端計算實驗室 — 致力於人工智慧、機器學習與深度學習技術之研發與產業落地應用。" />
     <meta name="twitter:image" content="https://ubiquitousscc.github.io/uscc_website/images/og.jpg" />
+    <meta name="twitter:image:alt" content="USCC Lab — 塵間感知與雲端計算實驗室，國立成功大學" />
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"USCC Lab — 塵間感知與雲端計算實驗室","alternateName":"Ubiquitous Sensing & Cloud Computing Lab","url":"https://ubiquitousscc.github.io/uscc_website/","logo":"https://ubiquitousscc.github.io/uscc_website/images/apple-touch-icon.png","image":"https://ubiquitousscc.github.io/uscc_website/images/og.jpg","parentOrganization":{"@type":"CollegeOrUniversity","name":"National Cheng Kung University","sameAs":"https://www.ncku.edu.tw/"}}</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;500;600;700;900&display=swap" />
-    <link rel="stylesheet" href="style.css?v=20260628" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;600;700;900&display=swap" />
+    <link rel="stylesheet" href="style.css?v=20260629" />
     <script>document.documentElement.classList.add("js-reveal")</script>
-    <script defer src="script.js?v=20260628"></script>
+    <script defer src="script.js?v=20260629"></script>
 </head>
 
 <body>
@@ -155,7 +158,7 @@
         </div>
         <div class="gallery reveal">
             <figure><img src="images/1.webp" alt="實驗室日常 — 學生於實驗室討論與開發" width="1200" height="676" loading="lazy" decoding="async" /></figure>
-            <figure><img src="images/3.webp" alt="WiMAX 基地台" width="1200" height="676" loading="lazy" decoding="async" /></figure>
+            <figure><img src="images/3.webp" alt="實驗室成員合影" width="1200" height="676" loading="lazy" decoding="async" /></figure>
         </div>
     </section>
 
@@ -181,12 +184,12 @@
                     </div>
                 </div>
                 <div class="ai-counter-display">
-                    <div class="ai-counter-digits" id="visitorCount">
-                        <span class="ai-digit" data-digit="0">0</span>
-                        <span class="ai-digit" data-digit="0">0</span>
-                        <span class="ai-digit" data-digit="0">0</span>
-                        <span class="ai-digit" data-digit="0">0</span>
-                        <span class="ai-digit" data-digit="0">0</span>
+                    <div class="ai-counter-digits" id="visitorCount" role="img" aria-label="訪客造訪次數">
+                        <span class="ai-digit" data-digit="0" aria-hidden="true">0</span>
+                        <span class="ai-digit" data-digit="0" aria-hidden="true">0</span>
+                        <span class="ai-digit" data-digit="0" aria-hidden="true">0</span>
+                        <span class="ai-digit" data-digit="0" aria-hidden="true">0</span>
+                        <span class="ai-digit" data-digit="0" aria-hidden="true">0</span>
                     </div>
                     <div class="ai-counter-pulse"></div>
                 </div>
@@ -197,7 +200,7 @@
                     </div>
                     <div class="ai-meta-item">
                         <span class="ai-meta-icon">⚡</span>
-                        <span id="aiStatus">正在連線...</span>
+                        <span id="aiStatus" aria-live="polite">正在連線...</span>
                     </div>
                 </div>
             </div>
