@@ -1,9 +1,10 @@
 // USCC Lab — UI interactions (heritage tea-house redesign)
 
-// Flag JS as available *before* first paint (this script is render-blocking in <head>),
-// so reveal-on-scroll hiding only applies when JS is present to un-hide it.
-// If this file fails to load/parse, .reveal elements stay visible — no blank sections.
-document.documentElement.classList.add('js-reveal');
+// The `js-reveal` flag is set by a tiny inline <script> in each page's <head>,
+// BEFORE first paint, so reveal-on-scroll hiding only applies when JS is present
+// to later un-hide it. This file is deferred (it runs after parse), so it must
+// not be relied on to set that flag pre-paint — the inline head script owns it.
+// If this file fails to load, .reveal elements simply stay visible — no blank sections.
 
 document.addEventListener('DOMContentLoaded', () => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -50,16 +51,21 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-count]').forEach(el => co.observe(el));
 
     // ---- Hover-to-play BGM on member cards with data-bgm ----
-    document.querySelectorAll('[data-bgm]').forEach(card => {
-        const audio = new Audio(card.dataset.bgm);
-        audio.preload = 'auto';
-        card.addEventListener('mouseenter', () => {
-            audio.currentTime = 0;
-            audio.play().catch(() => { /* autoplay may be blocked until first user gesture */ });
+    // Skipped entirely when the visitor prefers reduced motion. preload='none'
+    // means each mp3 is fetched only on the first hover (never on touch devices,
+    // which can't hover at all) — saves ~690 KB on the members page per visit.
+    if (!reduceMotion) {
+        document.querySelectorAll('[data-bgm]').forEach(card => {
+            const audio = new Audio(card.dataset.bgm);
+            audio.preload = 'none';
+            card.addEventListener('mouseenter', () => {
+                audio.currentTime = 0;
+                audio.play().catch(() => { /* autoplay may be blocked until first user gesture */ });
+            });
+            const stop = () => { audio.pause(); audio.currentTime = 0; };
+            card.addEventListener('mouseleave', stop);
         });
-        const stop = () => { audio.pause(); audio.currentTime = 0; };
-        card.addEventListener('mouseleave', stop);
-    });
+    }
 
     // ---- Lazy-load YouTube: swap the lightweight facade for the real iframe on click ----
     document.querySelectorAll('.yt-facade').forEach(facade => {
@@ -68,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const id = facade.dataset.yt;
             if (!id) return;
             const iframe = document.createElement('iframe');
-            iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+            iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
             iframe.title = 'YouTube video player';
             iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
             iframe.referrerPolicy = 'strict-origin-when-cross-origin';
@@ -183,10 +189,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const ctrl = new AbortController();
         const timer = setTimeout(() => ctrl.abort(), 6000);
-        fetch(url, { signal: ctrl.signal, cache: 'no-store' })
-            .then(r => r.ok ? r.json() : Promise.reject(r.status))
+        fetch(url, { signal: ctrl.signal, cache: 'no-store', referrerPolicy: 'no-referrer' })
+            .then(r => { clearTimeout(timer); return r.ok ? r.json() : Promise.reject(r.status); })
             .then(data => {
-                clearTimeout(timer);
                 const total = parseInt(data.count, 10);
                 if (!Number.isFinite(total)) return fallback();
                 sessionStorage.setItem('uscc_visit_counted', '1');
@@ -379,6 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // ---- Particle canvas animation ----
         const canvas = overlay.querySelector('.egg-particles');
         const ctx = canvas.getContext('2d');
+        if (!ctx) { dismissEgg(); return; }
         let raf;
 
         const resize = () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; };
