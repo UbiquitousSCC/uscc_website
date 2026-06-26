@@ -619,7 +619,7 @@ section { position: relative; }
     box-shadow: var(--shadow-glow);
     background: var(--surface);
 }
-.prof-photo img { width: 100%; display: block; }
+.prof-photo img { width: 100%; height: auto; display: block; }
 .prof-hero h1, .prof-hero h2 {
     font-family: 'Noto Serif TC', serif;
     font-size: clamp(1.9rem, 4vw, 2.7rem);
