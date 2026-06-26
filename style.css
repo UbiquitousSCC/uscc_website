@@ -102,6 +102,22 @@ body::after {
 @keyframes float1 { 50% { transform: translate(55px, 70px) scale(1.08); } }
 @keyframes float2 { 50% { transform: translate(-65px, 45px) scale(1.06); } }
 
+/* ---- Skip link (keyboard / screen-reader): hidden until focused ---- */
+.skip-link {
+    position: fixed;
+    left: 12px; top: -56px;
+    z-index: 300;
+    background: var(--deep);
+    color: #f6efdc;
+    padding: 10px 16px;
+    border-radius: 9px;
+    text-decoration: none;
+    font-weight: 500;
+    box-shadow: var(--shadow);
+    transition: top .2s ease;
+}
+.skip-link:focus { top: 12px; outline: 2px solid #f6efdc; outline-offset: 2px; }
+
 /* ============================================================
    Navbar
    ============================================================ */
@@ -441,7 +457,7 @@ section { position: relative; }
     color: var(--blue);
     margin-bottom: 8px;
 }
-.section-head h2 {
+.section-head h1, .section-head h2 {
     font-family: 'Noto Serif TC', serif;
     font-weight: 700;
     font-size: clamp(1.8rem, 4vw, 2.5rem);
@@ -450,7 +466,7 @@ section { position: relative; }
     display: inline-block;
     padding-bottom: 14px;
 }
-.section-head h2::after {
+.section-head h1::after, .section-head h2::after {
     content: "";
     position: absolute;
     left: 0; bottom: 0;
@@ -459,7 +475,7 @@ section { position: relative; }
     background: var(--grad);
     transition: width .8s cubic-bezier(.2, .7, .2, 1) .25s;
 }
-.section-head.in h2::after { width: 54px; }
+.section-head.in h1::after, .section-head.in h2::after { width: 54px; }
 .section-head p { color: var(--text-soft); margin-top: 10px; max-width: 640px; }
 
 .block { padding: 32px 0 72px; }
@@ -590,7 +606,7 @@ section { position: relative; }
     background: var(--surface);
 }
 .prof-photo img { width: 100%; display: block; }
-.prof-hero h1 {
+.prof-hero h1, .prof-hero h2 {
     font-family: 'Noto Serif TC', serif;
     font-size: clamp(1.9rem, 4vw, 2.7rem);
     font-weight: 700;
@@ -804,7 +820,7 @@ footer.site {
     grid-template-columns: 1.4fr 1fr 1fr;
     gap: 30px;
 }
-.footer-inner h4 { font-family: 'Cormorant Garamond', serif; font-size: .92rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue); margin-bottom: 14px; }
+.footer-inner h3 { font-family: 'Cormorant Garamond', serif; font-size: .92rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue); margin-bottom: 14px; }
 .footer-inner p, .footer-inner a { color: var(--text-soft); font-size: .92rem; text-decoration: none; }
 .footer-inner a:hover { color: var(--blue); }
 .footer-brand b { font-family: 'Noto Serif TC', serif; font-size: 1.1rem; color: var(--text); }
@@ -833,6 +849,12 @@ footer.site {
 
 /* respect reduced-motion preferences */
 @media (prefers-reduced-motion: reduce) {
+    /* neutralise all looping/ambient animations: blobs, brand shine, badge pulse, AI-counter FX */
+    *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
     .js-reveal .reveal { opacity: 1; transform: none; transition: none; }
     .hero-bg { animation: none; }
     .hero-content > *, .hero-scroll { opacity: 1; transform: none; animation: none; }
