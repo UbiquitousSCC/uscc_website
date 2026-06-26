@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ubiquitousscc.github.io/uscc_website/sitemap.xml
