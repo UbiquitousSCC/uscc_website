@@ -140,10 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
             synced:  en ? 'live analysis · synced' : '即時分析 · 已同步',
             offline: en ? 'Offline · local cache'     : '離線統計 · 本機快取',
         };
+        const countLabel = en ? 'Total visits' : '訪客造訪次數';
 
         // Paint a number across the digit tiles; flip any tile whose value changed.
         const renderDigits = (value, flip) => {
             const str = String(Math.max(0, Math.round(value))).padStart(slots, '0').slice(-slots);
+            countEl.setAttribute('aria-label', countLabel + ' ' + Number(str));   // keep SR label in sync with the tiles
             digitEls.forEach((el, i) => {
                 const ch = str[i];
                 if (el.textContent === ch) return;
@@ -364,11 +366,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const overlay = document.createElement('div');
         overlay.id = 'uscc-egg';
         overlay.className = 'egg-overlay';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-label', 'USCC Lab');
+        overlay.tabIndex = -1;
         overlay.innerHTML = `
             <canvas class="egg-particles"></canvas>
             <div class="egg-content">
                 <div class="egg-seal">U</div>
-                <h1 class="egg-title">USCC Lab</h1>
+                <div class="egg-title">USCC Lab</div>
                 <div class="egg-subtitle">Ubiquitous Sensing &amp; Cloud Computing</div>
                 <div class="egg-divider"></div>
                 <p class="egg-motto">「 以技術淬鍊智慧，用程式碼書寫未來 」</p>
@@ -377,6 +383,7 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
         document.body.appendChild(overlay);
+        overlay.focus();
 
         // Click to dismiss
         overlay.addEventListener('click', dismissEgg);
@@ -489,6 +496,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const startTime = performance.now();
 
         const draw = (now) => {
+            // If the overlay was dismissed (Escape), stop the loop, drop the
+            // resize listener, and skip the redirect — don't jump after a cancel.
+            if (!document.getElementById('uscc-egg')) {
+                cancelAnimationFrame(raf);
+                window.removeEventListener('resize', resize);
+                return;
+            }
             const elapsed = now - startTime;
             t = elapsed / totalDuration;
 

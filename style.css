@@ -703,6 +703,7 @@ section { position: relative; }
     position: absolute;
     top: 130%; left: 0;
     width: 220px;
+    max-width: calc(100vw - 24px);
     border-radius: 12px;
     border: 1px solid var(--border);
     box-shadow: var(--shadow);
@@ -837,7 +838,7 @@ footer.site {
     grid-template-columns: 1.4fr 1fr 1fr;
     gap: 30px;
 }
-.footer-inner h3 { font-family: 'Cormorant Garamond', serif; font-size: .92rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 14px; }
+.footer-inner h3 { font-family: 'Cormorant Garamond', serif; font-size: .92rem; letter-spacing: 1.5px; text-transform: uppercase; color: #74541d; margin-bottom: 14px; }
 .footer-inner p, .footer-inner a { color: var(--text-soft); font-size: .92rem; text-decoration: none; }
 .footer-inner a:hover { color: var(--gold-ink); }
 .footer-brand b { font-family: 'Noto Serif TC', serif; font-size: 1.1rem; color: var(--text); }
@@ -845,7 +846,7 @@ footer.site {
     border-top: 1px solid var(--border-soft);
     text-align: center;
     padding: 18px;
-    color: var(--text-muted);
+    color: var(--text-soft);
     font-size: .82rem;
 }
 
@@ -920,14 +921,21 @@ footer.site {
     .member-group .group-title { justify-content: center; }
 
     /* stat strip: three even cells across, never wider than the screen */
-    .stats { gap: 10px; }
+    .stats { gap: 10px; margin-bottom: 48px; }
     .stat { flex: 1 1 0; min-width: 0; padding: 18px 8px; }
     .stat .num { font-size: 2.1rem; }
+    /* keep the longest label (實驗室成員) on one line in the tight 3-up cells */
+    .stat .lbl { font-size: .78rem; letter-spacing: 0; }
 }
 @media (max-width: 430px) {
     /* keep just the seal mark; drop the wordmark to guarantee the menu fits */
     .brand-text b { display: none; }
     .menu a { font-size: .78rem; padding: 6px 7px; }
+}
+/* short landscape phones: don't vertically-centre a tall hero or the CTAs fall below the fold */
+@media (max-height: 480px) and (orientation: landscape) {
+    .hero { min-height: auto; padding: 80px 24px 48px; justify-content: flex-start; }
+    .hero-scroll { display: none; }
 }
 
 /* ============================================================
