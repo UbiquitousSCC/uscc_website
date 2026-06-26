@@ -4,7 +4,9 @@
    Warm rice-paper tones · espresso browns · tea-green & gold
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;500;600;700;900&display=swap');
+/* Fonts load via a parallel <link> in each page's <head>, not @import — an
+   @import would serialise the font request behind this stylesheet and waste the
+   preconnect hints. */
 
 :root {
     /* surfaces — warm rice paper */
@@ -18,7 +20,7 @@
     /* ink */
     --text:        #2c2018;
     --text-soft:   #5e4f40;
-    --text-muted:  #9b8b76;
+    --text-muted:  #736550;
 
     /* accents — variable names kept for inline-style compatibility */
     --cyan:   #6f7d4e;   /* tea-leaf green — primary accent */
@@ -27,6 +29,12 @@
     --pink:   #b15a6a;   /* plum (rare) */
 
     --deep:   #4f5a37;   /* deep tea green (buttons / active) */
+
+    /* darker ink variants of the accents — used where the colour carries TEXT,
+       so small copy clears WCAG AA (>=4.5:1); the brighter accents above stay
+       for decorative fills/borders/dots (>=3:1 is enough there). */
+    --gold-ink:  #856222;   /* roasted amber — gold text on light */
+    --green-ink: #566236;   /* steeped tea-green — links/text on light */
 
     --grad:      linear-gradient(120deg, #6f7d4e 8%, #a9803c 55%, #9c4f2c 100%);
     --grad-soft: linear-gradient(120deg, rgba(111,125,78,.14), rgba(169,128,60,.14));
@@ -118,6 +126,11 @@ body::after {
 }
 .skip-link:focus { top: 12px; outline: 2px solid #f6efdc; outline-offset: 2px; }
 
+/* Consistent, visible keyboard focus on every interactive surface.
+   :focus-visible only fires for keyboard focus, so mouse/touch is unaffected. */
+:focus-visible { outline: 3px solid var(--gold-ink); outline-offset: 2px; }
+.hero a:focus-visible, .to-top:focus-visible { outline-color: #f6efdc; }
+
 /* ============================================================
    Navbar
    ============================================================ */
@@ -175,11 +188,12 @@ body::after {
     display: grid; place-items: center;
     opacity: 0; transform: translateY(14px);
     pointer-events: none;
+    visibility: hidden;
     backdrop-filter: blur(8px);
     box-shadow: var(--shadow);
-    transition: opacity .3s, transform .3s, background .2s, border-color .2s, color .2s;
+    transition: opacity .3s, transform .3s, visibility .3s, background .2s, border-color .2s, color .2s;
 }
-.to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+.to-top.show { opacity: 1; transform: none; pointer-events: auto; visibility: visible; }
 .to-top:hover { background: var(--grad); color: #fbf5e6; border-color: transparent; transform: translateY(-2px); }
 .brand {
     display: flex;
@@ -234,12 +248,12 @@ body::after {
 .menu .lang a {
     background: transparent;
     border: 1px solid var(--border);
-    color: var(--blue);
+    color: var(--gold-ink);
     font-family: 'Cormorant Garamond', serif;
     font-weight: 600;
     letter-spacing: 1px;
 }
-.menu .lang a:hover { background: rgba(169,128,60,.12); color: var(--blue); }
+.menu .lang a:hover { background: rgba(169,128,60,.12); color: var(--gold-ink); }
 
 /* ============================================================
    Layout
@@ -454,7 +468,7 @@ section { position: relative; }
     font-style: italic;
     font-size: 1rem;
     letter-spacing: 2px;
-    color: var(--blue);
+    color: var(--gold-ink);
     margin-bottom: 8px;
 }
 .section-head h1, .section-head h2 {
@@ -585,8 +599,8 @@ section { position: relative; }
 .prose { color: var(--text-soft); font-size: 1.04rem; }
 .prose p { margin-bottom: 16px; }
 .prose strong, .prose b { color: var(--text); }
-.prose a { color: var(--cyan); text-decoration: none; border-bottom: 1px dashed rgba(111,125,78,.55); }
-.prose a:hover { color: var(--blue); border-bottom-color: var(--blue); }
+.prose a { color: var(--green-ink); text-decoration: none; border-bottom: 1px dashed rgba(86,98,54,.6); }
+.prose a:hover { color: var(--gold-ink); border-bottom-color: var(--gold-ink); }
 
 /* ============================================================
    Professor page
@@ -616,15 +630,15 @@ section { position: relative; }
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     letter-spacing: 1.5px;
-    color: var(--blue);
+    color: var(--gold-ink);
     font-size: 1.05rem;
     margin-bottom: 18px;
 }
 .contact-list { list-style: none; display: grid; gap: 9px; }
 .contact-list li { color: var(--text-soft); font-size: .96rem; display: flex; flex-wrap: wrap; gap: 4px 12px; overflow-wrap: anywhere; }
 .contact-list li b { color: var(--text-muted); min-width: 64px; font-weight: 500; }
-.contact-list a { color: var(--cyan); text-decoration: none; overflow-wrap: anywhere; }
-.contact-list a:hover { color: var(--blue); }
+.contact-list a { color: var(--green-ink); text-decoration: none; overflow-wrap: anywhere; }
+.contact-list a:hover { color: var(--gold-ink); }
 
 .chips { display: flex; flex-wrap: wrap; gap: 10px; }
 .chip {
@@ -683,7 +697,7 @@ section { position: relative; }
 .award-list li:hover { border-color: var(--blue); transform: translateX(4px); background: var(--surface-2); }
 
 /* hover image (honorary professor) */
-.hover-container { position: relative; display: inline; color: var(--cyan); cursor: pointer; border-bottom: 1px dashed rgba(111,125,78,.55); }
+.hover-container { position: relative; display: inline; color: var(--green-ink); cursor: pointer; border-bottom: 1px dashed rgba(86,98,54,.6); }
 .hover-image {
     display: none;
     position: absolute;
@@ -694,7 +708,10 @@ section { position: relative; }
     box-shadow: var(--shadow);
     z-index: 99;
 }
-.hover-container:hover .hover-image { display: block; }
+.hover-container:hover .hover-image,
+.hover-container:focus .hover-image,
+.hover-container:focus-visible .hover-image { display: block; }
+.hover-container:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 3px; border-radius: 3px; }
 
 /* ============================================================
    Members page
@@ -820,9 +837,9 @@ footer.site {
     grid-template-columns: 1.4fr 1fr 1fr;
     gap: 30px;
 }
-.footer-inner h3 { font-family: 'Cormorant Garamond', serif; font-size: .92rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue); margin-bottom: 14px; }
+.footer-inner h3 { font-family: 'Cormorant Garamond', serif; font-size: .92rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold-ink); margin-bottom: 14px; }
 .footer-inner p, .footer-inner a { color: var(--text-soft); font-size: .92rem; text-decoration: none; }
-.footer-inner a:hover { color: var(--blue); }
+.footer-inner a:hover { color: var(--gold-ink); }
 .footer-brand b { font-family: 'Noto Serif TC', serif; font-size: 1.1rem; color: var(--text); }
 .footer-bottom {
     border-top: 1px solid var(--border-soft);
@@ -1171,7 +1188,7 @@ footer.site {
     font-weight: 600;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: var(--cyan);
+    color: var(--green-ink);
 }
 
 .ai-dot {

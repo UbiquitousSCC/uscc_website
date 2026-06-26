@@ -13,6 +13,7 @@
     <link rel="alternate" hreflang="x-default" href="https://ubiquitousscc.github.io/uscc_website/index.html" />
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png" />
+    <link rel="preload" as="image" href="images/2.webp" fetchpriority="high" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="USCC Lab" />
     <meta property="og:locale" content="zh_TW" />
@@ -29,9 +30,10 @@
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"USCC Lab — 塵間感知與雲端計算實驗室","alternateName":"Ubiquitous Sensing & Cloud Computing Lab","url":"https://ubiquitousscc.github.io/uscc_website/","logo":"https://ubiquitousscc.github.io/uscc_website/images/apple-touch-icon.png","image":"https://ubiquitousscc.github.io/uscc_website/images/og.jpg","parentOrganization":{"@type":"CollegeOrUniversity","name":"National Cheng Kung University","sameAs":"https://www.ncku.edu.tw/"}}</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="style.css?v=20260626b" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;500;600;700;900&display=swap" />
+    <link rel="stylesheet" href="style.css?v=20260627" />
     <script>document.documentElement.classList.add("js-reveal")</script>
-    <script defer src="script.js?v=20260626b"></script>
+    <script defer src="script.js?v=20260627"></script>
 </head>
 
 <body>
@@ -52,7 +54,7 @@
                 <li><a class="active" href="index.html">首頁</a></li>
                 <li><a href="professor.html">指導教授</a></li>
                 <li><a href="member.html">實驗室成員</a></li>
-                <li class="lang"><a href="index_e.html">EN</a></li>
+                <li class="lang"><a href="index_e.html" hreflang="en" lang="en">EN</a></li>
             </ul>
         </div>
     </nav>
@@ -104,8 +106,8 @@
                 <p>歡迎有程式設計專長的同學加入我們，也歡迎有興趣、肯吃苦的同學一起探索深度學習應用的領域！</p>
             </div>
             <div class="card reveal reveal-right">
-                <a class="yt-facade" href="https://www.youtube.com/watch?v=_nyPDXcXtyU" target="_blank" rel="noopener" data-yt="_nyPDXcXtyU" aria-label="播放實驗室介紹影片">
-                    <img src="https://i.ytimg.com/vi/_nyPDXcXtyU/maxresdefault.jpg" alt="實驗室介紹影片縮圖" loading="lazy"
+                <a class="yt-facade" href="https://www.youtube.com/watch?v=_nyPDXcXtyU" target="_blank" rel="noopener noreferrer" data-yt="_nyPDXcXtyU" aria-label="播放實驗室介紹影片">
+                    <img src="https://i.ytimg.com/vi/_nyPDXcXtyU/maxresdefault.jpg" alt="實驗室介紹影片縮圖" loading="lazy" decoding="async" referrerpolicy="no-referrer"
                         onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/_nyPDXcXtyU/hqdefault.jpg'" />
                     <span class="yt-play" aria-hidden="true"></span>
                 </a>
@@ -116,7 +118,7 @@
             <p><strong>實驗室位置</strong></p>
             <p>成功校區 · 資訊系新館 6 樓 <strong>65607</strong></p>
             <p>實驗室的最新消息及成員資料會不定期在網站更新發布。
-                若有任何批評與指教，歡迎您的來信 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=stevecheng1688@gmail.com" target="_blank" rel="noopener">聯絡我們 →</a></p>
+                若有任何批評與指教，歡迎您的來信 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=z10801032@ncku.edu.tw" target="_blank" rel="noopener noreferrer">聯絡我們 →</a></p>
         </div>
     </section>
 
@@ -152,8 +154,8 @@
             <h2>實驗室剪影</h2>
         </div>
         <div class="gallery reveal">
-            <figure><img src="images/1.webp" alt="實驗室日常 — 學生於實驗室討論與開發" /></figure>
-            <figure><img src="images/3.webp" alt="WiMAX 基地台" /></figure>
+            <figure><img src="images/1.webp" alt="實驗室日常 — 學生於實驗室討論與開發" width="1200" height="676" loading="lazy" decoding="async" /></figure>
+            <figure><img src="images/3.webp" alt="WiMAX 基地台" width="1200" height="676" loading="lazy" decoding="async" /></figure>
         </div>
     </section>
 
@@ -213,11 +215,11 @@
             </div>
             <div>
                 <h3>聯絡資訊</h3>
-                <p>台南市大學路 1 號<br />資訊系新館 6 樓 65607 <br />Phone: (06)275 7575</p>
+                <p>台南市大學路 1 號<br />資訊系新館 6 樓 65607 室<br />Phone: (06) 275 7575</p>
             </div>
             <div>
                 <h3>導覽</h3>
-                <p><a href="index.html">首頁</a><br /><a href="professor.html">指導教授</a><br /><a href="member.html">實驗室成員</a><br /><a href="index_e.html">English</a></p>
+                <p><a href="index.html">首頁</a><br /><a href="professor.html">指導教授</a><br /><a href="member.html">實驗室成員</a><br /><a href="index_e.html" hreflang="en" lang="en">English</a></p>
             </div>
         </div>
         <div class="footer-bottom">© 2026 國立成功大學資訊工程學系 · USCC Lab. All rights reserved.</div>
