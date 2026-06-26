@@ -888,7 +888,8 @@ footer.site {
     .prof-photo { max-width: 260px; margin: 0 auto; }
     .contact-list li { justify-content: center; }
     .chips { justify-content: center; }
-    .footer-inner { grid-template-columns: 1fr; }
+    /* footer stacks to one column here — centre it so the three blocks read symmetric */
+    .footer-inner { grid-template-columns: 1fr; text-align: center; }
 }
 @media (max-width: 620px) {
     /* compact navbar so it never overflows narrow screens */
@@ -915,6 +916,8 @@ footer.site {
     .member-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
     .member { min-width: 0; }
     .member .photo .ph-init { font-size: 2.6rem; }
+    /* centre group titles ("博士生 / Master's…") to match the centred section heading */
+    .member-group .group-title { justify-content: center; }
 
     /* stat strip: three even cells across, never wider than the screen */
     .stats { gap: 10px; }
