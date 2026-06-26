@@ -902,6 +902,14 @@ footer.site {
 
     .hero { padding: 64px 18px 52px; min-height: 80vh; }
     .hero .subtitle::before, .hero .subtitle::after { width: 22px; margin: 0 9px; }
+    /* hide the scroll-down cue on phones — tall hero text pushed the CTA
+       buttons down onto it, so the oval overlapped "Meet the Team". */
+    .hero-scroll { display: none; }
+
+    /* centre section headings (eyebrow / title / intro) on narrow screens */
+    .section-head { text-align: center; }
+    .section-head p { margin-left: auto; margin-right: auto; }
+    .section-head h1::after, .section-head h2::after { left: 50%; transform: translateX(-50%); }
 
     /* two even columns that shrink to fit — no forced 180px track */
     .member-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
