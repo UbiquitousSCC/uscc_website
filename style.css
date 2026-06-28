@@ -436,7 +436,7 @@ section { position: relative; }
     flex-wrap: wrap;
     justify-content: center;
     gap: 16px;
-    margin: 8px auto 88px;
+    margin: 56px auto 24px;
     max-width: var(--maxw);
     padding: 0 24px;
 }
