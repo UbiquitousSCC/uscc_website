@@ -14,6 +14,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ubiquitousscc.github.io/uscc_website/index.html"/>
   </url>
   <url>
+    <loc>https://ubiquitousscc.github.io/uscc_website/news.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://ubiquitousscc.github.io/uscc_website/news.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ubiquitousscc.github.io/uscc_website/news_e.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ubiquitousscc.github.io/uscc_website/news.html"/>
+  </url>
+  <url>
+    <loc>https://ubiquitousscc.github.io/uscc_website/news_e.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://ubiquitousscc.github.io/uscc_website/news.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ubiquitousscc.github.io/uscc_website/news_e.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ubiquitousscc.github.io/uscc_website/news.html"/>
+  </url>
+  <url>
     <loc>https://ubiquitousscc.github.io/uscc_website/member.html</loc>
     <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://ubiquitousscc.github.io/uscc_website/member.html"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://ubiquitousscc.github.io/uscc_website/member_e.html"/>
