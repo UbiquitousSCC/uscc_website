@@ -32,9 +32,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;600;700;900&display=swap" />
-    <link rel="stylesheet" href="style.css?v=20260630b" />
+    <link rel="stylesheet" href="style.css?v=20260630c" />
     <script>document.documentElement.classList.add("js-reveal")</script>
-    <script defer src="script.js?v=20260630b"></script>
+    <script defer src="script.js?v=20260630c"></script>
 </head>
 
 <body>
@@ -66,81 +66,57 @@
         <div class="section-head reveal">
             <div class="eyebrow">News &amp; Updates</div>
             <h1>最新消息</h1>
-            <p>實驗室的論文發表、競賽獲獎、研討會、學生畢業與招生消息，將陸續在此發布。</p>
+            <p>實驗室的競賽獲獎與招生資訊。</p>
         </div>
 
         <!-- ============================================================
-             目前狀態：建置中。下面這張「建置中」卡片是現在顯示給訪客看的。
-             等有真實消息要上線時：
-               1) 刪掉下面整段「建置中卡片」(整個 <section class="block"> ... </section>)
-               2) 把再下面那段「消息時間軸模板」外層的註解拆掉，填入真實消息
-               3) 英文版 news_e.html 也要做同樣的事（兩個檔都要各加一次）
+             分區一：競賽獲獎
+             · 每筆 = 一個 <li data-year="YYYY">；data-year 供自動篩選。
+             · 只放三年內：script.js 依 data-year 自動隱藏超過三年的條目
+               （顯示今年與前三年；今年 = 瀏覽器當下年份），維護者不必手動清。
+             · 新增：在 <ul data-awards> 內加一個 <li>，年份新的放上面；中英兩檔都要加。
              ============================================================ -->
-
-        <!-- 建置中卡片（之後上線時整段刪除） -->
         <section class="block">
-            <div class="news-coming reveal">
-                <span class="badge"><span class="dot"></span>建置中 · Coming soon</span>
-                <div class="mark">✦</div>
-                <h2>最新消息整理中</h2>
-                <p>本頁正在建置，近期將開始發布實驗室的論文發表、競賽獲獎、研討會、學生畢業與招生等消息，敬請期待。</p>
-                <p class="links">在此之前，歡迎先認識 <a href="professor.html">指導教授</a> 與 <a href="member.html">實驗室成員</a>，或 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=z10801032@ncku.edu.tw" target="_blank" rel="noopener noreferrer">與我們聯絡</a>。</p>
+            <div class="section-head reveal">
+                <div class="eyebrow">Awards</div>
+                <h2 style="font-size:1.6rem">競賽獲獎</h2>
+                <p>近三年實驗室個人與團體競賽得獎紀錄。</p>
+            </div>
+            <div class="card reveal">
+                <ul class="award-list" data-awards>
+                    <li data-year="2024"><b>2024</b>台積電校園黑客松 — 廠務知識機器人組 第一名（碩士生團隊）</li>
+                    <li data-year="2024"><b>2024</b>AICUP 2024 區域微氣候資料預測發電量競賽 — 佳作（碩士生）</li>
+                    <li data-year="2024"><b>2024</b>成大資工系大學部 114 級畢業專題展 — 第三名（專題生）</li>
+                    <li data-year="2023"><b>2023</b>第七屆創創 AIoT 競賽 — 永續科技組 第二名（實驗室團隊）</li>
+                    <li class="awards-empty is-hidden" data-awards-empty>近三年暫無競賽獲獎紀錄，敬請期待。</li>
+                </ul>
             </div>
         </section>
 
         <!-- ============================================================
-             消息時間軸模板 — 上線時把本段最外層的註解（這一行的上方與最末的 close 標記）拆掉即可啟用。
-             分類契約（中英對照＋圓點顏色，全站只在這裡定義一次；每則消息只要帶 data-cat）：
-                 data-cat="paper"    論文   / Paper        圓點：茶綠
-                 data-cat="award"    獲獎   / Award        圓點：金
-                 data-cat="talk"     研討會 / Talk         圓點：深綠
-                 data-cat="defense"  畢業   / Defense      圓點：赭紅
-                 data-cat="recruit"  招生   / Recruiting   圓點：梅
-                 data-cat="member"   成員   / Member       圓點：墨綠
-             規則：
-               · 篩選晶片只會顯示「實際有對應消息」的分類；沒消息的晶片由 JS 自動隱藏。
-               · 每則消息 = 一個 <li data-cat="...">；最新的永遠貼在 feed 最上面那行下方。
-               · 篩選數字與右上角「最新」標記都由 JS 自動產生，不用手打（避免中英不一致）。
-               · 純內容新增（只加 <li>）不需更動 CSS/JS，也不必動 ?v= 版本號。
-
-        <div class="chips news-filter reveal">
-            <button class="chip is-active" type="button" data-filter="all">全部</button>
-            <button class="chip" type="button" data-filter="paper">論文</button>
-            <button class="chip" type="button" data-filter="award">獲獎</button>
-            <button class="chip" type="button" data-filter="talk">研討會</button>
-            <button class="chip" type="button" data-filter="defense">畢業</button>
-            <button class="chip" type="button" data-filter="recruit">招生</button>
-            <button class="chip" type="button" data-filter="member">成員</button>
-        </div>
-
-        <div class="card reveal news-card">
-            <ul class="timeline" data-news-feed>
-                ★ 新消息貼在這一行下方，最新的放最上面 ★
-
-                <li class="reveal" data-cat="award">
-                    <span class="badge"><span class="dot"></span>獲獎</span>
-                    <b>2026.06 · 消息標題（範例）</b><br />
-                    一到兩句內文說明。<a class="news-more" href="#">詳情 →</a>
-                </li>
-
-                <li class="reveal" data-cat="paper">
-                    <span class="badge"><span class="dot"></span>論文</span>
-                    <b>2026.05 · 消息標題（範例）</b><br />
-                    一到兩句內文說明。
-                </li>
-
-                <li class="year-rule">2025</li>
-
-                <li class="reveal" data-cat="recruit">
-                    <span class="badge"><span class="dot"></span>招生</span>
-                    <b>2025.09 · 消息標題（範例）</b><br />
-                    一到兩句內文說明。<a class="news-more" href="https://mail.google.com/mail/?view=cm&fs=1&to=z10801032@ncku.edu.tw" target="_blank" rel="noopener noreferrer">聯絡我們 →</a>
-                </li>
-
-                <li class="news-empty is-hidden" data-news-empty>此分類目前沒有消息。</li>
-            </ul>
-        </div>
-        ============================================================ -->
+             分區二：學生招生
+             · 更新當年度招生：改 .recruit-year 的學年度，並更新表格列（系所／學程 + 缺額）。
+             · 一列 = 一個 <tr>；中英兩檔都要改。
+             ============================================================ -->
+        <section class="block">
+            <div class="section-head reveal">
+                <div class="eyebrow">Recruitment</div>
+                <h2 style="font-size:1.6rem">學生招生</h2>
+                <p>當年度招生名額，意者歡迎來信洽詢。</p>
+            </div>
+            <div class="card reveal">
+                <span class="badge recruit-year"><span class="dot"></span>115 學年度招生中</span>
+                <table class="recruit-table">
+                    <thead>
+                        <tr><th>系所／學位學程</th><th class="count">缺額</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>資訊工程系－人工智慧科技碩士學位學程</td><td class="count">1 名</td></tr>
+                    </tbody>
+                </table>
+                <p class="recruit-cta"><a href="https://mail.google.com/mail/?view=cm&fs=1&to=z10801032@ncku.edu.tw" target="_blank" rel="noopener noreferrer">意者請來信洽詢 →</a></p>
+            </div>
+        </section>
 
     </main>
 
