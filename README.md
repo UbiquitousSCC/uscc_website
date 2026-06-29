@@ -55,14 +55,8 @@ uscc_website/
 ├── USCC_Lab_改版_Checklist.md        # 改版待辦清單（僅供參考，不影響網站）
 └── images/
     ├── og.jpg                       # 社群分享圖（1200×630）
-    ├── 1.webp / 2.webp / 3.webp     # 首頁 hero／剪影照
-    ├── aiot2023-booth.webp          # 剪影：2023 創創 AIoT 競賽攤位
-    ├── aiot2023-award.webp          # 剪影：2023 創創 AIoT 競賽 永續科技組第二名
-    ├── tsmc2024-champion.webp       # 剪影：2024 台積電校園黑客松 冠軍
-    ├── lab-meeting.webp             # 剪影：實驗室工作會議
-    ├── lab-boardgame.webp           # 剪影：桌遊聚會
-    ├── lab-vr.webp                  # 剪影：VR 體驗
-    ├── lab-dinner.webp              # 剪影：實驗室聚餐
+    ├── moment/                      # 首頁「實驗室剪影」輪播圖
+    │   └── 1–9 + aiot2023-* / tsmc2024-champion / lab-*.webp  # 生活日常＋競賽得獎/活動照（含 5_2.webp hover 切換）
     ├── 766679109.webp               # 教授照片
     ├── S__24723467.webp             # 教授榮譽 hover 圖
     ├── tzuyu.webp / shao_pop.webp   # 成員卡彩蛋彈出圖
@@ -78,7 +72,7 @@ uscc_website/
 
 | 中文頁 | 英文頁 | 內容 |
 |---|---|---|
-| `index.html` | `index_e.html` | Hero、實驗室簡介、研究方向（AI／塵間感知／雲端）、剪影、訪客計數 |
+| `index.html` | `index_e.html` | Hero、實驗室簡介、研究方向（AI／塵間感知／雲端）、剪影輪播、訪客計數 |
 | `news.html` | `news_e.html` | 最新消息：**競賽獲獎**（近三年，JS 自動篩選）＋**學生招生**（當年度系所／缺額） |
 | `professor.html` | `professor_e.html` | 指導教授 鄭憲宗 — 研究領域、學經歷、榮譽獎項 |
 | `member.html` | `member_e.html` | 成員名冊：博士生 2、碩士生 11、預備生（碩零）5 |
@@ -110,7 +104,7 @@ uscc_website/
 
 ### 可重用元件
 
-`.nav`、`.hero`、`.section-head`（含動畫底線）、`.card`（hover 浮起＋金色頂邊）、`.chip`／`.chips`、`.badge`（脈動圓點）、`.timeline`（教授頁與消息頁共用）、`.award-list`、`.stats`/`.stat`、`.member-grid`/`.member`、`.recruit-table`、`footer.site`、`.bg-grid`（宣紙底紋）、`.skip-link`。
+`.nav`、`.hero`、`.section-head`（含動畫底線）、`.card`（hover 浮起＋金色頂邊）、`.chip`／`.chips`、`.badge`（脈動圓點）、`.timeline`（教授頁與消息頁共用）、`.award-list`、`.stats`/`.stat`、`.member-grid`/`.member`、`.recruit-table`、`.slideshow`（剪影輪播）、`footer.site`、`.bg-grid`（宣紙底紋）、`.skip-link`。
 
 ---
 
@@ -128,6 +122,7 @@ uscc_website/
 | 訪客計數 | 串接 counterapi.dev 取得共享造訪數；連不上時退回 `localStorage` 快取 |
 | 神經網路動畫 | 訪客計數卡後方的 canvas 連線動畫（離開畫面自動暫停、reduced-motion 時靜止） |
 | 競賽獲獎篩選 | 競賽獲獎自動只顯示近三年（JS 依 `data-year` 隱藏；JS 關閉時全部顯示） |
+| 剪影輪播 | `.slideshow` 跨淡轉場，左右箭頭／圓點／方向鍵切換、進入視窗才自動輪播；部分張可 `data-hover-src`／`data-hover-bgm` 滑入切圖配樂。JS 關閉時固定顯示第一張 |
 | 彩蛋 | 見下方〔彩蛋〕 |
 
 ---

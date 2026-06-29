@@ -534,45 +534,6 @@ section { position: relative; }
 .feature h3 { font-family: 'Noto Serif TC', serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
 .feature p { color: var(--text-soft); font-size: .96rem; }
 
-/* gallery */
-.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-.gallery figure {
-    border-radius: var(--radius-sm);
-    overflow: hidden;
-    border: 1px solid var(--border);
-    aspect-ratio: 4 / 3;
-    position: relative;
-}
-.gallery img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform .6s ease;
-    filter: saturate(1.02) sepia(.08);
-}
-.gallery figure:hover img { transform: scale(1.07); }
-.gallery figure::after {
-    content: "";
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, transparent 48%, rgba(44, 32, 24, .62));
-}
-.gallery figcaption {
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    z-index: 1;
-    padding: 20px 16px 13px;
-    color: #fdf8ee;
-    font-size: .85rem;
-    font-weight: 500;
-    line-height: 1.4;
-    letter-spacing: .2px;
-    text-shadow: 0 1px 4px rgba(20, 12, 4, .6);
-}
-/* gallery columns: 3 (wide) → 2 (≤1024) → 1 (≤900, in Responsive block below) */
-@media (max-width: 1024px) {
-    .gallery { grid-template-columns: repeat(2, 1fr); }
-}
-
 /* ---- Slideshow (Lab Moments) — cross-fade between images, arrows/dots/keys to navigate.
    Slides stack absolutely in a 16:9 frame; only .is-active is opaque. JS builds the dots
    and drives auto-advance. With JS off, the first slide stays visible (no blank box). ---- */
@@ -1001,7 +962,7 @@ footer.site {
    Responsive
    ============================================================ */
 @media (max-width: 900px) {
-    .grid-2, .grid-3, .gallery { grid-template-columns: 1fr; }
+    .grid-2, .grid-3 { grid-template-columns: 1fr; }
     .prof-hero { grid-template-columns: 1fr; text-align: center; }
     .prof-photo { max-width: 260px; margin: 0 auto; }
     .contact-list li { justify-content: center; }
