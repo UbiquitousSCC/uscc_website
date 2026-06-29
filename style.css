@@ -535,7 +535,7 @@ section { position: relative; }
 .feature p { color: var(--text-soft); font-size: .96rem; }
 
 /* gallery */
-.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
 .gallery figure {
     border-radius: var(--radius-sm);
     overflow: hidden;
@@ -567,6 +567,10 @@ section { position: relative; }
     line-height: 1.4;
     letter-spacing: .2px;
     text-shadow: 0 1px 4px rgba(20, 12, 4, .6);
+}
+/* gallery columns: 3 (wide) → 2 (≤1024) → 1 (≤900, in Responsive block below) */
+@media (max-width: 1024px) {
+    .gallery { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ---- Lazy YouTube facade (only a thumbnail until clicked) ---- */
