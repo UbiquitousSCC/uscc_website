@@ -55,7 +55,7 @@ uscc_website/
 ├── USCC_Lab_改版_Checklist.md        # 改版待辦清單（僅供參考，不影響網站）
 └── images/
     ├── og.jpg                       # 社群分享圖（1200×630）
-    ├── moment/                      # 首頁「實驗室剪影」輪播圖（hero 背景亦取用 moment/2.webp）
+    ├── moment/                      # 首頁「實驗室剪影」輪播圖
     │   └── 1–9 + aiot2023-* / tsmc2024-champion / lab-*.webp  # 生活日常＋競賽得獎/活動照（含 5_2.webp hover 切換）
     ├── 766679109.webp               # 教授照片
     ├── S__24723467.webp             # 教授榮譽 hover 圖
