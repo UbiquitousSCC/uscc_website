@@ -32,9 +32,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;600;700;900&display=swap" />
-    <link rel="stylesheet" href="style.css?v=20260630b" />
+    <link rel="stylesheet" href="style.css?v=20260630c" />
     <script>document.documentElement.classList.add("js-reveal")</script>
-    <script defer src="script.js?v=20260630b"></script>
+    <script defer src="script.js?v=20260630c"></script>
 </head>
 
 <body>
@@ -66,81 +66,57 @@
         <div class="section-head reveal">
             <div class="eyebrow">News &amp; Updates</div>
             <h1>News</h1>
-            <p>Paper acceptances, awards, talks, student graduations, and recruitment — posted here from time to time.</p>
+            <p>Our lab's competition awards and student recruitment.</p>
         </div>
 
         <!-- ============================================================
-             STATUS: under construction. The "coming soon" card below is what
-             visitors currently see. When real news is ready to go live:
-               1) Delete the whole "coming soon" card section below
-               2) Un-comment the "news timeline template" further down and fill it in
-               3) Mirror every change into the Chinese page news.html (add each item to BOTH files)
+             SECTION 1: Competition Awards
+             · One entry = one <li data-year="YYYY">; data-year drives the auto-filter.
+             · Last 3 years only: script.js auto-hides entries older than 3 years
+               (shows this year + the 3 prior years; "now" = the browser's current year).
+             · To add: insert an <li> in <ul data-awards>, newest at the top; mirror into news.html.
              ============================================================ -->
-
-        <!-- Coming-soon card (delete this whole section when going live) -->
         <section class="block">
-            <div class="news-coming reveal">
-                <span class="badge"><span class="dot"></span>Coming soon · 建置中</span>
-                <div class="mark">✦</div>
-                <h2>News is on the way</h2>
-                <p>This page is being prepared. We'll soon start posting the lab's paper acceptances, awards, talks, student graduations, and recruitment news — check back shortly.</p>
-                <p class="links">In the meantime, meet our <a href="professor_e.html">Professor</a> and <a href="member_e.html">Members</a>, or <a href="https://mail.google.com/mail/?view=cm&fs=1&to=z10801032@ncku.edu.tw" target="_blank" rel="noopener noreferrer">get in touch</a>.</p>
+            <div class="section-head reveal">
+                <div class="eyebrow">Awards</div>
+                <h2 style="font-size:1.6rem">Competition Awards</h2>
+                <p>Individual and team competition awards from the last three years.</p>
+            </div>
+            <div class="card reveal">
+                <ul class="award-list" data-awards>
+                    <li data-year="2024"><b>2024</b>TSMC Campus Hackathon — 1st place, Fab Knowledge Bot track (M.S. team)</li>
+                    <li data-year="2024"><b>2024</b>AICUP 2024 (regional microclimate power-generation forecasting) — Honorable Mention (M.S. student)</li>
+                    <li data-year="2024"><b>2024</b>NCKU CSIE Undergraduate Capstone Showcase (Class of 114) — 3rd place (capstone students)</li>
+                    <li data-year="2023"><b>2023</b>7th Chuang-Chuang AIoT Competition — 2nd place, Sustainable Technology track (lab team)</li>
+                    <li class="awards-empty is-hidden" data-awards-empty>No competition awards in the last three years yet.</li>
+                </ul>
             </div>
         </section>
 
         <!-- ============================================================
-             NEWS TIMELINE TEMPLATE — to go live, remove this block's outer comment wrapper.
-             Category contract (zh/en label + dot color, defined ONCE here; each item only carries data-cat):
-                 data-cat="paper"    論文   / Paper        dot: tea-green
-                 data-cat="award"    獲獎   / Award        dot: gold
-                 data-cat="talk"     研討會 / Talk         dot: deep green
-                 data-cat="defense"  畢業   / Defense      dot: terracotta
-                 data-cat="recruit"  招生   / Recruiting   dot: plum
-                 data-cat="member"   成員   / Member       dot: ink green
-             Rules:
-               · Filter chips only show categories that actually have items; empty ones are auto-hidden by JS.
-               · One news item = one <li data-cat="...">; the newest always goes at the TOP of the feed.
-               · Counts and the top-right "Latest" tag are generated by JS — never hand-typed (so zh/en can't drift).
-               · A pure content add (just adding an <li>) needs no CSS/JS change and no ?v= bump.
-
-        <div class="chips news-filter reveal">
-            <button class="chip is-active" type="button" data-filter="all">All</button>
-            <button class="chip" type="button" data-filter="paper">Paper</button>
-            <button class="chip" type="button" data-filter="award">Award</button>
-            <button class="chip" type="button" data-filter="talk">Talk</button>
-            <button class="chip" type="button" data-filter="defense">Defense</button>
-            <button class="chip" type="button" data-filter="recruit">Recruiting</button>
-            <button class="chip" type="button" data-filter="member">Member</button>
-        </div>
-
-        <div class="card reveal news-card">
-            <ul class="timeline" data-news-feed>
-                ★ Paste new items below this line, newest at the top ★
-
-                <li class="reveal" data-cat="award">
-                    <span class="badge"><span class="dot"></span>Award</span>
-                    <b>2026.06 · News headline (example)</b><br />
-                    A one- or two-sentence summary. <a class="news-more" href="#">Details →</a>
-                </li>
-
-                <li class="reveal" data-cat="paper">
-                    <span class="badge"><span class="dot"></span>Paper</span>
-                    <b>2026.05 · News headline (example)</b><br />
-                    A one- or two-sentence summary.
-                </li>
-
-                <li class="year-rule">2025</li>
-
-                <li class="reveal" data-cat="recruit">
-                    <span class="badge"><span class="dot"></span>Recruiting</span>
-                    <b>2025.09 · News headline (example)</b><br />
-                    A one- or two-sentence summary. <a class="news-more" href="https://mail.google.com/mail/?view=cm&fs=1&to=z10801032@ncku.edu.tw" target="_blank" rel="noopener noreferrer">Contact us →</a>
-                </li>
-
-                <li class="news-empty is-hidden" data-news-empty>No updates in this category yet.</li>
-            </ul>
-        </div>
-        ============================================================ -->
+             SECTION 2: Student Recruitment
+             · To update: change .recruit-year's academic year and the table rows
+               (department / program + openings). One row = one <tr>; mirror into news.html.
+             ============================================================ -->
+        <section class="block">
+            <div class="section-head reveal">
+                <div class="eyebrow">Recruitment</div>
+                <h2 style="font-size:1.6rem">Student Recruitment</h2>
+                <p>Openings for the current academic year — feel free to email us.</p>
+            </div>
+            <div class="card reveal">
+                <span class="badge recruit-year"><span class="dot"></span>Now recruiting · AY115 (2026)</span>
+                <table class="recruit-table">
+                    <thead>
+                        <tr><th>Department / Degree Program</th><th class="count">Openings</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>M.S. Program in Artificial Intelligence Technology, Dept. of CSIE</td><td class="count">1</td></tr>
+                    </tbody>
+                </table>
+                <p class="recruit-cta"><a href="https://mail.google.com/mail/?view=cm&fs=1&to=z10801032@ncku.edu.tw" target="_blank" rel="noopener noreferrer">Interested? Email us →</a></p>
+            </div>
+        </section>
 
     </main>
 

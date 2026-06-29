@@ -599,48 +599,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// ---- News page: category filter (progressive enhancement) ----
-// Pure enhancement: if this never runs (JS off, or load fails), every chip is
-// an inert label and every item stays visible — no blank sections. The whole
-// block no-ops on pages without a [data-news-feed] (incl. the coming-soon state).
+// ---- News page: show only competition awards from the last 3 years ----
+// Progressive enhancement: with JS off, all awards stay visible (no blank section).
+// No-ops on pages without a [data-awards] list.
 document.addEventListener('DOMContentLoaded', () => {
-    const feed = document.querySelector('[data-news-feed]');
-    if (!feed) return;
-
-    const items = Array.from(feed.querySelectorAll('li[data-cat]'));
-    const chips = Array.from(document.querySelectorAll('.news-filter .chip'));
-    if (!items.length || !chips.length) return;
-
-    const years = Array.from(feed.querySelectorAll('li.year-rule'));
-    const empty = feed.querySelector('[data-news-empty]');
-
-    // Live counts — generated here, never hand-typed, so zh/en can't drift.
-    const counts = {};
-    items.forEach(it => { const c = it.dataset.cat; counts[c] = (counts[c] || 0) + 1; });
-    chips.forEach(chip => {
-        const f = chip.dataset.filter;
-        const n = f === 'all' ? items.length : (counts[f] || 0);
-        if (f !== 'all' && n === 0) { chip.hidden = true; return; }  // hide empty categories
-        const cnt = document.createElement('span');
-        cnt.className = 'cnt';
-        cnt.textContent = n;
-        chip.append(' ', cnt);
+    const list = document.querySelector('[data-awards]');
+    if (!list) return;
+    const YEARS_BACK = 3;                                   // keep this year + the 3 prior years
+    const cutoff = new Date().getFullYear() - YEARS_BACK;   // e.g. 2026 - 3 = 2023 -> show year >= 2023
+    let shown = 0;
+    list.querySelectorAll('li[data-year]').forEach(li => {
+        const y = parseInt(li.dataset.year, 10);
+        const keep = !Number.isFinite(y) || y >= cutoff;
+        li.classList.toggle('is-hidden', !keep);
+        if (keep) shown++;
     });
-
-    const apply = (f) => {
-        let shown = 0;
-        items.forEach(it => {
-            const match = f === 'all' || it.dataset.cat === f;
-            it.classList.toggle('is-hidden', !match);
-            if (match) shown++;
-        });
-        years.forEach(y => y.classList.toggle('is-hidden', f !== 'all'));  // hide year rules while filtering
-        if (empty) empty.classList.toggle('is-hidden', shown !== 0);
-    };
-
-    chips.forEach(chip => chip.addEventListener('click', () => {
-        chips.forEach(c => c.classList.remove('is-active'));
-        chip.classList.add('is-active');
-        apply(chip.dataset.filter);
-    }));
+    const empty = list.querySelector('[data-awards-empty]');
+    if (empty) empty.classList.toggle('is-hidden', shown !== 0);
 });

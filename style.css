@@ -1513,167 +1513,53 @@ footer.site {
 }
 
 /* ============================================================
-   News page — "Tea-House Ledger" timeline
-   Reuses .section-head / .card / .chip / .badge / .timeline;
-   only the rules below are new. All scoped so other pages are
-   untouched (per-category rules need .news-card + [data-cat]).
+   News page — Competition Awards + Student Recruitment
+   Reuses .section-head / .card / .badge / .award-list.
    ============================================================ */
 
-/* Coming-soon / under-construction state (the current live state) */
-.news-coming {
-    text-align: center;
-    padding: 58px 30px 60px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    backdrop-filter: blur(10px);
-    position: relative;
-    overflow: hidden;
-}
-.news-coming::before {
-    content: "";
-    position: absolute; top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--grad);
-}
-.news-coming .badge { margin-bottom: 22px; }
-.news-coming .mark {
-    width: 66px; height: 66px;
-    margin: 0 auto 22px;
-    border-radius: 50%;
-    display: grid; place-items: center;
-    background: var(--grad-soft);
-    border: 1px solid rgba(169, 128, 60, .28);
+/* Competition awards — year accent + 3-year auto-filter (see script.js) */
+.award-list[data-awards] li b {
     color: var(--gold-ink);
-    font-family: 'Noto Serif TC', serif;
-    font-size: 1.8rem;
-}
-.news-coming h2 {
-    font-family: 'Noto Serif TC', serif;
-    font-weight: 700;
-    font-size: 1.5rem;
-    color: var(--text);
-    margin-bottom: 12px;
-}
-.news-coming p {
-    color: var(--text-soft);
-    max-width: 500px;
-    margin: 0 auto;
-}
-.news-coming .links {
-    margin-top: 20px;
-    font-size: .95rem;
-    color: var(--text-muted);
-}
-.news-coming .links a {
-    color: var(--green-ink);
-    text-decoration: none;
-    border-bottom: 1px dashed rgba(86, 98, 54, .6);
-}
-.news-coming .links a:hover { color: var(--deep); border-bottom-color: var(--deep); }
-
-/* Filter chips (progressive enhancement; chips are <button>) */
-.news-filter { margin-bottom: 28px; }
-button.chip { cursor: pointer; font-family: inherit; line-height: 1.2; }
-.chip.is-active {
-    background: var(--grad-soft);
-    border-color: var(--blue);
-    color: var(--gold-ink);
-    font-weight: 500;
-}
-.chip .cnt {
-    color: var(--text-muted);
-    font-weight: 400;
-    margin-left: 4px;
+    margin-right: 10px;
     font-variant-numeric: tabular-nums;
 }
-.chip.is-active .cnt { color: var(--gold-ink); }
+.award-list li.awards-empty { color: var(--text-muted); padding-left: 18px; }
+.award-list li.awards-empty::before { display: none; }
 
-/* Ledger items — scoped to .news-card so the professor timeline is untouched */
-.news-card .timeline { padding-top: 4px; }
-.news-card .timeline > li[data-cat] { padding-bottom: 24px; }
-.news-card .timeline .badge {
-    margin-bottom: 10px;
-    padding: 4px 13px;
-    font-size: .72rem;
+/* Student recruitment */
+.recruit-year { margin-bottom: 24px; }
+.recruit-table { width: 100%; border-collapse: collapse; }
+.recruit-table th,
+.recruit-table td {
+    text-align: left;
+    padding: 13px 14px;
+    border-bottom: 1px solid var(--border-soft);
 }
-.news-card .timeline b { display: block; margin-bottom: 3px; line-height: 1.55; }
-.news-card .timeline .news-more {
+.recruit-table thead th {
+    color: var(--text-muted);
+    font-size: .78rem;
+    font-weight: 500;
+    letter-spacing: .6px;
+}
+.recruit-table tbody td { color: var(--text-soft); }
+.recruit-table .count { text-align: right; white-space: nowrap; }
+.recruit-table tbody td.count {
+    color: var(--gold-ink);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+.recruit-table tbody tr:last-child td { border-bottom: none; }
+.recruit-cta { margin-top: 18px; font-size: .95rem; }
+.recruit-cta a {
     color: var(--green-ink);
     text-decoration: none;
     border-bottom: 1px dashed rgba(86, 98, 54, .6);
-    font-size: .9rem;
-    white-space: nowrap;
 }
-.news-card .timeline .news-more:hover { color: var(--deep); border-bottom-color: var(--deep); }
+.recruit-cta a:hover { color: var(--deep); border-bottom-color: var(--deep); }
 
-/* Per-category dot colours (label carries the meaning; dot is the accent) */
-.news-card .timeline li[data-cat="paper"]   .badge .dot { background: var(--cyan);      box-shadow: 0 0 9px 2px rgba(111, 125, 78, .55); }
-.news-card .timeline li[data-cat="award"]   .badge .dot { background: var(--blue);      box-shadow: 0 0 9px 2px rgba(169, 128, 60, .55); }
-.news-card .timeline li[data-cat="talk"]    .badge .dot { background: var(--deep);      box-shadow: 0 0 9px 2px rgba(79, 90, 55, .55); }
-.news-card .timeline li[data-cat="defense"] .badge .dot { background: var(--violet);    box-shadow: 0 0 9px 2px rgba(156, 79, 44, .55); }
-.news-card .timeline li[data-cat="recruit"] .badge .dot { background: var(--pink);      box-shadow: 0 0 9px 2px rgba(177, 90, 106, .5); }
-.news-card .timeline li[data-cat="member"]  .badge .dot { background: var(--green-ink); box-shadow: 0 0 9px 2px rgba(86, 98, 54, .5); }
-
-/* Newest item — auto-emphasised via :first-child; no manual pin needed */
-.news-card .timeline > li[data-cat]:first-child {
-    background: var(--surface-2);
-    border: 1px solid rgba(169, 128, 60, .3);
-    border-radius: var(--radius-sm);
-    padding: 16px 18px;
-    margin-bottom: 26px;
-    box-shadow: var(--shadow-glow);
-}
-.news-card .timeline > li[data-cat]:first-child::before {
-    left: -33px; top: 24px;
-    width: 12px; height: 12px;
-    border-color: var(--blue);
-    box-shadow: 0 0 11px 2px rgba(169, 128, 60, .6);
-}
-.news-card .timeline > li[data-cat]:first-child::after {
-    content: "最新";
-    position: absolute; top: 14px; right: 16px;
-    padding: 3px 11px;
-    border-radius: 999px;
-    background: var(--blue);
-    color: #fff8ec;
-    font-size: .66rem;
-    letter-spacing: 1px;
-    font-weight: 500;
-}
-html[lang="en"] .news-card .timeline > li[data-cat]:first-child::after { content: "Latest"; }
-
-/* Year divider inside the ledger */
-.news-card .timeline li.year-rule {
-    list-style: none;
-    padding: 2px 0 18px;
-    margin: 0;
-    color: var(--text-muted);
-    font-family: 'Noto Serif TC', serif;
-    font-weight: 700;
-    font-size: 1.05rem;
-    letter-spacing: 1px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-.news-card .timeline li.year-rule::before { display: none; }
-.news-card .timeline li.year-rule::after { content: ""; flex: 1; height: 1px; background: var(--grad-soft); }
-
-/* Filtered-empty notice (revealed by JS when a category has no matches) */
-.news-card .timeline li.news-empty {
-    list-style: none;
-    color: var(--text-muted);
-    padding: 6px 0 8px 4px;
-}
-.news-card .timeline li.news-empty::before { display: none; }
-
-/* Shared visibility toggle used by the filter */
+/* Shared visibility toggle (used by the awards 3-year filter) */
 .is-hidden { display: none !important; }
 
 @media (max-width: 620px) {
-    .news-coming { padding: 44px 20px 46px; }
-    .news-coming h2 { font-size: 1.3rem; }
-    .news-filter { justify-content: center; }
-    .news-card .timeline > li[data-cat]:first-child::after { position: static; display: inline-block; margin-left: 8px; }
+    .recruit-table th, .recruit-table td { padding: 11px 8px; }
 }

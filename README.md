@@ -44,7 +44,7 @@
 ```
 uscc_website/
 ├── index.html / index_e.html        # 首頁（中／英）
-├── news.html / news_e.html          # 最新消息（目前為「建置中」狀態）
+├── news.html / news_e.html          # 最新消息（競賽獲獎＋學生招生）
 ├── professor.html / professor_e.html# 指導教授
 ├── member.html / member_e.html      # 實驗室成員
 ├── style.css                        # 全站樣式（茶館主題，單一檔）
@@ -72,7 +72,7 @@ uscc_website/
 | 中文頁 | 英文頁 | 內容 |
 |---|---|---|
 | `index.html` | `index_e.html` | Hero、實驗室簡介、研究方向（AI／塵間感知／雲端）、剪影、訪客計數 |
-| `news.html` | `news_e.html` | 最新消息（**目前顯示「建置中」**，內附可啟用的時間軸模板） |
+| `news.html` | `news_e.html` | 最新消息：**競賽獲獎**（近三年，JS 自動篩選）＋**學生招生**（當年度系所／缺額） |
 | `professor.html` | `professor_e.html` | 指導教授 鄭憲宗 — 研究領域、學經歷、榮譽獎項 |
 | `member.html` | `member_e.html` | 成員名冊：博士生 2、碩士生 11、預備生（碩零）5 |
 
@@ -103,7 +103,7 @@ uscc_website/
 
 ### 可重用元件
 
-`.nav`、`.hero`、`.section-head`（含動畫底線）、`.card`（hover 浮起＋金色頂邊）、`.chip`／`.chips`、`.badge`（脈動圓點）、`.timeline`（教授頁與消息頁共用）、`.award-list`、`.stats`/`.stat`、`.member-grid`/`.member`、`.news-*`、`footer.site`、`.bg-grid`（宣紙底紋）、`.skip-link`。
+`.nav`、`.hero`、`.section-head`（含動畫底線）、`.card`（hover 浮起＋金色頂邊）、`.chip`／`.chips`、`.badge`（脈動圓點）、`.timeline`（教授頁與消息頁共用）、`.award-list`、`.stats`/`.stat`、`.member-grid`/`.member`、`.recruit-table`、`footer.site`、`.bg-grid`（宣紙底紋）、`.skip-link`。
 
 ---
 
@@ -120,7 +120,7 @@ uscc_website/
 | 導覽列／閱讀進度／回頂 | 捲動時收合導覽、頂部進度條、右下回到頂端鈕（皆由 JS 生成） |
 | 訪客計數 | 串接 counterapi.dev 取得共享造訪數；連不上時退回 `localStorage` 快取 |
 | 神經網路動畫 | 訪客計數卡後方的 canvas 連線動畫（離開畫面自動暫停、reduced-motion 時靜止） |
-| 最新消息篩選 | 分類晶片即時篩選；數量與「最新」標記由 JS／CSS 自動產生（無消息時整段 no-op） |
+| 競賽獲獎篩選 | 競賽獲獎自動只顯示近三年（JS 依 `data-year` 隱藏；JS 關閉時全部顯示） |
 | 彩蛋 | 見下方〔彩蛋〕 |
 
 ---
@@ -169,7 +169,7 @@ gh pr create --base menu
 
 ### 規則二：快取版本 `?v=`
 
-`style.css` 與 `script.js` 的連結都帶 `?v=YYYYMMDD[字母]`（目前為 `?v=20260630b`）。
+`style.css` 與 `script.js` 的連結都帶 `?v=YYYYMMDD[字母]`（目前為 `?v=20260630c`）。
 
 - **只有當 `style.css` 或 `script.js` 內容有改時**才需要 bump 版本號。
 - bump 時要 **8 個 HTML 檔的 css 與 js 連結全部一起改成相同新值**。
@@ -201,42 +201,37 @@ gh pr create --base menu
 - 進階：要 hover 播音樂就在 `.member` 上加 `data-bgm="images/members/xxx.mp3"`；要 hover 彈出圖就把卡包進 `.member-pop-host` 並加一張 `.member-pop`。
 - 新增圖片屬於內容變更，**不需** bump `?v=`。
 
-### 最新消息：讓頁面正式上線
+最新消息頁有兩個分區：**競賽獲獎**與**學生招生**。兩者都在 `news.html` / `news_e.html`，**中英兩個檔都要改**。
 
-`news.html` / `news_e.html` 目前是「建置中」狀態。要上線時，**兩個檔都做**：
+### 最新消息：新增競賽獲獎
 
-1. 刪掉整段「建置中卡片」（`<section class="block">` 內含 `.news-coming` 那一段）。
-2. 把下方「消息時間軸模板」外層的 HTML 註解拆掉（移除上方 `<!-- ===…` 與最末 `===… -->`），啟用篩選晶片與 `<ul class="timeline" data-news-feed>`。
-3. 填入真實消息，保留最後那個 `<li class="news-empty" data-news-empty>`。
-
-> 模板與啟用步驟在 `news.html` 檔內都有詳細中文註解可對照。`script.js` 的篩選程式在 `[data-news-feed]` 出現後會自動啟用。
-
-### 最新消息：新增一則（頁面上線後）
-
-在 `<ul ... data-news-feed>` 裡、`★ 新消息貼在這一行下方 ★` 標記的**正下方**（最新的放最上面）加一個 `<li>`：
+競賽獲獎在 `<ul ... data-awards>` 內，每筆一個 `<li data-year="YYYY">`，年份新的放上面：
 
 ```html
-<li class="reveal" data-cat="award">
-  <span class="badge"><span class="dot"></span>獲獎</span>
-  <b>2026.06 · 標題</b><br />
-  一兩句內文。<a class="news-more" href="#">詳情 →</a>
-</li>
+<li data-year="2024"><b>2024</b>台積電校園黑客松 — 廠務知識機器人組 第一名（碩士生團隊）</li>
 ```
 
-分類 `data-cat`（圓點顏色與標籤由分類決定，不用手設）：
+- `<b>` 放年份（會自動上金色），其後接「競賽 — 名次（個人／團體）」。
+- **只放三年內**：`script.js` 依 `data-year` 自動隱藏超過三年的（顯示今年與前三年，今年＝瀏覽器當下年份），舊的會自動退場、不用手動清；JS 關閉時則全部顯示。
+- 最後那個 `<li class="awards-empty" data-awards-empty>` 是「近三年無紀錄」時才出現的備援，請保留。
+- 純內容新增不需 `?v=` bump。
 
-| `data-cat` | 中／英標籤 | 圓點 |
-|---|---|---|
-| `paper` | 論文 / Paper | 茶綠 |
-| `award` | 獲獎 / Award | 金 |
-| `talk` | 研討會 / Talk | 深綠 |
-| `defense` | 畢業 / Defense | 赭紅 |
-| `recruit` | 招生 / Recruiting | 梅 |
-| `member` | 成員 / Member | 墨綠 |
+### 最新消息：更新學生招生
 
-- 跨年份可插 `<li class="year-rule">2025</li>` 當分隔。
-- **不要手打**晶片數量或「最新／Latest」標記——數量由 JS 自動統計、「最新」由 CSS 自動標在第一筆；沒消息的分類晶片會自動隱藏。
-- 中英兩個檔各加一次（翻譯標籤與內文）。
+學生招生是一張卡片：學年度徽章 + 一個 `.recruit-table`（系所／學位學程 + 缺額）+ 來信 CTA。更新當年度招生時：
+
+```html
+<span class="badge recruit-year"><span class="dot"></span>115 學年度招生中</span>
+<table class="recruit-table">
+  <thead><tr><th>系所／學位學程</th><th class="count">缺額</th></tr></thead>
+  <tbody>
+    <tr><td>資訊工程系－人工智慧科技碩士學位學程</td><td class="count">1 名</td></tr>
+  </tbody>
+</table>
+```
+
+- 改學年度徽章文字；一個系所／缺額 = 一個 `<tr>`（要多收名額就多加一列）。
+- 英文版 `news_e.html` 用 `Now recruiting · AY115 (2026)` 與英文系所名。
 
 ---
 
