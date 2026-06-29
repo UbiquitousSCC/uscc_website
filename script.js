@@ -84,6 +84,111 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // ---- Slideshow: cross-fade between Lab Moments ----
+    // Arrows / dots / keyboard arrows / touch-swipe all jump to a slide; it also
+    // auto-advances every 5s, pausing on hover, focus, and while off-screen.
+    // Honors prefers-reduced-motion by not auto-advancing. The fade itself is CSS.
+    document.querySelectorAll('.slideshow').forEach(box => {
+        const slides = Array.from(box.querySelectorAll('.slide'));
+        if (slides.length < 2) return;
+
+        const prevBtn = box.querySelector('.slide-btn.prev');
+        const nextBtn = box.querySelector('.slide-btn.next');
+        const dotWrap = box.querySelector('.slide-dots');
+
+        let i = slides.findIndex(s => s.classList.contains('is-active'));
+        if (i < 0) i = 0;
+
+        // Build one dot per slide so the markup stays count-agnostic.
+        const dots = slides.map((_, n) => {
+            const d = document.createElement('button');
+            d.type = 'button';
+            d.setAttribute('role', 'tab');
+            d.setAttribute('aria-label', String(n + 1));
+            d.addEventListener('click', () => go(n, true));
+            if (dotWrap) dotWrap.appendChild(d);
+            return d;
+        });
+
+        // Per-slide hover swap: hovering an eligible slide (data-hover-src) for 2s
+        // swaps in an alternate image and, if data-hover-bgm is set, plays it.
+        // Leaving the slide — or navigating away — reverts the image and stops the clip.
+        // Only the active slide receives hover events (others are visibility:hidden).
+        const hovers = slides.map(slide => {
+            const altSrc = slide.dataset.hoverSrc;
+            if (!altSrc) return null;
+            const img = slide.querySelector('img');
+            if (!img) return null;
+            const baseSrc = img.getAttribute('src');
+            const audio = slide.dataset.hoverBgm ? new Audio(slide.dataset.hoverBgm) : null;
+            if (audio) audio.preload = 'none';
+            new Image().src = altSrc;   // warm the cache so the 2s swap is instant
+            let t = null;
+            const reset = () => {
+                clearTimeout(t); t = null;
+                img.setAttribute('src', baseSrc);
+                if (audio) { audio.pause(); audio.currentTime = 0; }
+            };
+            slide.addEventListener('mouseenter', () => {
+                clearTimeout(t);
+                t = setTimeout(() => {
+                    img.setAttribute('src', altSrc);
+                    if (audio) { audio.currentTime = 0; audio.play().catch(() => { /* gesture may be required */ }); }
+                }, 2000);
+            });
+            slide.addEventListener('mouseleave', reset);
+            return reset;
+        }).filter(Boolean);
+        const resetHovers = () => hovers.forEach(reset => reset());
+
+        const AUTO = 5000;
+        let timer = null;
+        const play = () => { clearInterval(timer); timer = reduceMotion ? null : setInterval(() => go(i + 1, false), AUTO); };
+        const pause = () => { clearInterval(timer); timer = null; };
+
+        function go(n, user) {
+            resetHovers();   // never leave a swapped image / playing clip behind when the slide changes
+            i = (n + slides.length) % slides.length;
+            slides.forEach((s, k) => s.classList.toggle('is-active', k === i));
+            dots.forEach((d, k) => {
+                d.classList.toggle('is-active', k === i);
+                d.setAttribute('aria-selected', k === i ? 'true' : 'false');
+            });
+            if (user) play();   // a manual jump resets the auto-advance timer
+        }
+
+        if (prevBtn) prevBtn.addEventListener('click', () => go(i - 1, true));
+        if (nextBtn) nextBtn.addEventListener('click', () => go(i + 1, true));
+
+        // Arrow keys when the slideshow (or anything inside it) holds focus.
+        box.tabIndex = 0;
+        box.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') { go(i - 1, true); e.preventDefault(); }
+            else if (e.key === 'ArrowRight') { go(i + 1, true); e.preventDefault(); }
+        });
+
+        box.addEventListener('mouseenter', pause);
+        box.addEventListener('mouseleave', play);
+        box.addEventListener('focusin', pause);
+        box.addEventListener('focusout', play);
+
+        // Touch swipe (left = next, right = prev).
+        let x0 = null;
+        box.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+        box.addEventListener('touchend', (e) => {
+            if (x0 === null) return;
+            const dx = e.changedTouches[0].clientX - x0;
+            if (Math.abs(dx) > 40) go(i + (dx < 0 ? 1 : -1), true);
+            x0 = null;
+        }, { passive: true });
+
+        go(i, false);
+        // Only auto-advance while the slideshow is on-screen.
+        new IntersectionObserver((entries) => {
+            entries.forEach(e => e.isIntersecting ? play() : pause());
+        }, { threshold: 0.25 }).observe(box);
+    });
+
     // ---- Sticky-nav shrink + reading-progress bar + back-to-top ----
     const nav = document.querySelector('.nav');
 

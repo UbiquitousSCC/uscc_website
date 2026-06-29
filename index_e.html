@@ -34,9 +34,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;600;700;900&display=swap" />
-    <link rel="stylesheet" href="style.css?v=20260630c" />
+    <link rel="stylesheet" href="style.css?v=20260630e" />
     <script>document.documentElement.classList.add("js-reveal")</script>
-    <script defer src="script.js?v=20260630c"></script>
+    <script defer src="script.js?v=20260630e"></script>
 </head>
 
 <body>
@@ -154,9 +154,21 @@
             <div class="eyebrow">Gallery</div>
             <h2>Lab Moments</h2>
         </div>
-        <div class="gallery reveal">
-            <figure><img src="images/1.webp" alt="Lab life — students discussing and coding" width="1200" height="676" loading="lazy" decoding="async" /></figure> 
-            <figure><img src="images/3.webp" alt="USCC Lab members group photo" width="1200" height="676" loading="lazy" decoding="async" /></figure>
+        <div class="slideshow reveal" aria-roledescription="carousel" aria-label="Lab Moments">
+            <div class="slides">
+                <figure class="slide is-active"><img src="images/moment/1.webp" alt="Lab moment 1" width="1200" height="676" loading="lazy" decoding="async" /></figure>
+                <figure class="slide"><img src="images/moment/2.webp" alt="Lab moment 2" width="1206" height="914" loading="lazy" decoding="async" /></figure>
+                <figure class="slide"><img src="images/moment/3.webp" alt="Lab moment 3" width="1200" height="676" loading="lazy" decoding="async" /></figure>
+                <figure class="slide"><img src="images/moment/4.webp" alt="Lab moment 4" width="1280" height="720" loading="lazy" decoding="async" /></figure>
+                <figure class="slide" data-hover-src="images/moment/5_2.webp" data-hover-bgm="images/members/wenyao.mp3"><img src="images/moment/5.webp" alt="Lab moment 5" width="1280" height="720" loading="lazy" decoding="async" /></figure>
+                <figure class="slide"><img src="images/moment/6.webp" alt="Lab moment 6" width="1280" height="720" loading="lazy" decoding="async" /></figure>
+                <figure class="slide"><img src="images/moment/7.webp" alt="Lab moment 7" width="1280" height="720" loading="lazy" decoding="async" /></figure>
+                <figure class="slide"><img src="images/moment/8.webp" alt="Lab moment 8" width="1280" height="720" loading="lazy" decoding="async" /></figure>
+                <figure class="slide"><img src="images/moment/9.webp" alt="Lab moment 9" width="1280" height="720" loading="lazy" decoding="async" /></figure>
+            </div>
+            <button type="button" class="slide-btn prev" aria-label="Previous">&#8249;</button>
+            <button type="button" class="slide-btn next" aria-label="Next">&#8250;</button>
+            <div class="slide-dots" role="tablist" aria-label="Choose image"></div>
         </div>
     </section>
 

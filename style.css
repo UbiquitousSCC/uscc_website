@@ -557,6 +557,90 @@ section { position: relative; }
     background: linear-gradient(180deg, transparent 55%, rgba(44, 32, 24, .5));
 }
 
+/* ---- Slideshow (Lab Moments) — cross-fade between images, arrows/dots/keys to navigate.
+   Slides stack absolutely in a 16:9 frame; only .is-active is opaque. JS builds the dots
+   and drives auto-advance. With JS off, the first slide stays visible (no blank box). ---- */
+.slideshow {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--bg-2);
+    box-shadow: var(--shadow);
+}
+.slideshow .slides { position: absolute; inset: 0; }
+.slideshow .slide {
+    position: absolute; inset: 0;
+    margin: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .8s ease, visibility .8s ease;
+}
+.slideshow .slide.is-active { opacity: 1; visibility: visible; }
+.slideshow .slide img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(1.02) sepia(.08);
+}
+/* bottom scrim so dots/arrows stay legible over bright photos */
+.slideshow::after {
+    content: ""; pointer-events: none;
+    position: absolute; left: 0; right: 0; bottom: 0; height: 40%;
+    background: linear-gradient(180deg, transparent, rgba(44, 32, 24, .42));
+    z-index: 2;
+}
+/* prev / next arrows */
+.slide-btn {
+    position: absolute; top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    width: 44px; height: 44px;
+    display: grid; place-items: center;
+    border: 1px solid rgba(255, 255, 255, .55);
+    border-radius: 50%;
+    background: rgba(44, 32, 24, .42);
+    color: #fff;
+    font-size: 1.6rem; line-height: 1;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    opacity: .85;
+    transition: background .25s ease, transform .2s ease, opacity .25s ease;
+}
+.slide-btn.prev { left: 14px; }
+.slide-btn.next { right: 14px; }
+.slide-btn:hover { background: rgba(44, 32, 24, .74); }
+.slide-btn:active { transform: translateY(-50%) scale(.92); }
+/* fine pointers (mouse): keep the frame clean — reveal arrows only on hover/focus.
+   coarse pointers (touch) keep the .85 default above, since there is no hover. */
+@media (hover: hover) and (pointer: fine) {
+    .slide-btn { opacity: 0; }
+    .slideshow:hover .slide-btn,
+    .slide-btn:focus-visible { opacity: 1; }
+}
+/* dots */
+.slide-dots {
+    position: absolute; left: 0; right: 0; bottom: 14px;
+    z-index: 3;
+    display: flex; justify-content: center; gap: 9px;
+}
+.slide-dots button {
+    width: 9px; height: 9px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, .75);
+    background: rgba(255, 255, 255, .3);
+    cursor: pointer;
+    transition: background .25s ease, transform .25s ease;
+}
+.slide-dots button:hover { background: rgba(255, 255, 255, .65); }
+.slide-dots button.is-active { background: #fff; transform: scale(1.3); }
+@media (prefers-reduced-motion: reduce) {
+    .slideshow .slide { transition: opacity .12s ease; }
+}
+
 /* ---- Lazy YouTube facade (only a thumbnail until clicked) ---- */
 .yt-facade {
     display: block; width: 100%;
@@ -806,6 +890,7 @@ section { position: relative; }
     transform-origin: center bottom;
     width: 240px;
     max-width: 84vw;
+    height: auto;
     border-radius: 12px;
     border: 1px solid var(--border);
     box-shadow: var(--shadow);
