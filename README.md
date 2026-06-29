@@ -56,6 +56,8 @@ uscc_website/
 └── images/
     ├── og.jpg                       # 社群分享圖（1200×630）
     ├── 1.webp / 2.webp / 3.webp     # 首頁 hero／剪影照
+    ├── aiot2023-booth.webp          # 剪影：2023 創創 AIoT 競賽攤位
+    ├── aiot2023-award.webp          # 剪影：2023 創創 AIoT 競賽 永續科技組第二名
     ├── 766679109.webp               # 教授照片
     ├── S__24723467.webp             # 教授榮譽 hover 圖
     ├── tzuyu.webp / shao_pop.webp   # 成員卡彩蛋彈出圖
