@@ -75,7 +75,7 @@ uscc_website/
 | `index.html` | `index_e.html` | Hero、實驗室簡介、研究方向（AI／塵間感知／雲端）、剪影輪播、訪客計數 |
 | `news.html` | `news_e.html` | 最新消息：**競賽獲獎**（近三年，JS 自動篩選）＋**學生招生**（當年度系所／缺額） |
 | `professor.html` | `professor_e.html` | 指導教授 鄭憲宗 — 研究領域、學經歷、榮譽獎項 |
-| `member.html` | `member_e.html` | 成員名冊：博士生 2、碩士生 11、預備生（碩零）5 |
+| `member.html` | `member_e.html` | 成員名冊：博士生 2、碩士生 11、預備生（碩零）5、實驗室助理 1 |
 
 導覽列順序：**首頁 · 最新消息 · 指導教授 · 實驗室成員 · EN／中文**（語言切換永遠是最後一項，會切到同一頁的另一語言版）。
 
@@ -183,7 +183,7 @@ gh pr create --base menu
 
 ### 新增一位成員（`member.html` ＋ `member_e.html` 都要改）
 
-成員分三組：`博士生 / Ph.D.`、`碩士生 / Master's`、`碩零 / Incoming`。在對應組別的 `.member-grid` 內加一張卡：
+成員分四組：`博士生 / Ph.D.`、`碩士生 / Master's`、`碩零 / Incoming`、`實驗室助理 / Assistant`。在對應組別的 `.member-grid` 內加一張卡：
 
 ```html
 <div class="member reveal">
