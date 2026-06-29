@@ -1,0 +1,280 @@
+# USCC Lab 官方網站
+
+> **塵間感知與雲端計算實驗室** · Ubiquitous Sensing & Cloud Computing Lab
+> 國立成功大學 資訊工程學系（NCKU CSIE）
+
+實驗室的雙語（繁體中文／English）官方網站。純靜態網頁、**無 build 步驟**，由 GitHub Pages 直接從 `menu` 分支發布。
+
+🔗 **線上網址**：<https://ubiquitousscc.github.io/uscc_website/>
+
+---
+
+## 目錄
+
+- [技術概覽](#技術概覽)
+- [專案結構](#專案結構)
+- [頁面一覽](#頁面一覽)
+- [設計系統（茶館主題）](#設計系統茶館主題)
+- [互動功能](#互動功能)
+- [本機預覽](#本機預覽)
+- [開發與貢獻流程](#開發與貢獻流程)
+- [常見維護任務](#常見維護任務)
+- [外部服務](#外部服務)
+- [彩蛋](#彩蛋-)
+- [無障礙與效能](#無障礙與效能)
+- [SEO](#seo)
+
+---
+
+## 技術概覽
+
+| 項目 | 說明 |
+|---|---|
+| 技術 | 原生 HTML / CSS / JavaScript（無框架、無打包工具、無 `package.json`） |
+| Build | **無**。檔案原樣提供，改完直接生效 |
+| 部署 | GitHub Pages，發布來源是 **`menu`** 分支（**不是** `main`） |
+| 字型 | Google Fonts：Noto Sans TC（內文）、Noto Serif TC（標題／品牌）、Cormorant Garamond（英文標籤） |
+| 雙語 | 成對檔案：每個中文頁 `foo.html` 都有英文版 `foo_e.html` |
+| 瀏覽器資料 | 訪客計數使用 counterapi.dev（免費、無需金鑰） |
+
+---
+
+## 專案結構
+
+```
+uscc_website/
+├── index.html / index_e.html        # 首頁（中／英）
+├── news.html / news_e.html          # 最新消息（目前為「建置中」狀態）
+├── professor.html / professor_e.html# 指導教授
+├── member.html / member_e.html      # 實驗室成員
+├── style.css                        # 全站樣式（茶館主題，單一檔）
+├── script.js                        # 全站互動（單一檔，原生 JS）
+├── favicon.svg                      # 網站圖示（茶綠漸層的「U」印章）
+├── sitemap.xml                      # 8 個頁面 + hreflang 替代連結
+├── robots.txt                       # 允許全部爬蟲、指向 sitemap
+├── USCC_Lab_改版_Checklist.md        # 改版待辦清單（僅供參考，不影響網站）
+└── images/
+    ├── og.jpg                       # 社群分享圖（1200×630）
+    ├── 1.webp / 2.webp / 3.webp     # 首頁 hero／剪影照
+    ├── 766679109.webp               # 教授照片
+    ├── S__24723467.webp             # 教授榮譽 hover 圖
+    ├── tzuyu.webp / shao_pop.webp   # 成員卡彩蛋彈出圖
+    ├── apple-touch-icon.png         # iOS 圖示
+    └── members/                     # 成員照片（*.webp，512×512）+ hover 音樂（*.mp3）
+```
+
+> 全站只有 **8 個 HTML、1 個 CSS、1 個 JS**。樣式與互動分別集中在 `style.css` 與 `script.js`。
+
+---
+
+## 頁面一覽
+
+| 中文頁 | 英文頁 | 內容 |
+|---|---|---|
+| `index.html` | `index_e.html` | Hero、實驗室簡介、研究方向（AI／塵間感知／雲端）、剪影、訪客計數 |
+| `news.html` | `news_e.html` | 最新消息（**目前顯示「建置中」**，內附可啟用的時間軸模板） |
+| `professor.html` | `professor_e.html` | 指導教授 鄭憲宗 — 研究領域、學經歷、榮譽獎項 |
+| `member.html` | `member_e.html` | 成員名冊：博士生 2、碩士生 11、預備生（碩零）5 |
+
+導覽列順序：**首頁 · 最新消息 · 指導教授 · 實驗室成員 · EN／中文**（語言切換永遠是最後一項，會切到同一頁的另一語言版）。
+
+---
+
+## 設計系統（茶館主題）
+
+整站視覺命名為 **「Heritage Tea-House UI」**，靈感取自春水堂人文茶館：宣紙暖色、墨色文字、茶綠與金的點綴。
+
+### 色彩 token（定義於 `style.css` 的 `:root`）
+
+| Token | 值 | 用途 |
+|---|---|---|
+| `--bg` / `--bg-2` | `#f6f1e7` / `#ece2d0` | 宣紙底色 |
+| `--text` / `--text-soft` / `--text-muted` | `#2c2018` / `#5e4f40` / `#736550` | 墨色文字三階 |
+| `--cyan` | `#6f7d4e` | 茶綠（主要點綴） |
+| `--blue` | `#a9803c` | 金 |
+| `--violet` / `--pink` | `#9c4f2c` / `#b15a6a` | 赭紅 / 梅（少量） |
+| `--deep` | `#4f5a37` | 深茶綠（按鈕、導覽 active、標籤） |
+| `--gold-ink` / `--green-ink` | `#856222` / `#566236` | **AA 對比**的金／綠「文字」色（小字 ≥4.5:1） |
+
+> ⚠️ 變數名（`--cyan`/`--blue`/`--violet`）是歷史相容用的舊名，實際色相已是茶綠／金／赭紅，請以註解與實際色碼為準。
+> 亮色（`--blue`/`--cyan`）只用於裝飾性填色／圓點（≥3:1 即可）；**文字**請用對應的 `--gold-ink`／`--green-ink` 以符合 WCAG AA。
+
+其他：`--radius 16px`、`--radius-sm 11px`、`--maxw 1160px`、`--grad`（茶綠→金→赭紅漸層）、`--shadow` / `--shadow-glow`。
+
+### 可重用元件
+
+`.nav`、`.hero`、`.section-head`（含動畫底線）、`.card`（hover 浮起＋金色頂邊）、`.chip`／`.chips`、`.badge`（脈動圓點）、`.timeline`（教授頁與消息頁共用）、`.award-list`、`.stats`/`.stat`、`.member-grid`/`.member`、`.news-*`、`footer.site`、`.bg-grid`（宣紙底紋）、`.skip-link`。
+
+---
+
+## 互動功能
+
+全部集中在 `script.js`，核心原則是 **漸進增強（progressive enhancement）**：JS 失效或關閉時頁面仍完整可用，不會出現空白區塊。
+
+| 功能 | 說明 |
+|---|---|
+| 捲動淡入（reveal） | `.reveal` 元素進入視窗才淡入，並依序錯開（IntersectionObserver）。JS 沒載入時元素一律可見 |
+| 數字動畫 | `[data-count]` 統計數字捲到才開始累加 |
+| 成員卡 hover 音樂 | `[data-bgm]` 滑入才載入並播放 mp3（`preload='none'`、觸控裝置不觸發、`prefers-reduced-motion` 時略過） |
+| YouTube 延遲載入 | `.yt-facade` 縮圖點擊後才換成 `youtube-nocookie` iframe |
+| 導覽列／閱讀進度／回頂 | 捲動時收合導覽、頂部進度條、右下回到頂端鈕（皆由 JS 生成） |
+| 訪客計數 | 串接 counterapi.dev 取得共享造訪數；連不上時退回 `localStorage` 快取 |
+| 神經網路動畫 | 訪客計數卡後方的 canvas 連線動畫（離開畫面自動暫停、reduced-motion 時靜止） |
+| 最新消息篩選 | 分類晶片即時篩選；數量與「最新」標記由 JS／CSS 自動產生（無消息時整段 no-op） |
+| 彩蛋 | 見下方〔彩蛋〕 |
+
+---
+
+## 本機預覽
+
+純靜態網站，用任何靜態伺服器在 repo 根目錄起一個即可（直接用 `file://` 開會因路徑問題無法正常運作，請務必起伺服器）：
+
+```bash
+# 在 repo 根目錄
+python3 -m http.server 8000
+# 然後瀏覽器開 http://localhost:8000/index.html
+```
+
+或者：
+
+```bash
+npx serve .
+```
+
+改完樣式／腳本後若沒看到變化，請 **Cmd/Ctrl + Shift + R** 強制重新整理清快取。
+
+---
+
+## 開發與貢獻流程
+
+1. **動工前先同步**：`git fetch origin`，從**最新的 `origin/menu`** 切分支（其他人可能直接更新 repo）。
+2. 建立 `feature/<主題>` 分支進行修改。
+3. 遵守下列兩條硬規則（雙語、快取版本）。
+4. **本機跑過、確認 console 無錯、畫面正常**才推。
+5. 開 PR 回 **`menu`**；merge 即發布。
+
+```bash
+git fetch origin
+git switch -c feature/my-change origin/menu
+# ...修改...
+python3 -m http.server 8000      # 本機驗證
+git add -A && git commit -m "說明"
+git push -u origin feature/my-change
+gh pr create --base menu
+```
+
+### 規則一：雙語成對檔案
+
+每個變更都要**同時改中英兩個檔**（`foo.html` 與 `foo_e.html`）。最常見的錯誤就是只改其中一個語言，導致中英不同步。
+
+### 規則二：快取版本 `?v=`
+
+`style.css` 與 `script.js` 的連結都帶 `?v=YYYYMMDD[字母]`（目前為 `?v=20260630b`）。
+
+- **只有當 `style.css` 或 `script.js` 內容有改時**才需要 bump 版本號。
+- bump 時要 **8 個 HTML 檔的 css 與 js 連結全部一起改成相同新值**。
+- **純內容修改**（新增一則消息、新增一張成員卡）**不需要** bump。
+
+---
+
+## 常見維護任務
+
+### 新增一位成員（`member.html` ＋ `member_e.html` 都要改）
+
+成員分三組：`博士生 / Ph.D.`、`碩士生 / Master's`、`碩零 / Incoming`。在對應組別的 `.member-grid` 內加一張卡：
+
+```html
+<div class="member reveal">
+  <div class="photo">
+    <span class="ph-init">王</span>
+    <img src="images/members/wenyao.webp" alt="王文耀"
+         width="512" height="512" loading="lazy" decoding="async"
+         onerror="this.style.display='none'" />
+  </div>
+  <div class="info"><b>王文耀</b><span>碩二</span></div>
+</div>
+```
+
+- 照片放 `images/members/`，**正方形 `.webp`、512×512**。
+- `.ph-init` 是照片載入失敗時顯示的字（中文姓氏／英文首字母）；`onerror` 會把壞掉的圖藏起來、露出這個字。請保留這個組合。
+- 英文版用羅馬拼音名與 `Master · Y2` 之類的職級。
+- 進階：要 hover 播音樂就在 `.member` 上加 `data-bgm="images/members/xxx.mp3"`；要 hover 彈出圖就把卡包進 `.member-pop-host` 並加一張 `.member-pop`。
+- 新增圖片屬於內容變更，**不需** bump `?v=`。
+
+### 最新消息：讓頁面正式上線
+
+`news.html` / `news_e.html` 目前是「建置中」狀態。要上線時，**兩個檔都做**：
+
+1. 刪掉整段「建置中卡片」（`<section class="block">` 內含 `.news-coming` 那一段）。
+2. 把下方「消息時間軸模板」外層的 HTML 註解拆掉（移除上方 `<!-- ===…` 與最末 `===… -->`），啟用篩選晶片與 `<ul class="timeline" data-news-feed>`。
+3. 填入真實消息，保留最後那個 `<li class="news-empty" data-news-empty>`。
+
+> 模板與啟用步驟在 `news.html` 檔內都有詳細中文註解可對照。`script.js` 的篩選程式在 `[data-news-feed]` 出現後會自動啟用。
+
+### 最新消息：新增一則（頁面上線後）
+
+在 `<ul ... data-news-feed>` 裡、`★ 新消息貼在這一行下方 ★` 標記的**正下方**（最新的放最上面）加一個 `<li>`：
+
+```html
+<li class="reveal" data-cat="award">
+  <span class="badge"><span class="dot"></span>獲獎</span>
+  <b>2026.06 · 標題</b><br />
+  一兩句內文。<a class="news-more" href="#">詳情 →</a>
+</li>
+```
+
+分類 `data-cat`（圓點顏色與標籤由分類決定，不用手設）：
+
+| `data-cat` | 中／英標籤 | 圓點 |
+|---|---|---|
+| `paper` | 論文 / Paper | 茶綠 |
+| `award` | 獲獎 / Award | 金 |
+| `talk` | 研討會 / Talk | 深綠 |
+| `defense` | 畢業 / Defense | 赭紅 |
+| `recruit` | 招生 / Recruiting | 梅 |
+| `member` | 成員 / Member | 墨綠 |
+
+- 跨年份可插 `<li class="year-rule">2025</li>` 當分隔。
+- **不要手打**晶片數量或「最新／Latest」標記——數量由 JS 自動統計、「最新」由 CSS 自動標在第一筆；沒消息的分類晶片會自動隱藏。
+- 中英兩個檔各加一次（翻譯標籤與內文）。
+
+---
+
+## 外部服務
+
+| 服務 | 用途 | 備註 |
+|---|---|---|
+| [counterapi.dev](https://counterapi.dev) | 訪客造訪計數 | namespace `usccncku` / key `site-visits`；免費、無金鑰；失敗退回 `localStorage` |
+| YouTube（`youtube-nocookie`） | 首頁實驗室介紹影片 | 點縮圖才載入 iframe |
+| Google Fonts | 字型 | Noto Sans/Serif TC、Cormorant Garamond |
+| GitHub Pages | 主機 | `https://ubiquitousscc.github.io/uscc_website/` |
+| 聯絡信箱 | 「聯絡我們」 | Gmail 撰信連結寄至 `z10801032@ncku.edu.tw` |
+
+---
+
+## 彩蛋 🥚
+
+- 在頁面上**鍵盤輸入 `uscc`（小寫）** → 跳出實驗室印章動畫遮罩（Esc／點擊關閉）。
+- 輸入 `USCC`（大寫） → 進入「曲速跳躍」星空動畫，結束後導向實驗室 Facebook。
+
+（輸入焦點在輸入框時不會觸發。）
+
+---
+
+## 無障礙與效能
+
+- **Skip link**、鍵盤 `:focus-visible` 焦點環、AA 對比文字色（`--gold-ink`/`--green-ink`）。
+- `prefers-reduced-motion`：關閉所有環境動畫、hover 音樂、平滑捲動、數字翻牌。
+- 圖片一律 `.webp` + `width/height`（避免版面跳動 CLS）+ `loading="lazy"`；YouTube／音樂延遲載入。
+- 捲動事件以 `requestAnimationFrame` 節流；一次性動畫看完即 `unobserve`。
+
+## SEO
+
+每頁皆有：canonical、`hreflang`（zh-Hant／en／x-default）、Open Graph／Twitter 卡片、JSON-LD（首頁與成員頁為 `Organization`、教授頁為 `Person`、消息頁為 `CollectionPage`），並登錄於 `sitemap.xml`。
+
+---
+
+## 授權與聯絡
+
+© 國立成功大學 資訊工程學系 · USCC Lab。
+網站內容與素材版權屬實驗室所有。問題或建議歡迎透過站上「聯絡我們」與我們聯繫。
