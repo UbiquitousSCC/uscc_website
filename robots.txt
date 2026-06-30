@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ubiquitousscc.github.io/uscc_website/sitemap.xml
+Sitemap: https://plato.csie.ncku.edu.tw/sitemap.xml
