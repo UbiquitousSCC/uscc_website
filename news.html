@@ -66,35 +66,11 @@
         <div class="section-head reveal">
             <div class="eyebrow">News &amp; Updates</div>
             <h1>最新消息</h1>
-            <p>實驗室的競賽獲獎與招生資訊。</p>
+            <p>實驗室的學生招生與競賽獲獎資訊。</p>
         </div>
 
         <!-- ============================================================
-             分區一：競賽獲獎
-             · 每筆 = 一個 <li data-year="YYYY">；data-year 供自動篩選。
-             · 只放三年內：script.js 依 data-year 自動隱藏超過三年的條目
-               （顯示今年與前三年；今年 = 瀏覽器當下年份），維護者不必手動清。
-             · 新增：在 <ul data-awards> 內加一個 <li>，年份新的放上面；中英兩檔都要加。
-             ============================================================ -->
-        <section class="block">
-            <div class="section-head reveal">
-                <div class="eyebrow">Awards</div>
-                <h2 style="font-size:1.6rem">競賽獲獎</h2>
-                <p>近三年實驗室個人與團體競賽得獎紀錄。</p>
-            </div>
-            <div class="card reveal">
-                <ul class="award-list" data-awards>
-                    <li data-year="2024"><b>2024</b>台積電校園黑客松 — 廠務知識機器人組 第一名（碩士生團隊）</li>
-                    <li data-year="2024"><b>2024</b>AICUP 2024 區域微氣候資料預測發電量競賽 — 佳作（碩士生）</li>
-                    <li data-year="2024"><b>2024</b>成大資工系大學部 114 級畢業專題展 — 第三名（專題生）</li>
-                    <li data-year="2023"><b>2023</b>第七屆創創 AIoT 競賽 — 永續科技組 第二名（實驗室團隊）</li>
-                    <li class="awards-empty is-hidden" data-awards-empty>近三年暫無競賽獲獎紀錄，敬請期待。</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- ============================================================
-             分區二：學生招生
+             分區一：學生招生
              · 更新當年度招生：改 .recruit-year 的學年度，並更新表格列（系所／學程 + 缺額）。
              · 一列 = 一個 <tr>；中英兩檔都要改。
              ============================================================ -->
@@ -115,6 +91,30 @@
                     </tbody>
                 </table>
                 <p class="recruit-cta"><a href="https://mail.google.com/mail/?view=cm&fs=1&to=z10801032@ncku.edu.tw" target="_blank" rel="noopener noreferrer">意者請來信洽詢 →</a></p>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             分區二：競賽獲獎
+             · 每筆 = 一個 <li data-year="YYYY">；data-year 供自動篩選。
+             · 只放三年內：script.js 依 data-year 自動隱藏超過三年的條目
+               （顯示今年與前三年；今年 = 瀏覽器當下年份），維護者不必手動清。
+             · 新增：在 <ul data-awards> 內加一個 <li>，年份新的放上面；中英兩檔都要加。
+             ============================================================ -->
+        <section class="block">
+            <div class="section-head reveal">
+                <div class="eyebrow">Awards</div>
+                <h2 style="font-size:1.6rem">競賽獲獎</h2>
+                <p>近三年實驗室個人與團體競賽得獎紀錄。</p>
+            </div>
+            <div class="card reveal">
+                <ul class="award-list" data-awards>
+                    <li data-year="2024"><b>2024</b>台積電校園黑客松 — 廠務知識機器人組 第一名（碩士生團隊）</li>
+                    <li data-year="2024"><b>2024</b>AICUP 2024 區域微氣候資料預測發電量競賽 — 佳作（碩士生）</li>
+                    <li data-year="2024"><b>2024</b>成大資工系大學部 114 級畢業專題展 — 第三名（專題生）</li>
+                    <li data-year="2023"><b>2023</b>第七屆創創 AIoT 競賽 — 永續科技組 第二名（實驗室團隊）</li>
+                    <li class="awards-empty is-hidden" data-awards-empty>近三年暫無競賽獲獎紀錄，敬請期待。</li>
+                </ul>
             </div>
         </section>
 
