@@ -47,10 +47,11 @@ uscc_website/
 ├── news.html / news_e.html          # 最新消息（競賽獲獎＋學生招生）
 ├── professor.html / professor_e.html# 指導教授
 ├── member.html / member_e.html      # 實驗室成員
+├── graduate.html / graduate_e.html  # 畢業生
 ├── style.css                        # 全站樣式（茶館主題，單一檔）
 ├── script.js                        # 全站互動（單一檔，原生 JS）
 ├── favicon.svg                      # 網站圖示（茶綠漸層的「U」印章）
-├── sitemap.xml                      # 8 個頁面 + hreflang 替代連結
+├── sitemap.xml                      # 10 個頁面 + hreflang 替代連結
 ├── robots.txt                       # 允許全部爬蟲、指向 sitemap
 ├── USCC_Lab_改版_Checklist.md        # 改版待辦清單（僅供參考，不影響網站）
 └── images/
@@ -64,7 +65,7 @@ uscc_website/
     └── members/                     # 成員照片（*.webp，512×512）+ hover 音樂（*.mp3）
 ```
 
-> 全站只有 **8 個 HTML、1 個 CSS、1 個 JS**。樣式與互動分別集中在 `style.css` 與 `script.js`。
+> 全站只有 **10 個 HTML、1 個 CSS、1 個 JS**。樣式與互動分別集中在 `style.css` 與 `script.js`。
 
 ---
 
@@ -76,8 +77,9 @@ uscc_website/
 | `news.html` | `news_e.html` | 最新消息：**競賽獲獎**（近三年，JS 自動篩選）＋**學生招生**（當年度系所／缺額） |
 | `professor.html` | `professor_e.html` | 指導教授 鄭憲宗 — 研究領域、學經歷、榮譽獎項 |
 | `member.html` | `member_e.html` | 成員名冊：博士生 2、碩士生 11、預備生（碩零）5、實驗室助理 1 |
+| `graduate.html` | `graduate_e.html` | 歷屆畢業生名單與畢業出路，依年級（110～114 級）分頁籤切換，JS 生成（`script.js` 的 `graduateDataZh` / `graduateDataEn`） |
 
-導覽列順序：**首頁 · 最新消息 · 指導教授 · 實驗室成員 · EN／中文**（語言切換永遠是最後一項，會切到同一頁的另一語言版）。
+導覽列順序：**首頁 · 最新消息 · 指導教授 · 實驗室成員 · 畢業生 · EN／中文**（語言切換永遠是最後一項，會切到同一頁的另一語言版）。
 
 ---
 
@@ -174,7 +176,7 @@ gh pr create --base menu
 `style.css` 與 `script.js` 的連結都帶 `?v=YYYYMMDD[字母]`（目前為 `?v=20260630c`）。
 
 - **只有當 `style.css` 或 `script.js` 內容有改時**才需要 bump 版本號。
-- bump 時要 **8 個 HTML 檔的 css 與 js 連結全部一起改成相同新值**。
+- bump 時要 **10 個 HTML 檔的 css 與 js 連結全部一起改成相同新值**。
 - **純內容修改**（新增一則消息、新增一張成員卡）**不需要** bump。
 
 ---
@@ -234,6 +236,22 @@ gh pr create --base menu
 
 - 改學年度徽章文字；一個系所／缺額 = 一個 `<tr>`（要多收名額就多加一列）。
 - 英文版 `news_e.html` 用 `Now recruiting · AY115 (2026)` 與英文系所名。
+
+### 畢業生：新增一位畢業生（只改 `script.js`，兩個頁面共用）
+
+畢業生頁不像成員頁把名字寫死在 HTML 裡，而是由 `script.js` 底部「Graduate page」區塊的兩個物件 `graduateDataZh`（中文）／`graduateDataEn`（英文）產生，`graduate.html` 與 `graduate_e.html` 共用同一支 `script.js`，依 `<html lang>` 自動切換資料源。
+
+```js
+'114級': [
+    { name: '傅信豪', job: '華碩', photo: 'fuxinhao.webp' },
+],
+```
+
+- 兩個物件的**年級與陣列順序要一一對應**：`graduateDataZh` 加一筆，`graduateDataEn` 也要在同一個年級、同一個位置加上羅馬拼音姓名＋英文公司名。
+- `job` 留空字串代表「出路未提供」，畫面會顯示 `—`。
+- `photo`（可省略）是 `images/graduate/` 底下的檔名；沒有照片時自動退回姓氏首字的圓形字母頭貼，圖片載入失敗（`onerror`）也會退回同一個字母。
+- 新增年級（`'115級'` / `'Class of 115'`）就在物件最上面加一個新 key；tab 會依物件的 key 順序自動產生，不用改 HTML。
+- 純內容新增不需 `?v=` bump。
 
 ---
 

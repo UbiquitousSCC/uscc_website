@@ -49,4 +49,16 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://plato.csie.ncku.edu.tw/professor_e.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://plato.csie.ncku.edu.tw/professor.html"/>
   </url>
+  <url>
+    <loc>https://plato.csie.ncku.edu.tw/graduate.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://plato.csie.ncku.edu.tw/graduate.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://plato.csie.ncku.edu.tw/graduate_e.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://plato.csie.ncku.edu.tw/graduate.html"/>
+  </url>
+  <url>
+    <loc>https://plato.csie.ncku.edu.tw/graduate_e.html</loc>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://plato.csie.ncku.edu.tw/graduate.html"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://plato.csie.ncku.edu.tw/graduate_e.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://plato.csie.ncku.edu.tw/graduate.html"/>
+  </url>
 </urlset>

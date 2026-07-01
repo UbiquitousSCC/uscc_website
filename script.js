@@ -731,3 +731,178 @@ document.addEventListener('DOMContentLoaded', () => {
     const empty = list.querySelector('[data-awards-empty]');
     if (empty) empty.classList.toggle('is-hidden', shown !== 0);
 });
+
+// ---- Graduate page: year tabs, rendered entirely from graduateData ----
+// No-ops on pages without the tab/panel containers.
+document.addEventListener('DOMContentLoaded', () => {
+    const tabsEl = document.querySelector('[data-grad-tabs]');
+    const panelEl = document.querySelector('[data-grad-panel]');
+    if (!tabsEl || !panelEl) return;
+
+    const graduateDataZh = {
+
+        // '115級': [
+        //     { name: '張耕齊', job: '台積電' },
+        //     { name: '簡劭宸', job: '群聯電子' },
+        //     { name: '徐振傑', job: '光寶科技' },
+        //     { name: '王文耀', job: '群聯電子' },
+        //     { name: '劉俊廷', job: '台積電' },
+        // ],
+        '114級': [
+            { name: '傅信豪', job: '華碩', photo: 'fuxinhao.webp' },
+            { name: '林俊廷', job: '君帆工業' },
+            { name: '鄒佳昌', job: '台積電' },
+            { name: '陳韶均', job: '' },
+            { name: '邱子珆', job: '台積電' },
+            { name: '蔡宇柔', job: '美光科技' },
+            { name: '朱宇淵', job: '台積電' },
+        ],
+        '113級': [
+            { name: '廖柏棠', job: '玩美移動' },
+            { name: '張嘉進', job: '' },
+            { name: '張庭瑜', job: '和碩聯合科技' },
+            { name: '鄧晴', job: '玩美移動' },
+            { name: '林溢泓', job: '聯發科技' },
+            { name: '張晏榕', job: '台積電' },
+            { name: '廖偉佑', job: '玩美移動' },
+            { name: '林晨鈞', job: '台積電' },
+        ],
+        '112級': [
+            { name: '鄭郁霖', job: '' },
+            { name: '葉濬偉', job: '' },
+            { name: '高德龍', job: '' },
+            { name: '楊宗翰', job: '' },
+        ],
+        '111級': [
+            { name: '王登立', job: '' },
+            { name: '徐偉峰', job: '' },
+            { name: '何昌祐', job: '' },
+            { name: '王子源', job: '' },
+            { name: '徐郁淞', job: '' },
+        ],
+        '110級': [
+            { name: '潘崇智', job: '' },
+            { name: '田亦心', job: '' },
+            { name: '李昀陽', job: '' },
+            { name: '黃威智', job: '' },
+            { name: '林佳萱', job: '' },
+        ],
+    };
+
+    // English mirror of graduateDataZh — names in Hanyu Pinyin, companies in their English names.
+    // Keep both objects in sync: any addition/edit above must be mirrored below.
+    const graduateDataEn = {
+        'Class of 114': [
+            { name: 'Xin Hao Fu', job: 'ASUS', photo: 'fuxinhao.webp' },
+            { name: 'Jun Ting Lin', job: 'Junfan Industrial' },
+            { name: 'Jia Chang Zou', job: 'TSMC' },
+            { name: 'Shao Jun Chen', job: '' },
+            { name: 'Zi Tai Qiu', job: 'TSMC' },
+            { name: 'Yu Rou Cai', job: 'Micron Technology' },
+            { name: 'Yu Yuan Zhu', job: 'TSMC' },
+        ],
+        'Class of 113': [
+            { name: 'Bo Tang Liao', job: 'Perfect Corp.' },
+            { name: 'Jia Jin Zhang', job: '' },
+            { name: 'Ting Yu Zhang', job: 'Pegatron' },
+            { name: 'Qing Deng', job: 'Perfect Corp.' },
+            { name: 'Yi Hong Lin', job: 'MediaTek' },
+            { name: 'Yan Rong Zhang', job: 'TSMC' },
+            { name: 'Wei You Liao', job: 'Perfect Corp.' },
+            { name: 'Chen Jun Lin', job: 'TSMC' },
+        ],
+        'Class of 112': [
+            { name: 'Yu Lin Zheng', job: '' },
+            { name: 'Jun Wei Ye', job: '' },
+            { name: 'De Long Gao', job: '' },
+            { name: 'Zong Han Yang', job: '' },
+        ],
+        'Class of 111': [
+            { name: 'Deng Li Wang', job: '' },
+            { name: 'Wei Feng Xu', job: '' },
+            { name: 'Chang You He', job: '' },
+            { name: 'Zi Yuan Wang', job: '' },
+            { name: 'Yu Song Xu', job: '' },
+        ],
+        'Class of 110': [
+            { name: 'Chong Zhi Pan', job: '' },
+            { name: 'Yi Xin Tian', job: '' },
+            { name: 'Yun Yang Li', job: '' },
+            { name: 'Wei Zhi Huang', job: '' },
+            { name: 'Jia Xuan Lin', job: '' },
+        ],
+    };
+
+    const isEnglish = document.documentElement.lang.toLowerCase().startsWith('en');
+    const graduateData = isEnglish ? graduateDataEn : graduateDataZh;
+    const emptyPanelText = isEnglish ? 'No graduate data for this class yet.' : '此屆暫無畢業生資料。';
+
+    const escapeHtml = (str) => String(str).replace(/[&<>"']/g, (c) => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+    }[c]));
+
+    const years = Object.keys(graduateData);
+    panelEl.id = panelEl.id || 'gradPanel';
+    panelEl.setAttribute('role', 'tabpanel');
+
+    const renderPanel = (year) => {
+        const students = graduateData[year] || [];
+        panelEl.innerHTML = students.length ? students.map(s => {
+            const job = (s.job || '').trim();
+            const photo = s.photo
+                ? `<img src="images/graduate/${encodeURIComponent(s.photo)}" alt="" loading="lazy" decoding="async" onerror="this.style.display='none'" />`
+                : '';
+            return `
+                <div class="grad-card">
+                    <div class="grad-avatar" aria-hidden="true"><span class="grad-avatar-init">${escapeHtml(s.name.charAt(0))}</span>${photo}</div>
+                    <div class="grad-name">${escapeHtml(s.name)}</div>
+                    <div class="grad-job ${job ? 'has-job' : 'no-job'}">${job ? escapeHtml(job) : '—'}</div>
+                </div>`;
+        }).join('') : `<p class="grad-empty">${emptyPanelText}</p>`;
+        panelEl.classList.remove('grad-fade');
+        void panelEl.offsetWidth;   // restart the fade-in animation
+        panelEl.classList.add('grad-fade');
+    };
+
+    const selectYear = (year) => {
+        buttons.forEach(btn => {
+            const active = btn.dataset.year === year;
+            btn.classList.toggle('is-active', active);
+            btn.setAttribute('aria-selected', active ? 'true' : 'false');
+            btn.tabIndex = active ? 0 : -1;
+        });
+        panelEl.setAttribute('aria-labelledby', `grad-tab-${year}`);
+        renderPanel(year);
+    };
+
+    const buttons = years.map(year => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'grad-tab';
+        btn.textContent = year;
+        btn.id = `grad-tab-${year}`;
+        btn.dataset.year = year;
+        btn.setAttribute('role', 'tab');
+        btn.setAttribute('aria-controls', panelEl.id);
+        btn.addEventListener('click', () => selectYear(year));
+        tabsEl.appendChild(btn);
+        return btn;
+    });
+
+    // Roving tabindex: arrow keys move focus + selection between tabs (WAI-ARIA tabs pattern).
+    tabsEl.addEventListener('keydown', (e) => {
+        const i = buttons.indexOf(document.activeElement);
+        if (i < 0) return;
+        let n = null;
+        if (e.key === 'ArrowRight') n = (i + 1) % buttons.length;
+        else if (e.key === 'ArrowLeft') n = (i - 1 + buttons.length) % buttons.length;
+        else if (e.key === 'Home') n = 0;
+        else if (e.key === 'End') n = buttons.length - 1;
+        if (n === null) return;
+        e.preventDefault();
+        buttons[n].focus();
+        selectYear(buttons[n].dataset.year);
+    });
+
+    selectYear(years[0]);
+});
