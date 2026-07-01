@@ -92,6 +92,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const slides = Array.from(box.querySelectorAll('.slide'));
         if (slides.length < 2) return;
 
+        // Blurred backdrop fill: expose each slide's own image as --slide-bg so CSS can
+        // soften + scale it behind the (object-fit:contain) photo, filling the letterbox
+        // without cropping. JS-off falls back to the frame colour — no blank/broken box.
+        slides.forEach(slide => {
+            const img = slide.querySelector('img');
+            const src = img && img.getAttribute('src');
+            if (src) slide.style.setProperty('--slide-bg', `url("${src}")`);
+        });
+
         const prevBtn = box.querySelector('.slide-btn.prev');
         const nextBtn = box.querySelector('.slide-btn.next');
         const dotWrap = box.querySelector('.slide-dots');
