@@ -66,35 +66,11 @@
         <div class="section-head reveal">
             <div class="eyebrow">News &amp; Updates</div>
             <h1>News</h1>
-            <p>Our lab's competition awards and student recruitment.</p>
+            <p>Our lab's student recruitment and competition awards.</p>
         </div>
 
         <!-- ============================================================
-             SECTION 1: Competition Awards
-             · One entry = one <li data-year="YYYY">; data-year drives the auto-filter.
-             · Last 3 years only: script.js auto-hides entries older than 3 years
-               (shows this year + the 3 prior years; "now" = the browser's current year).
-             · To add: insert an <li> in <ul data-awards>, newest at the top; mirror into news.html.
-             ============================================================ -->
-        <section class="block">
-            <div class="section-head reveal">
-                <div class="eyebrow">Awards</div>
-                <h2 style="font-size:1.6rem">Competition Awards</h2>
-                <p>Individual and team competition awards from the last three years.</p>
-            </div>
-            <div class="card reveal">
-                <ul class="award-list" data-awards>
-                    <li data-year="2024"><b>2024</b>TSMC Campus Hackathon — 1st place, Fab Knowledge Bot track (M.S. team)</li>
-                    <li data-year="2024"><b>2024</b>AICUP 2024 (regional microclimate power-generation forecasting) — Honorable Mention (M.S. student)</li>
-                    <li data-year="2024"><b>2024</b>NCKU CSIE Undergraduate Capstone Showcase (Class of 114) — 3rd place (capstone students)</li>
-                    <li data-year="2023"><b>2023</b>7th Chuang-Chuang AIoT Competition — 2nd place, Sustainable Technology track (lab team)</li>
-                    <li class="awards-empty is-hidden" data-awards-empty>No competition awards in the last three years yet.</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- ============================================================
-             SECTION 2: Student Recruitment
+             SECTION 1: Student Recruitment
              · To update: change .recruit-year's academic year and the table rows
                (department / program + openings). One row = one <tr>; mirror into news.html.
              ============================================================ -->
@@ -115,6 +91,30 @@
                     </tbody>
                 </table>
                 <p class="recruit-cta"><a href="https://mail.google.com/mail/?view=cm&fs=1&to=z10801032@ncku.edu.tw" target="_blank" rel="noopener noreferrer">Interested? Email us →</a></p>
+            </div>
+        </section>
+
+        <!-- ============================================================
+             SECTION 2: Competition Awards
+             · One entry = one <li data-year="YYYY">; data-year drives the auto-filter.
+             · Last 3 years only: script.js auto-hides entries older than 3 years
+               (shows this year + the 3 prior years; "now" = the browser's current year).
+             · To add: insert an <li> in <ul data-awards>, newest at the top; mirror into news.html.
+             ============================================================ -->
+        <section class="block">
+            <div class="section-head reveal">
+                <div class="eyebrow">Awards</div>
+                <h2 style="font-size:1.6rem">Competition Awards</h2>
+                <p>Individual and team competition awards from the last three years.</p>
+            </div>
+            <div class="card reveal">
+                <ul class="award-list" data-awards>
+                    <li data-year="2024"><b>2024</b>TSMC Campus Hackathon — 1st place, Fab Knowledge Bot track (M.S. team)</li>
+                    <li data-year="2024"><b>2024</b>AICUP 2024 (regional microclimate power-generation forecasting) — Honorable Mention (M.S. student)</li>
+                    <li data-year="2024"><b>2024</b>NCKU CSIE Undergraduate Capstone Showcase (Class of 114) — 3rd place (capstone students)</li>
+                    <li data-year="2023"><b>2023</b>7th Chuang-Chuang AIoT Competition — 2nd place, Sustainable Technology track (lab team)</li>
+                    <li class="awards-empty is-hidden" data-awards-empty>No competition awards in the last three years yet.</li>
+                </ul>
             </div>
         </section>
 
