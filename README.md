@@ -5,7 +5,7 @@
 
 實驗室的雙語（繁體中文／English）官方網站。純靜態網頁、**無 build 步驟**，由 GitHub Pages 直接從 `menu` 分支發布。
 
-🔗 **線上網址**：<https://ubiquitousscc.github.io/uscc_website/>
+🔗 **線上網址**：<https://plato.csie.ncku.edu.tw/>
 
 ---
 
@@ -244,7 +244,7 @@ gh pr create --base menu
 | [counterapi.dev](https://counterapi.dev) | 訪客造訪計數 | namespace `usccncku` / key `site-visits`；免費、無金鑰；失敗退回 `localStorage` |
 | YouTube（`youtube-nocookie`） | 首頁實驗室介紹影片 | 點縮圖才載入 iframe |
 | Google Fonts | 字型 | Noto Sans/Serif TC、Cormorant Garamond |
-| GitHub Pages | 主機 | `https://ubiquitousscc.github.io/uscc_website/` |
+| GitHub Pages | 主機 | `https://plato.csie.ncku.edu.tw/` |
 | 聯絡信箱 | 「聯絡我們」 | Gmail 撰信連結寄至 `z10801032@ncku.edu.tw` |
 
 ---
