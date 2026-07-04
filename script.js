@@ -772,6 +772,8 @@ document.addEventListener('DOMContentLoaded', () => {
             { name: '葉濬偉', job: '' },
             { name: '高德龍', job: '' },
             { name: '楊宗翰', job: '' },
+            { name: '曾凰嘉', job: '台積電' },
+            { name: '劉佳泓', job: 'Synology' },
         ],
         '111級': [
             { name: '王登立', job: '' },
@@ -816,6 +818,8 @@ document.addEventListener('DOMContentLoaded', () => {
             { name: 'Jun Wei Ye', job: '' },
             { name: 'De Long Gao', job: '' },
             { name: 'Zong Han Yang', job: '' },
+            { name: 'Huang Jia Zeng', job: 'TSMC' },
+            { name: 'Jia Hong Liu', job: 'Synology' },
         ],
         'Class of 111': [
             { name: 'Deng Li Wang', job: '' },
