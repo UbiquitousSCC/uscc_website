@@ -54,13 +54,13 @@ uscc_website/
 ├── sitemap.xml                      # 10 個頁面 + hreflang 替代連結
 ├── robots.txt                       # 允許全部爬蟲、指向 sitemap
 ├── USCC_Lab_改版_Checklist.md        # 改版待辦清單（僅供參考，不影響網站）
-└── images/
+└── material/
     ├── og.jpg                       # 社群分享圖（1200×630）
     ├── moment/                      # 首頁「實驗室剪影」輪播圖
     │   └── 1–9 + aiot2023-* / tsmc2024-champion / lab-*.webp  # 生活日常＋競賽得獎/活動照（含 5_2.webp hover 切換）
-    ├── 766679109.webp               # 教授照片
-    ├── S__24723467.webp             # 教授榮譽 hover 圖
-    ├── tzuyu.webp / shao_pop.webp   # 成員卡彩蛋彈出圖
+    ├── boss.webp               # 教授照片
+    ├── jp_honor.webp             # 教授榮譽 hover 圖
+    ├── tyler_pop.webp / shao_pop.webp   # 成員卡彩蛋彈出圖
     ├── apple-touch-icon.png         # iOS 圖示
     └── members/                     # 成員照片（*.webp，512×512）+ hover 音樂（*.mp3）
 ```
@@ -118,11 +118,11 @@ uscc_website/
 |---|---|
 | 捲動淡入（reveal） | `.reveal` 元素進入視窗才淡入，並依序錯開（IntersectionObserver）。JS 沒載入時元素一律可見 |
 | 數字動畫 | `[data-count]` 統計數字捲到才開始累加 |
-| 成員卡 hover 音樂 | `[data-bgm]` 滑入才載入並播放 mp3（`preload='none'`、觸控裝置不觸發、`prefers-reduced-motion` 時略過） |
+| 成員卡 hover 音樂 | `[data-hover-bgm]` 滑入停留 0.5 秒才載入並播放 mp3、離開即停止（`preload='none'`、觸控裝置不觸發） |
 | YouTube 延遲載入 | `.yt-facade` 縮圖點擊後才換成 `youtube-nocookie` iframe |
 | 導覽列／閱讀進度／回頂 | 捲動時收合導覽、頂部進度條、右下回到頂端鈕（皆由 JS 生成） |
 | 訪客計數 | 串接 counterapi.dev 取得共享造訪數；連不上時退回 `localStorage` 快取 |
-| 神經網路動畫 | 訪客計數卡後方的 canvas 連線動畫（離開畫面自動暫停、reduced-motion 時靜止） |
+| 神經網路動畫 | 訪客計數卡後方的 canvas 連線動畫（離開畫面自動暫停） |
 | 競賽獲獎篩選 | 競賽獲獎自動只顯示近三年（JS 依 `data-year` 隱藏；JS 關閉時全部顯示） |
 | 剪影輪播 | `.slideshow` 跨淡轉場，左右箭頭／圓點／方向鍵切換、進入視窗才自動輪播；部分張可 `data-hover-src`／`data-hover-bgm` 滑入切圖配樂。JS 關閉時固定顯示第一張 |
 | 彩蛋 | 見下方〔彩蛋〕 |
@@ -173,7 +173,7 @@ gh pr create --base menu
 
 ### 規則二：快取版本 `?v=`
 
-`style.css` 與 `script.js` 的連結都帶 `?v=YYYYMMDD[字母]`（目前為 `?v=20260630c`）。
+`style.css` 與 `script.js` 的連結都帶 `?v=YYYYMMDD[字母]`（目前為 `?v=20260705d`）。
 
 - **只有當 `style.css` 或 `script.js` 內容有改時**才需要 bump 版本號。
 - bump 時要 **10 個 HTML 檔的 css 與 js 連結全部一起改成相同新值**。
@@ -191,7 +191,7 @@ gh pr create --base menu
 <div class="member reveal">
   <div class="photo">
     <span class="ph-init">王</span>
-    <img src="images/members/wenyao.webp" alt="王文耀"
+    <img src="material/members/wenyao.webp" alt="王文耀"
          width="512" height="512" loading="lazy" decoding="async"
          onerror="this.style.display='none'" />
   </div>
@@ -199,10 +199,10 @@ gh pr create --base menu
 </div>
 ```
 
-- 照片放 `images/members/`，**正方形 `.webp`、512×512**。
+- 照片放 `material/members/`，**正方形 `.webp`、512×512**。
 - `.ph-init` 是照片載入失敗時顯示的字（中文姓氏／英文首字母）；`onerror` 會把壞掉的圖藏起來、露出這個字。請保留這個組合。
 - 英文版用羅馬拼音名與 `Master · Y2` 之類的職級。
-- 進階：要 hover 播音樂就在 `.member` 上加 `data-bgm="images/members/xxx.mp3"`；要 hover 彈出圖就把卡包進 `.member-pop-host` 並加一張 `.member-pop`。
+- 進階：要 hover 播音樂就在 `.member` 上加 `data-hover-bgm="material/members/xxx.mp3"`（滑入停留 0.5 秒播放、離開停止）；要 hover 彈出圖就把卡包進 `.member-pop-host` 並加一張 `.member-pop`。
 - 新增圖片屬於內容變更，**不需** bump `?v=`。
 
 最新消息頁有兩個分區：**競賽獲獎**與**學生招生**。兩者都在 `news.html` / `news_e.html`，**中英兩個檔都要改**。
@@ -249,7 +249,7 @@ gh pr create --base menu
 
 - 兩個物件的**年級與陣列順序要一一對應**：`graduateDataZh` 加一筆，`graduateDataEn` 也要在同一個年級、同一個位置加上羅馬拼音姓名＋英文公司名。
 - `job` 留空字串代表「出路未提供」，畫面會顯示 `—`。
-- `photo`（可省略）是 `images/graduate/` 底下的檔名；沒有照片時自動退回姓氏首字的圓形字母頭貼，圖片載入失敗（`onerror`）也會退回同一個字母。
+- `photo`（可省略）是 `material/graduate/` 底下的檔名；沒有照片時自動退回姓氏首字的圓形字母頭貼，圖片載入失敗（`onerror`）也會退回同一個字母。
 - 新增年級（`'115級'` / `'Class of 115'`）就在物件最上面加一個新 key；tab 會依物件的 key 順序自動產生，不用改 HTML。
 - 純內容新增不需 `?v=` bump。
 
@@ -265,21 +265,12 @@ gh pr create --base menu
 | GitHub Pages | 主機 | `https://plato.csie.ncku.edu.tw/` |
 | 聯絡信箱 | 「聯絡我們」 | Gmail 撰信連結寄至 `z10801032@ncku.edu.tw` |
 
----
-
-## 彩蛋 🥚
-
-- 在頁面上**鍵盤輸入 `uscc`（小寫）** → 跳出實驗室印章動畫遮罩（Esc／點擊關閉）。
-- 輸入 `USCC`（大寫） → 進入「曲速跳躍」星空動畫，結束後導向實驗室 Facebook。
-
-（輸入焦點在輸入框時不會觸發。）
 
 ---
 
 ## 無障礙與效能
 
 - **Skip link**、鍵盤 `:focus-visible` 焦點環、AA 對比文字色（`--gold-ink`/`--green-ink`）。
-- `prefers-reduced-motion`：關閉所有環境動畫、hover 音樂、平滑捲動、數字翻牌。
 - 圖片一律 `.webp` + `width/height`（避免版面跳動 CLS）+ `loading="lazy"`；YouTube／音樂延遲載入。
 - 捲動事件以 `requestAnimationFrame` 節流；一次性動畫看完即 `unobserve`。
 

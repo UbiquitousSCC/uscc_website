@@ -534,7 +534,7 @@ section { position: relative; }
 .feature h3 { font-family: 'Noto Serif TC', serif; font-size: 1.2rem; font-weight: 600; margin-bottom: 8px; }
 .feature p { color: var(--text-soft); font-size: .96rem; }
 
-/* ---- Slideshow (Lab Moments) — cross-fade between images, arrows/dots/keys to navigate.
+/* ---- Slideshow (Lab Moments) — cross-fade between material, arrows/dots/keys to navigate.
    Slides stack absolutely in a 16:9 frame; only .is-active is opaque. JS builds the dots
    and drives auto-advance. With JS off, the first slide stays visible (no blank box). ---- */
 .slideshow {
@@ -629,9 +629,6 @@ section { position: relative; }
 }
 .slide-dots button:hover { background: rgba(255, 255, 255, .65); }
 .slide-dots button.is-active { background: #fff; transform: scale(1.3); }
-@media (prefers-reduced-motion: reduce) {
-    .slideshow .slide { transition: opacity .12s ease; }
-}
 
 /* ---- Lazy YouTube facade (only a thumbnail until clicked) ---- */
 .yt-facade {
@@ -906,14 +903,6 @@ section { position: relative; }
     78%  { transform: translate(-49%, -13px) scale(1.22) rotate(1deg); }
     100% { opacity: 1; transform: translate(-50%, -14px) scale(1.20) rotate(0); }
 }
-@media (prefers-reduced-motion: reduce) {
-    .member-pop-host:hover .member-pop {
-        animation: none;
-        opacity: 1;
-        transform: translate(-50%, -14px) scale(1);
-    }
-
-}
 /* ============================================================
    Footer
    ============================================================ */
@@ -957,21 +946,6 @@ footer.site {
 .js-reveal .reveal.reveal-right { transform: translateX(40px); }
 .js-reveal .reveal.reveal-scale { transform: scale(.94); }
 .js-reveal .reveal.in { opacity: 1; transform: none; }
-
-/* respect reduced-motion preferences */
-@media (prefers-reduced-motion: reduce) {
-    /* neutralise all looping/ambient animations: blobs, brand shine, badge pulse, AI-counter FX */
-    *, *::before, *::after {
-        animation-duration: .001ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-    }
-    .js-reveal .reveal { opacity: 1; transform: none; transition: none; }
-    .hero-bg { animation: none; }
-    .hero-content > *, .hero-scroll { opacity: 1; transform: none; animation: none; }
-    .hero-scroll span { animation: none; }
-    html { scroll-behavior: auto; }
-}
 
 /* ============================================================
    Responsive
@@ -1031,9 +1005,6 @@ footer.site {
     .hero-scroll { display: none; }
 }
 
-/* ============================================================
-   Easter Egg Overlay — triggered by typing "uscc"
-   ============================================================ */
 .egg-overlay {
     position: fixed;
     inset: 0;
@@ -1252,6 +1223,145 @@ footer.site {
     opacity: 0;
     pointer-events: none;
     z-index: 1;
+}
+ 
+.twice-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: pointer; 
+    background: linear-gradient(135deg, #FCC89B, #FF5FA2, #FCC89B);
+    background-size: 200% 200%;
+    animation: eggFadeIn .5s ease forwards, twiceGradient 6s ease infinite;
+}
+.twice-overlay.egg-out {
+    animation: eggFadeOut .7s cubic-bezier(.4, 0, .2, 1) forwards;
+}
+@keyframes twiceGradient {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Welcome line — greets Once, then fades out as WHAT IS LOVE begins (0–1.5s). */
+/* Absolutely centred so it overlays the (still-invisible) WHAT IS LOVE text. */
+.twice-welcome {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Noto Sans TC', 'Arial', sans-serif;
+    font-size: clamp(1.5rem, 6vw, 3rem);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 3px;
+    text-align: center;
+    text-shadow: 3px 3px 15px rgba(0, 0, 0, .2);
+    opacity: 0;
+    pointer-events: none;
+}
+.twice-welcome span {
+    color: #fff;
+    text-shadow: 0 0 20px rgba(255, 47, 142, .9), 0 0 6px rgba(255, 255, 255, .8);
+}
+.twice-show .twice-welcome { animation: twiceWelcome 1.5s ease forwards; }
+@keyframes twiceWelcome {
+    0%   { opacity: 0; transform: translate(-50%, -50%) scale(.9); }
+    15%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    72%  { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(1.06); }
+}
+
+.twice-text {
+    display: flex;
+    gap: clamp(12px, 4vw, 25px);
+    font-family: 'Arial', sans-serif;
+    font-size: clamp(2rem, 10vw, 4rem);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: 5px;
+    text-shadow: 3px 3px 15px rgba(0, 0, 0, .2);
+    margin-bottom: 30px;
+}
+.twice-word { opacity: 0; transform: translateY(20px); }
+.twice-show .twice-word { animation: twiceFadeUp .4s ease-out forwards; }
+.twice-show .twice-word:nth-child(1) { animation-delay: 1.5s; }   /* WHAT */
+.twice-show .twice-word:nth-child(2) { animation-delay: 2s; }     /* IS */
+.twice-show .twice-word:nth-child(3) { animation-delay: 2.2s; }   /* LOVE */
+@keyframes twiceFadeUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.twice-qm {
+    width: 200px;
+    height: 300px;
+    opacity: 0;
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, .2));
+}
+.twice-show .twice-qm { animation: twiceFadeIn .1s 2.7s forwards; }
+@keyframes twiceFadeIn { to { opacity: 1; } }
+
+.twice-qm-curve {
+    fill: transparent;
+    stroke: #fff;
+    stroke-width: 12;
+    stroke-linecap: round;
+}
+.twice-show .twice-qm-curve { animation: twiceDraw .4s ease-in-out 2.7s forwards; }
+@keyframes twiceDraw { to { stroke-dashoffset: 0; } }
+
+.twice-qm-dot {
+    fill: #fff;
+    transform: scale(0);
+    transform-origin: 50px 130px;
+}
+.twice-show .twice-qm-dot { animation: twicePop .5s cubic-bezier(.68, -.55, .265, 1.55) 3s forwards; }
+@keyframes twicePop { to { transform: scale(1); } }
+ 
+.twice-photo-stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    pointer-events: none;
+}
+.twice-photo {
+    max-width: min(90vw, 900px);
+    max-height: 74vh;
+    width: auto;
+    height: auto;
+    border-radius: 16px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .35);
+    opacity: 0;
+    transform: scale(.96);
+}
+.twice-show .twice-photo { animation: twicePhotoIn 1.4s ease 4s forwards; }
+@keyframes twicePhotoIn {
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Dismiss hint sits on the bright gradient, so it needs light colours */
+.twice-hint {
+    position: absolute;
+    bottom: 24px;
+    color: rgba(255, 255, 255, .85);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, .15);
+}
+.twice-hint kbd {
+    border-color: rgba(255, 255, 255, .5);
+    color: rgba(255, 255, 255, .9);
+    background: rgba(255, 255, 255, .15);
+}
+
+@media (max-width: 620px) {
+    .twice-qm { width: 150px; height: 225px; }
 }
 
 /* ============================================================

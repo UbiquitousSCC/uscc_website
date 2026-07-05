@@ -7,8 +7,6 @@
 // If this file fails to load, .reveal elements simply stay visible — no blank sections.
 
 document.addEventListener('DOMContentLoaded', () => {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
     // ---- Scroll reveal with stagger ----
     // Stagger is derived from each element's index among its .reveal siblings,
     // so cards in a grid animate in one after another.
@@ -50,22 +48,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { threshold: 0.5 });
     document.querySelectorAll('[data-count]').forEach(el => co.observe(el));
 
-    // ---- Hover-to-play BGM on member cards with data-bgm ----
-    // Skipped entirely when the visitor prefers reduced motion. preload='none'
-    // means each mp3 is fetched only on the first hover (never on touch devices,
-    // which can't hover at all) — saves ~690 KB on the members page per visit.
-    if (!reduceMotion) {
-        document.querySelectorAll('[data-bgm]').forEach(card => {
-            const audio = new Audio(card.dataset.bgm);
-            audio.preload = 'none';
-            card.addEventListener('mouseenter', () => {
+    // ---- Hover-to-play BGM on member cards with data-hover-bgm ----
+    // Hovering a card for 0.5s starts its clip; leaving it — or leaving before the
+    // 0.5s elapses — cancels the pending start and stops playback. Slides also carry
+    // data-hover-bgm, but the slideshow owns those (image swap + its own timing), so
+    // exclude .slide here. preload='none' means each mp3 is fetched only on the first
+    // hover (never on touch devices, which can't hover) — saves ~690 KB on the members page.
+    document.querySelectorAll('[data-hover-bgm]:not(.slide)').forEach(card => {
+        const audio = new Audio(card.dataset.hoverBgm);
+        audio.preload = 'none';
+        let t = null;
+        const stop = () => { clearTimeout(t); t = null; audio.pause(); audio.currentTime = 0; };
+        card.addEventListener('mouseenter', () => {
+            clearTimeout(t);
+            t = setTimeout(() => {
                 audio.currentTime = 0;
                 audio.play().catch(() => { /* autoplay may be blocked until first user gesture */ });
-            });
-            const stop = () => { audio.pause(); audio.currentTime = 0; };
-            card.addEventListener('mouseleave', stop);
+            }, 500);
         });
-    }
+        card.addEventListener('mouseleave', stop);
+    });
 
     // ---- Lazy-load YouTube: swap the lightweight facade for the real iframe on click ----
     document.querySelectorAll('.yt-facade').forEach(facade => {
@@ -87,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // ---- Slideshow: cross-fade between Lab Moments ----
     // Arrows / dots / keyboard arrows / touch-swipe all jump to a slide; it also
     // auto-advances every 5s, pausing on hover, focus, and while off-screen.
-    // Honors prefers-reduced-motion by not auto-advancing. The fade itself is CSS.
+    // The fade itself is CSS.
     document.querySelectorAll('.slideshow').forEach(box => {
         const slides = Array.from(box.querySelectorAll('.slide'));
         if (slides.length < 2) return;
@@ -152,7 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const AUTO = 5000;
         let timer = null;
-        const play = () => { clearInterval(timer); timer = reduceMotion ? null : setInterval(() => go(i + 1, false), AUTO); };
+        const play = () => { clearInterval(timer); timer = setInterval(() => go(i + 1, false), AUTO); };
         const pause = () => { clearInterval(timer); timer = null; };
 
         function go(n, user) {
@@ -211,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
     toTop.setAttribute('aria-label', 'Back to top');
     toTop.innerHTML = '↑';
     toTop.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     document.body.appendChild(toTop);
 
@@ -265,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (el.textContent === ch) return;
                 el.textContent = ch;
                 el.dataset.digit = ch;
-                if (flip && !reduceMotion) {
+                if (flip) {
                     el.classList.remove('flip');
                     void el.offsetWidth;                // restart the CSS flip animation
                     el.classList.add('flip');
@@ -275,7 +277,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Odometer-style count-up to the total, then a staggered flip flourish.
         const revealTo = (total) => {
-            if (reduceMotion) { renderDigits(total, false); return; }
             const dur = 1600, start = performance.now();
             const tick = (now) => {
                 const p = Math.min((now - start) / dur, 1);
@@ -401,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const start = () => {
-            if (running || reduceMotion) return;
+            if (running) return;
             if (!nodes.length || !w) build();
             if (!nodes.length) return;
             running = true;
@@ -410,14 +411,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const stop = () => { running = false; if (raf) cancelAnimationFrame(raf); raf = null; };
 
         build();
-        if (reduceMotion) {
-            ctx.clearRect(0, 0, w, h); drawLinks(0.45); drawNodes();   // single static frame
-        } else {
-            // Only animate while the section is on-screen.
-            new IntersectionObserver((entries) => {
-                entries.forEach(e => e.isIntersecting ? start() : stop());
-            }, { threshold: 0 }).observe(canvas);
-        }
+        // Only animate while the section is on-screen.
+        new IntersectionObserver((entries) => {
+            entries.forEach(e => e.isIntersecting ? start() : stop());
+        }, { threshold: 0 }).observe(canvas);
 
         let rt;
         window.addEventListener('resize', () => {
@@ -425,17 +422,15 @@ document.addEventListener('DOMContentLoaded', () => {
             rt = setTimeout(() => {
                 const wasRunning = running;
                 stop(); build();
-                if (reduceMotion) { ctx.clearRect(0, 0, w, h); drawLinks(0.45); drawNodes(); }
-                else if (wasRunning) start();
+                if (wasRunning) start();
             }, 200);
         }, { passive: true });
     }
-
-    // ---- Easter Eggs ----
-    // "uscc" (lowercase) → cinematic overlay
-    // "USCC" (uppercase) → hyperspace jump to Facebook
+ 
     const eggCodeLower = 'uscc';
     const eggCodeUpper = 'USCC';
+    const eggCodeTwice = 'twice';
+    const eggMaxLen = Math.max(eggCodeUpper.length, eggCodeLower.length, eggCodeTwice.length);
     let eggBufRaw = '';   // preserves case
     let eggActive = false;
 
@@ -458,22 +453,73 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key.length > 1) return;
 
         eggBufRaw += e.key;
-        // Keep buffer trimmed
-        if (eggBufRaw.length > eggCodeUpper.length) eggBufRaw = eggBufRaw.slice(-eggCodeUpper.length);
+        // Keep buffer trimmed to the longest code so every code can still be matched.
+        if (eggBufRaw.length > eggMaxLen) eggBufRaw = eggBufRaw.slice(-eggMaxLen);
 
-        // Check uppercase first (USCC → hyperspace jump)
-        if (eggBufRaw === eggCodeUpper) {
+        if (eggBufRaw.toLowerCase().endsWith(eggCodeTwice)) {
+            eggBufRaw = '';
+            eggActive = true;
+            showTwiceEgg();
+        }
+        // "USCC" (uppercase only) → hyperspace jump
+        else if (eggBufRaw.endsWith(eggCodeUpper)) {
             eggBufRaw = '';
             eggActive = true;
             showHyperspaceJump();
         }
-        // Then check lowercase (uscc → cinematic overlay)
-        else if (eggBufRaw.toLowerCase() === eggCodeLower) {
+        // "uscc" (any case) → cinematic overlay
+        else if (eggBufRaw.toLowerCase().endsWith(eggCodeLower)) {
             eggBufRaw = '';
             eggActive = true;
             showEasterEgg();
         }
     });
+
+    function showTwiceEgg() {
+        const overlay = document.createElement('div');
+        overlay.id = 'uscc-egg';
+        overlay.className = 'twice-overlay';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-label', 'TWICE — What is Love?');
+        overlay.tabIndex = -1;
+        overlay.innerHTML = `
+            <div class="twice-welcome">歡迎 <span>ONCE</span> 的加入</div>
+            <div class="twice-text">
+                <span class="twice-word">WHAT</span>
+                <span class="twice-word">IS</span>
+                <span class="twice-word">LOVE</span>
+            </div>
+            <svg viewBox="0 0 100 150" class="twice-qm" aria-hidden="true">
+                <path class="twice-qm-curve" d="M 30 50 C 30 10, 80 10, 80 50 C 80 80, 50 90, 50 115" />
+                <circle class="twice-qm-dot" cx="50" cy="135" r="7" />
+            </svg>
+            <div class="twice-photo-stage">
+                <img class="twice-photo" src="material/members/twice_answer.png" alt="" width="1920" height="1005" decoding="async" />
+            </div>
+            <div class="egg-hint twice-hint">Press <kbd>ESC</kbd> or click to close</div>
+        `;
+        document.body.appendChild(overlay);
+        overlay.focus();
+        overlay.addEventListener('click', dismissEgg);
+
+        // Prime the SVG "air question mark" draw: hide the stroke by its own length,
+        // then the .twice-show class animates strokeDashoffset back to 0.
+        const curve = overlay.querySelector('.twice-qm-curve');
+        const len = curve.getTotalLength();
+        curve.style.strokeDasharray = len;
+        curve.style.strokeDashoffset = len;
+
+        // Kick off all child animations on the next frame (lets the initial state paint first).
+        requestAnimationFrame(() => overlay.classList.add('twice-show'));
+
+        // Play the easter-egg track; loops while the overlay stays open.
+        const audio = new Audio('material/members/easter.mp3');
+        audio.loop = false;
+        audio.play().catch(() => { /* file missing or gesture required — fail silently */ });
+
+        audio.addEventListener('ended', dismissEgg); 
+    }
 
     function showEasterEgg() {
         // Build overlay
@@ -491,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="egg-title">USCC Lab</div>
                 <div class="egg-subtitle">Ubiquitous Sensing &amp; Cloud Computing</div>
                 <div class="egg-divider"></div>
-                <p class="egg-motto">「 以技術淬鍊智慧，用程式碼書寫未來 」</p>
+                <p class="egg-motto">「 以技術淬鍊智慧，用程式書寫未來 」</p>
                 <p class="egg-motto-en">Forging intelligence through technology,<br>writing the future in code.</p>
                 <div class="egg-hint">Press <kbd>ESC</kbd> or click to close</div>
             </div>
@@ -577,6 +623,13 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.className = 'hyper-overlay';
         overlay.innerHTML = '<canvas class="hyper-canvas"></canvas><div class="hyper-flash"></div>';
         document.body.appendChild(overlay);
+ 
+        const audio = new Audio('material/members/traverse.mp3');
+        audio.play().catch(() => { /* file missing or gesture required — fail silently */ });
+        const audioMo = new MutationObserver(() => {
+            if (!document.getElementById('uscc-egg')) { audio.pause(); audioMo.disconnect(); }
+        });
+        audioMo.observe(document.body, { childList: true });
 
         const canvas = overlay.querySelector('.hyper-canvas');
         const ctx = canvas.getContext('2d');
@@ -605,7 +658,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let phase = 0; // 0 = stars idle, 1 = accelerating, 2 = streaking, 3 = flash
         let t = 0;
         let raf;
-        const totalDuration = 2800; // ms total before redirect
+        const totalDuration = 6000; // ms total before redirect
 
         const startTime = performance.now();
 
@@ -794,6 +847,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // English mirror of graduateDataZh — names in Hanyu Pinyin, companies in their English names.
     // Keep both objects in sync: any addition/edit above must be mirrored below.
     const graduateDataEn = {
+
+        // 'Class of 115': [
+        //     { name: 'Keng Chi Zhang', job: 'TSMC' },
+        //     { name: 'Shao Chen Jian', job: 'Plextor' },
+        //     { name: 'Zhen Jie Xu', job: 'Lite-On' },
+        //     { name: 'Wen Yao Wang', job: 'Plextor' },
+        //     { name: 'Jun Ting Liu', job: 'TSMC' },
+        // ],
         'Class of 114': [
             { name: 'Xin Hao Fu', job: 'ASUS', photo: 'fuxinhao.webp' },
             { name: 'Jun Ting Lin', job: 'Junfan Industrial' },
@@ -854,7 +915,7 @@ document.addEventListener('DOMContentLoaded', () => {
         panelEl.innerHTML = students.length ? students.map(s => {
             const job = (s.job || '').trim();
             const photo = s.photo
-                ? `<img src="images/graduate/${encodeURIComponent(s.photo)}" alt="" loading="lazy" decoding="async" onerror="this.style.display='none'" />`
+                ? `<img src="material/graduate/${encodeURIComponent(s.photo)}" alt="" loading="lazy" decoding="async" onerror="this.style.display='none'" />`
                 : '';
             return `
                 <div class="grad-card">
