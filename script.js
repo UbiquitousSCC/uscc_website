@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ---- Slideshow: cross-fade between Lab Moments ----
     // Arrows / dots / keyboard arrows / touch-swipe all jump to a slide; it also
-    // auto-advances every 5s, pausing on hover, focus, and while off-screen.
+    // auto-advances every 5s by default (data-interval overrides, ms), pausing on hover, focus, and while off-screen.
     // The fade itself is CSS.
     document.querySelectorAll('.slideshow').forEach(box => {
         const slides = Array.from(box.querySelectorAll('.slide'));
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }).filter(Boolean);
         const resetHovers = () => hovers.forEach(reset => reset());
 
-        const AUTO = 5000;
+        const AUTO = Number(box.dataset.interval) || 5000;   // per-slideshow override via data-interval (ms)
         let timer = null;
         const play = () => { clearInterval(timer); timer = setInterval(() => go(i + 1, false), AUTO); };
         const pause = () => { clearInterval(timer); timer = null; };
