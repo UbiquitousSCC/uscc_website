@@ -4,8 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Graduates · USCC Lab</title>
-    <meta name="description" content="USCC Lab (Ubiquitous Sensing and Cloud Computing Lab, Dept. of CSIE, National Cheng Kung University) — alumni roster and career destinations, Class of 110 through Class of 114." />
+    <title>Graduate · USCC Lab</title>
+    <meta name="description" content="Alumni of USCC Lab at National Cheng Kung University — graduate roster and career destinations, Class of 110 to Class of 115." />
     <link rel="canonical" href="https://plato.csie.ncku.edu.tw/graduate_e.html" />
     <link rel="alternate" hreflang="zh-Hant" href="https://plato.csie.ncku.edu.tw/graduate.html" />
     <link rel="alternate" hreflang="en" href="https://plato.csie.ncku.edu.tw/graduate_e.html" />
@@ -16,23 +16,62 @@
     <meta property="og:site_name" content="USCC Lab" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="zh_TW" />
-    <meta property="og:title" content="Graduates · USCC Lab" />
-    <meta property="og:description" content="USCC Lab (Ubiquitous Sensing and Cloud Computing Lab, Dept. of CSIE, National Cheng Kung University) — alumni roster and career destinations, Class of 110 through Class of 114." />
+    <meta property="og:title" content="Graduate · USCC Lab" />
+    <meta property="og:description" content="Alumni of USCC Lab at National Cheng Kung University — graduate roster and career destinations, Class of 110 to Class of 115." />
     <meta property="og:url" content="https://plato.csie.ncku.edu.tw/graduate_e.html" />
     <meta property="og:image" content="https://plato.csie.ncku.edu.tw/material/og.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="USCC Lab — Ubiquitous Sensing and Cloud Computing Lab, NCKU" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Graduates · USCC Lab" />
-    <meta name="twitter:description" content="USCC Lab (Ubiquitous Sensing and Cloud Computing Lab, Dept. of CSIE, National Cheng Kung University) — alumni roster and career destinations, Class of 110 through Class of 114." />
+    <meta name="twitter:title" content="Graduate · USCC Lab" />
+    <meta name="twitter:description" content="Alumni of USCC Lab at National Cheng Kung University — graduate roster and career destinations, Class of 110 to Class of 115." />
     <meta name="twitter:image" content="https://plato.csie.ncku.edu.tw/material/og.jpg" />
     <meta name="twitter:image:alt" content="USCC Lab — Ubiquitous Sensing and Cloud Computing Lab, NCKU" />
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Graduates · USCC Lab","url":"https://plato.csie.ncku.edu.tw/graduate_e.html","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"USCC Lab — Ubiquitous Sensing & Cloud Computing Lab","url":"https://plato.csie.ncku.edu.tw/"}}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Graduate · USCC Lab","url":"https://plato.csie.ncku.edu.tw/graduate_e.html","inLanguage":"en","isPartOf":{"@type":"WebSite","name":"USCC Lab — Ubiquitous Sensing & Cloud Computing Lab","url":"https://plato.csie.ncku.edu.tw/"}}</script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@400;500;600;700;900&display=swap" />
     <link rel="stylesheet" href="style.css?v=20260705i" />
+    <style>
+        /* graduate 專用：卡片放大、一列三個、頭像放大。只作用於本頁的 data-newgrad-panel，
+           不影響共用 style.css 與現有 graduate.html。 */
+        .grad-panel[data-newgrad-panel] { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+        .grad-panel[data-newgrad-panel] .grad-card { padding: 34px 22px 28px; position: relative; }
+        .grad-panel[data-newgrad-panel] .grad-avatar {
+            width: 150px; height: 150px; margin: 0 auto 20px; font-size: 2.8rem;
+        }
+        .grad-panel[data-newgrad-panel] .grad-name { font-size: 1.22rem; margin-bottom: 10px; }
+        .grad-panel[data-newgrad-panel] .grad-job { font-size: .9rem; padding: 4px 16px; }
+
+        /* hover-to-reveal 大圖彩蛋，套用現有的 pop-jumpscare 動畫（定義於 style.css）。 */
+        .grad-panel[data-newgrad-panel] .grad-pop {
+            position: absolute;
+            left: 50%; bottom: 100%;
+            transform: translate(-50%, 18px) scale(.4);
+            transform-origin: center bottom;
+            width: 260px; max-width: 84vw; height: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            opacity: 0; visibility: hidden; pointer-events: none;
+            transition: opacity .3s ease, transform .42s cubic-bezier(.34, 1.56, .64, 1), visibility .42s;
+            z-index: 60;
+        }
+        .grad-panel[data-newgrad-panel] .grad-card.has-pop:hover .grad-pop {
+            opacity: 1; visibility: visible;
+            animation: pop-jumpscare .4s cubic-bezier(.2, .8, .2, 1) forwards;
+        }
+
+        @media (max-width: 900px) {
+            .grad-panel[data-newgrad-panel] { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+            .grad-panel[data-newgrad-panel] .grad-avatar { width: 128px; height: 128px; font-size: 2.4rem; }
+        }
+        @media (max-width: 560px) {
+            .grad-panel[data-newgrad-panel] { grid-template-columns: 1fr; }
+            .grad-panel[data-newgrad-panel] .grad-avatar { width: 120px; height: 120px; }
+        }
+    </style>
     <script>document.documentElement.classList.add("js-reveal")</script>
     <script defer src="script.js?v=20260705i"></script>
 </head>
@@ -72,8 +111,8 @@
         </div>
 
         <section class="grad-section reveal">
-            <div class="grad-tabs" role="tablist" aria-label="Graduating class" data-grad-tabs></div>
-            <div class="grad-panel" data-grad-panel aria-live="polite"></div>
+            <div class="grad-tabs" role="tablist" aria-label="Graduating class" data-newgrad-tabs></div>
+            <div class="grad-panel" data-newgrad-panel aria-live="polite"></div>
             <noscript>
                 <p style="text-align:center;color:var(--text-muted);padding:12px 0">Please enable JavaScript to view the alumni roster.</p>
             </noscript>
@@ -99,6 +138,159 @@
         </div>
         <div class="footer-bottom">© 2026 National Cheng Kung University · CSIE · USCC Lab. All rights reserved.</div>
     </footer>
+
+    <!-- Inline graduate data (incl. Class of 115). This page carries its own roster and does not
+         use the shared data in script.js, so the containers use data-newgrad-* to avoid double rendering. -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabsEl = document.querySelector('[data-newgrad-tabs]');
+        const panelEl = document.querySelector('[data-newgrad-panel]');
+        if (!tabsEl || !panelEl) return;
+
+        const graduateData = {
+            'Class of 115': [
+                { name: 'Keng Chi Zhang', job: 'TSMC', photoSrc: 'material/members/gengqi.webp', bgm: 'material/members/tyler.mp3', pop: 'material/tyler_pop.jpg' },
+                { name: 'Shao Chen Jian', job: 'Plextor', photoSrc: 'material/members/shaochen.webp', bgm: 'material/members/shao.mp3', pop: 'material/shao_pop.webp' },
+                { name: 'Zhen Jie Xu', job: 'Lite-On', photoSrc: 'material/members/zhenjie.webp' },
+                { name: 'Wen Yao Wang', job: 'Micron Technology', photoSrc: 'material/members/wenyao.webp'},
+                { name: 'Jun Ting Liu', job: 'TSMC', photoSrc: 'material/members/liujunting.webp' },
+            ],
+            'Class of 114': [
+                { name: 'Xin Hao Fu', job: 'ASUS', photo: 'fuxinhao.webp' },
+                { name: 'Jun Ting Lin', job: 'Junfan Industrial' },
+                { name: 'Jia Chang Zou', job: 'TSMC' },
+                { name: 'Shao Jun Chen', job: '' },
+                { name: 'Zi Tai Qiu', job: 'TSMC' },
+                { name: 'Yu Rou Cai', job: 'Micron Technology' },
+                { name: 'Yu Yuan Zhu', job: 'TSMC' },
+            ],
+            'Class of 113': [
+                { name: 'Bo Tang Liao', job: 'Perfect Corp.' },
+                { name: 'Jia Jin Zhang', job: '' },
+                { name: 'Ting Yu Zhang', job: 'Pegatron' },
+                { name: 'Qing Deng', job: 'Perfect Corp.' },
+                { name: 'Yi Hong Lin', job: 'MediaTek' },
+                { name: 'Yan Rong Zhang', job: 'TSMC' },
+                { name: 'Wei You Liao', job: 'Perfect Corp.' },
+                { name: 'Chen Jun Lin', job: 'TSMC' },
+            ],
+            'Class of 112': [
+                { name: 'Yu Lin Zheng', job: '' },
+                { name: 'Jun Wei Ye', job: '' },
+                { name: 'De Long Gao', job: '' },
+                { name: 'Zong Han Yang', job: '' },
+                { name: 'Huang Jia Zeng', job: 'TSMC' },
+                { name: 'Jia Hong Liu', job: 'Synology' },
+            ],
+            'Class of 111': [
+                { name: 'Deng Li Wang', job: '' },
+                { name: 'Wei Feng Xu', job: '' },
+                { name: 'Chang You He', job: '' },
+                { name: 'Zi Yuan Wang', job: '' },
+                { name: 'Yu Song Xu', job: '' },
+            ],
+            'Class of 110': [
+                { name: 'Chong Zhi Pan', job: '' },
+                { name: 'Yi Xin Tian', job: '' },
+                { name: 'Yun Yang Li', job: '' },
+                { name: 'Wei Zhi Huang', job: '' },
+                { name: 'Jia Xuan Lin', job: '' },
+            ],
+        };
+        const emptyPanelText = 'No graduate data for this class yet.';
+
+        const escapeHtml = (str) => String(str).replace(/[&<>"']/g, (c) => ({
+            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+        }[c]));
+
+        const years = Object.keys(graduateData);
+        panelEl.id = panelEl.id || 'gradPanel';
+        panelEl.setAttribute('role', 'tabpanel');
+
+        const renderPanel = (year) => {
+            const students = graduateData[year] || [];
+            panelEl.innerHTML = students.length ? students.map(s => {
+                const job = (s.job || '').trim();
+                const src = s.photoSrc ? s.photoSrc : (s.photo ? `material/graduate/${encodeURIComponent(s.photo)}` : '');
+                const photo = src
+                    ? `<img src="${src}" alt="" loading="lazy" decoding="async" onerror="this.style.display='none'" />`
+                    : '';
+                const pop = s.pop
+                    ? `<img class="grad-pop" src="${s.pop}" alt="" aria-hidden="true" loading="lazy" decoding="async" onerror="this.remove()" />`
+                    : '';
+                return `
+                    <div class="grad-card${s.pop ? ' has-pop' : ''}">
+                        <div class="grad-avatar" aria-hidden="true"><span class="grad-avatar-init">${escapeHtml(s.name.charAt(0))}</span>${photo}</div>
+                        <div class="grad-name">${escapeHtml(s.name)}</div>
+                        <div class="grad-job ${job ? 'has-job' : 'no-job'}">${job ? escapeHtml(job) : '—'}</div>
+                        ${pop}
+                    </div>`;
+            }).join('') : `<p class="grad-empty">${emptyPanelText}</p>`;
+
+            // Hover-to-play BGM on cards that carry a bgm (mirrors the member-card easter egg):
+            // hovering 0.5s starts the clip; leaving cancels the pending start and stops playback.
+            const cards = panelEl.querySelectorAll('.grad-card');
+            students.forEach((s, i) => {
+                if (!s.bgm || !cards[i]) return;
+                const card = cards[i];
+                const audio = new Audio(s.bgm);
+                audio.preload = 'none';
+                let t = null;
+                const stop = () => { clearTimeout(t); t = null; audio.pause(); audio.currentTime = 0; };
+                card.addEventListener('mouseenter', () => {
+                    clearTimeout(t);
+                    t = setTimeout(() => { audio.currentTime = 0; audio.play().catch(() => {}); }, 500);
+                });
+                card.addEventListener('mouseleave', stop);
+            });
+
+            panelEl.classList.remove('grad-fade');
+            void panelEl.offsetWidth;   // restart the fade-in animation
+            panelEl.classList.add('grad-fade');
+        };
+
+        const selectYear = (year) => {
+            buttons.forEach(btn => {
+                const active = btn.dataset.year === year;
+                btn.classList.toggle('is-active', active);
+                btn.setAttribute('aria-selected', active ? 'true' : 'false');
+                btn.tabIndex = active ? 0 : -1;
+            });
+            panelEl.setAttribute('aria-labelledby', `grad-tab-${year}`);
+            renderPanel(year);
+        };
+
+        const buttons = years.map(year => {
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'grad-tab';
+            btn.textContent = year;
+            btn.id = `grad-tab-${year}`;
+            btn.dataset.year = year;
+            btn.setAttribute('role', 'tab');
+            btn.setAttribute('aria-controls', panelEl.id);
+            btn.addEventListener('click', () => selectYear(year));
+            tabsEl.appendChild(btn);
+            return btn;
+        });
+
+        tabsEl.addEventListener('keydown', (e) => {
+            const i = buttons.indexOf(document.activeElement);
+            if (i < 0) return;
+            let n = null;
+            if (e.key === 'ArrowRight') n = (i + 1) % buttons.length;
+            else if (e.key === 'ArrowLeft') n = (i - 1 + buttons.length) % buttons.length;
+            else if (e.key === 'Home') n = 0;
+            else if (e.key === 'End') n = buttons.length - 1;
+            if (n === null) return;
+            e.preventDefault();
+            buttons[n].focus();
+            selectYear(buttons[n].dataset.year);
+        });
+
+        selectYear(years[0]);
+    });
+    </script>
 </body>
 
 </html>

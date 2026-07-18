@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return d;
         });
 
-        // Per-slide hover swap: hovering an eligible slide (data-hover-src) for 2s
+        // Per-slide hover swap: hovering an eligible slide (data-hover-src) for 0.5s
         // swaps in an alternate image and, if data-hover-bgm is set, plays it.
         // Leaving the slide — or navigating away — reverts the image and stops the clip.
         // Only the active slide receives hover events (others are visibility:hidden).
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 t = setTimeout(() => {
                     img.setAttribute('src', altSrc);
                     if (audio) { audio.currentTime = 0; audio.play().catch(() => { /* gesture may be required */ }); }
-                }, 2000);
+                }, 500);
             });
             slide.addEventListener('mouseleave', reset);
             return reset;

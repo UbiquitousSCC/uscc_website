@@ -60,7 +60,7 @@ uscc_website/
     │   └── 1–9 + aiot2023-* / tsmc2024-champion / lab-*.webp  # 生活日常＋競賽得獎/活動照（含 5_2.webp hover 切換）
     ├── boss.webp               # 教授照片
     ├── jp_honor.webp             # 教授榮譽 hover 圖
-    ├── tyler_pop.webp / shao_pop.webp   # 成員卡彩蛋彈出圖
+    ├── tyler_pop.jpg / shao_pop.webp   # 成員卡彩蛋彈出圖
     ├── apple-touch-icon.png         # iOS 圖示
     └── members/                     # 成員照片（*.webp，512×512）+ hover 音樂（*.mp3）
 ```
