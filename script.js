@@ -253,8 +253,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Status text follows the page language (<html lang>); labels live in the markup.
         const en = (document.documentElement.lang || '').toLowerCase().startsWith('en');
         const TXT = {
-            synced:  en ? 'live analysis · synced' : '即時分析 · 已同步',
-            offline: en ? 'Offline · local cache'     : '離線統計 · 本機快取',
+            synced: en ? 'live analysis · synced' : '即時分析 · 已同步',
+            offline: en ? 'Offline · local cache' : '離線統計 · 本機快取',
         };
         const countLabel = en ? 'Total visits' : '訪客造訪次數';
 
@@ -426,11 +426,12 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 200);
         }, { passive: true });
     }
- 
+
     const eggCodeLower = 'uscc';
+    const eggCodeAespa = 'aespa';
     const eggCodeUpper = 'USCC';
     const eggCodeTwice = 'twice';
-    const eggMaxLen = Math.max(eggCodeUpper.length, eggCodeLower.length, eggCodeTwice.length);
+    const eggMaxLen = Math.max(eggCodeUpper.length, eggCodeLower.length, eggCodeTwice.length, eggCodeAespa.length);
     let eggBufRaw = '';   // preserves case
     let eggActive = false;
 
@@ -460,6 +461,11 @@ document.addEventListener('DOMContentLoaded', () => {
             eggBufRaw = '';
             eggActive = true;
             showTwiceEgg();
+        }
+        else if (eggBufRaw.toLowerCase().endsWith(eggCodeAespa)) {
+            eggBufRaw = '';
+            eggActive = true;
+            showAespaEgg();
         }
         // "USCC" (uppercase only) → hyperspace jump
         else if (eggBufRaw.endsWith(eggCodeUpper)) {
@@ -518,7 +524,80 @@ document.addEventListener('DOMContentLoaded', () => {
         audio.loop = false;
         audio.play().catch(() => { /* file missing or gesture required — fail silently */ });
 
-        audio.addEventListener('ended', dismissEgg); 
+        audio.addEventListener('ended', dismissEgg);
+    }
+
+    function showAespaEgg() {
+        const overlay = document.createElement('div');
+        overlay.id = 'uscc-egg';
+        overlay.className = 'aespa-overlay';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-label', 'aespa · Welcome MY');
+        overlay.tabIndex = -1;
+        overlay.innerHTML = `
+            <div class="aespa-stage">
+                <img class="aespa-bg" src="material/members/aespa_bg.jpg" alt="aespa 舞台剪影背景" />
+
+                <div class="aespa-member" id="aespa-karina">
+                    <img src="material/members/karina.png" alt="KARINA" />
+                    <span class="aespa-tag">KARINA</span>
+                </div>
+                <div class="aespa-member" id="aespa-winter">
+                    <img src="material/members/winter.png" alt="WINTER" />
+                    <span class="aespa-tag">WINTER</span>
+                </div>
+                <div class="aespa-member" id="aespa-giselle">
+                    <img src="material/members/giselle.png" alt="GISELLE" />
+                    <span class="aespa-tag">GISELLE</span>
+                </div>
+                <div class="aespa-member" id="aespa-ningning">
+                    <img src="material/members/ningning.png" alt="NINGNING" />
+                    <span class="aespa-tag">NINGNING</span>
+                </div>
+
+                <div class="aespa-card" id="aespa-card">
+                    <div class="aespa-line"></div>
+                    <h1>歡迎 <span class="my">MY</span> 的加入</h1>
+                    <p>卡寶我老婆</p>
+                    <div class="aespa-line"></div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+        overlay.focus();
+        overlay.addEventListener('click', dismissEgg);
+
+        const timeline = [
+            { t: 500, el: 'aespa-karina' },
+            { t: 2600, el: 'aespa-winter' },
+            { t: 5100, el: 'aespa-giselle' },
+            { t: 7600, el: 'aespa-ningning' },
+            { t: 9500, el: 'aespa-card' },
+        ];
+
+        const audio = new Audio(encodeURI("material/members/aenergy.mp3"));
+        audio.preload = 'auto';
+        audio.currentTime = 0;
+        audio.play().catch(() => { /* autoplay may be blocked until the triggering keypress is accepted */ });
+
+        timeline.forEach(step => {
+            setTimeout(() => {
+                const el = document.getElementById(step.el);
+                if (el && document.getElementById('uscc-egg')) el.classList.add('show');
+            }, step.t);
+        });
+
+        requestAnimationFrame(() => overlay.classList.add('aespa-show'));
+
+        const mo = new MutationObserver(() => {
+            if (!document.getElementById('uscc-egg')) {
+                audio.pause();
+                audio.currentTime = 0;
+                mo.disconnect();
+            }
+        });
+        mo.observe(document.body, { childList: true });
     }
 
     function showEasterEgg() {
@@ -623,7 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.className = 'hyper-overlay';
         overlay.innerHTML = '<canvas class="hyper-canvas"></canvas><div class="hyper-flash"></div>';
         document.body.appendChild(overlay);
- 
+
         const audio = new Audio('material/members/traverse.mp3');
         audio.play().catch(() => { /* file missing or gesture required — fail silently */ });
         const audioMo = new MutationObserver(() => {
