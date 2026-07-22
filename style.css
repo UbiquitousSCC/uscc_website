@@ -2191,9 +2191,6 @@ footer.site {
     }
 }
 
-/* ============================================================
-   aespa Welcome MY Overlay — triggered by typing "aespa" / "AESPA"
-   ============================================================ */
 .aespa-overlay {
     position: fixed;
     inset: 0;
@@ -2238,10 +2235,10 @@ footer.site {
 
 .aespa-member {
     position: absolute;
-    width: 53%;
-    height: 53%;
+    width: 50%;
+    height: 50%;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     opacity: 0;
     transform: translateY(14px) scale(.97);
@@ -2250,10 +2247,12 @@ footer.site {
 }
 
 .aespa-member img {
-    max-width: 96%;
-    max-height: 96%;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 0 18px rgba(0, 0, 0, .55));
+    transform: scale(1.1);
+    transform-origin: center;
 }
 
 .aespa-member.show {
@@ -2262,23 +2261,23 @@ footer.site {
 }
 
 #aespa-karina {
-    top: -2%;
-    left: -2%;
+    top: 2%;
+    left: 0;
 }
 
 #aespa-winter {
-    top: -2%;
-    right: -2%;
+    top: 1%;
+    right: 0;
 }
 
 #aespa-giselle {
-    bottom: 2%;
-    left: -1%;
+    bottom: -2%;
+    left: 2%;
 }
 
 #aespa-ningning {
-    bottom: 0;
-    right: 1%;
+    bottom: -2%;
+    right: 0;
 }
 
 .aespa-tag {

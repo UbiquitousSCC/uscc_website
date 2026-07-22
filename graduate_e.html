@@ -63,6 +63,22 @@
             animation: pop-jumpscare .4s cubic-bezier(.2, .8, .2, 1) forwards;
         }
 
+        .grad-panel[data-newgrad-panel] .grad-logo {
+            position: absolute; bottom: 14px; right: 14px;
+            padding: 0; border: 0; background: none; cursor: pointer;
+            width: 30px; line-height: 0;
+            opacity: .82;
+            transition: transform .25s ease, opacity .25s ease, filter .25s ease;
+            z-index: 45;
+        }
+        .grad-panel[data-newgrad-panel] .grad-logo img { width: 100%; height: auto; display: block; }
+        .grad-panel[data-newgrad-panel] .grad-logo:hover,
+        .grad-panel[data-newgrad-panel] .grad-logo:focus-visible {
+            opacity: 1; outline: none;
+            transform: scale(1.15) rotate(-6deg);
+            filter: drop-shadow(0 4px 10px rgba(255, 120, 180, .55));
+        }
+
         @media (max-width: 900px) {
             .grad-panel[data-newgrad-panel] { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
             .grad-panel[data-newgrad-panel] .grad-avatar { width: 128px; height: 128px; font-size: 2.4rem; }
@@ -149,7 +165,7 @@
 
         const graduateData = {
             'Class of 115': [
-                { name: 'Keng Chi Zhang', job: 'TSMC', photoSrc: 'material/members/gengqi.webp', bgm: 'material/members/tyler.mp3', pop: 'material/tyler_pop.jpg' },
+                { name: 'Keng Chi Zhang', job: 'TSMC', photoSrc: 'material/members/gengqi.webp', bgm: 'material/members/tyler.mp3', pop: 'material/tyler_pop.jpg', logo: 'material/embeded.png' },
                 { name: 'Shao Chen Jian', job: 'Plextor', photoSrc: 'material/members/shaochen.webp', bgm: 'material/members/shao.mp3', pop: 'material/shao_pop.webp' },
                 { name: 'Zhen Jie Xu', job: 'Lite-On', photoSrc: 'material/members/zhenjie.webp' },
                 { name: 'Wen Yao Wang', job: 'Micron Technology', photoSrc: 'material/members/wenyao.webp'},
@@ -218,17 +234,19 @@
                 const pop = s.pop
                     ? `<img class="grad-pop" src="${s.pop}" alt="" aria-hidden="true" loading="lazy" decoding="async" onerror="this.remove()" />`
                     : '';
+                const logo = s.logo
+                    ? `<button type="button" class="grad-logo" aria-label="TWICE" title="TWICE"><img src="${s.logo}" alt="" decoding="async" onerror="this.closest('.grad-logo').remove()" /></button>`
+                    : '';
                 return `
                     <div class="grad-card${s.pop ? ' has-pop' : ''}">
                         <div class="grad-avatar" aria-hidden="true"><span class="grad-avatar-init">${escapeHtml(s.name.charAt(0))}</span>${photo}</div>
                         <div class="grad-name">${escapeHtml(s.name)}</div>
                         <div class="grad-job ${job ? 'has-job' : 'no-job'}">${job ? escapeHtml(job) : '—'}</div>
                         ${pop}
+                        ${logo}
                     </div>`;
             }).join('') : `<p class="grad-empty">${emptyPanelText}</p>`;
 
-            // Hover-to-play BGM on cards that carry a bgm (mirrors the member-card easter egg):
-            // hovering 0.5s starts the clip; leaving cancels the pending start and stops playback.
             const cards = panelEl.querySelectorAll('.grad-card');
             students.forEach((s, i) => {
                 if (!s.bgm || !cards[i]) return;
@@ -242,6 +260,17 @@
                     t = setTimeout(() => { audio.currentTime = 0; audio.play().catch(() => {}); }, 500);
                 });
                 card.addEventListener('mouseleave', stop);
+            });
+
+            // Click the TWICE lightstick logo to fire the same egg as typing "twice"
+            // (defined in script.js). Guarded in case script.js hasn't loaded.
+            panelEl.querySelectorAll('.grad-logo').forEach(logo => {
+                logo.addEventListener('click', () => {
+                    // Stop this card's hover BGM first so it doesn't overlap the egg's audio.
+                    const card = logo.closest('.grad-card');
+                    if (card) card.dispatchEvent(new Event('mouseleave'));
+                    if (typeof window.usccPlayTwiceEgg === 'function') window.usccPlayTwiceEgg();
+                });
             });
 
             panelEl.classList.remove('grad-fade');

@@ -481,6 +481,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    window.usccPlayTwiceEgg = () => {
+        if (eggActive) return;
+        eggActive = true;
+        showTwiceEgg();
+    };
+
     function showTwiceEgg() {
         const overlay = document.createElement('div');
         overlay.id = 'uscc-egg';
@@ -508,9 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.appendChild(overlay);
         overlay.focus();
         overlay.addEventListener('click', dismissEgg);
-
-        // Prime the SVG "air question mark" draw: hide the stroke by its own length,
-        // then the .twice-show class animates strokeDashoffset back to 0.
+ 
         const curve = overlay.querySelector('.twice-qm-curve');
         const len = curve.getTotalLength();
         curve.style.strokeDasharray = len;
@@ -518,8 +522,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Kick off all child animations on the next frame (lets the initial state paint first).
         requestAnimationFrame(() => overlay.classList.add('twice-show'));
-
-        // Play the easter-egg track; loops while the overlay stays open.
+ 
         const audio = new Audio('material/members/easter.mp3');
         audio.loop = false;
         audio.play().catch(() => { /* file missing or gesture required — fail silently */ });
@@ -587,6 +590,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (el && document.getElementById('uscc-egg')) el.classList.add('show');
             }, step.t);
         });
+
+        // 字卡（最後一個時間點）出現後，停留一小段再自動關閉彩蛋。
+        const cardStep = timeline[timeline.length - 1];
+        setTimeout(() => {
+            if (document.getElementById('uscc-egg')) dismissEgg();
+        }, cardStep.t + 2000);
 
         requestAnimationFrame(() => overlay.classList.add('aespa-show'));
 
