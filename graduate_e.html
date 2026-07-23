@@ -87,6 +87,145 @@
             .grad-panel[data-newgrad-panel] { grid-template-columns: 1fr; }
             .grad-panel[data-newgrad-panel] .grad-avatar { width: 120px; height: 120px; }
         }
+
+        /* ===== Oral Defense gallery ===== */
+        .oral-section { margin-top: 64px; }
+        .oral-section[hidden] { display: none; }
+        .oral-section .section-head { margin-bottom: 30px; }
+        .oral-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .oral-person {
+            background: var(--surface);
+            border: 1px solid var(--border-soft);
+            border-radius: var(--radius);
+            padding: 18px 18px 20px;
+            box-shadow: var(--shadow);
+            transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+        }
+        .oral-person:hover {
+            transform: translateY(-4px);
+            border-color: var(--border);
+            box-shadow: var(--shadow-glow);
+        }
+        .oral-person-head {
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 14px;
+        }
+        .oral-badge {
+            flex: none;
+            width: 30px; height: 30px;
+            display: grid; place-items: center;
+            border-radius: 50%;
+            font: 600 .8rem/1 "Cormorant Garamond", serif;
+            color: var(--gold-ink);
+            border: 1px solid var(--border);
+            background: var(--surface-2);
+        }
+        .oral-person-head h3 {
+            margin: 0;
+            font-family: "Noto Serif TC", serif;
+            font-size: 1.12rem; font-weight: 600;
+            color: var(--text);
+        }
+        .oral-person-head .oral-role {
+            margin-left: auto;
+            font-size: .74rem; letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .oral-shots {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .oral-shot {
+            position: relative;
+            display: block;
+            padding: 0; margin: 0; border: 0;
+            cursor: pointer;
+            aspect-ratio: 4 / 3;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: var(--bg-2);
+            box-shadow: inset 0 0 0 1px var(--border-soft);
+        }
+        .oral-shot img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+            transition: transform .4s ease, filter .4s ease;
+        }
+        .oral-shot::after {
+            content: "🔍";
+            position: absolute; right: 8px; bottom: 8px;
+            width: 26px; height: 26px;
+            display: grid; place-items: center;
+            font-size: .8rem;
+            border-radius: 50%;
+            background: rgba(28, 20, 12, .55);
+            color: #fff;
+            opacity: 0; transform: scale(.7);
+            transition: opacity .25s ease, transform .25s ease;
+        }
+        .oral-shot:hover img,
+        .oral-shot:focus-visible img { transform: scale(1.07); }
+        .oral-shot:hover::after,
+        .oral-shot:focus-visible::after { opacity: 1; transform: scale(1); }
+        .oral-shot:focus-visible { outline: 2px solid var(--gold-ink); outline-offset: 2px; }
+
+        /* Lightbox */
+        .oral-lightbox {
+            position: fixed; inset: 0; z-index: 200;
+            display: flex; align-items: center; justify-content: center;
+            padding: 4vh 4vw;
+            background: rgba(20, 14, 8, .82);
+            backdrop-filter: blur(6px);
+            opacity: 0; visibility: hidden;
+            transition: opacity .3s ease, visibility .3s ease;
+        }
+        .oral-lightbox.is-open { opacity: 1; visibility: visible; }
+        .oral-lb-figure {
+            margin: 0; max-width: 100%; max-height: 100%;
+            display: flex; flex-direction: column; align-items: center; gap: 14px;
+            transform: scale(.94);
+            transition: transform .32s cubic-bezier(.2, .8, .2, 1);
+        }
+        .oral-lightbox.is-open .oral-lb-figure { transform: scale(1); }
+        .oral-lb-figure img {
+            max-width: 100%; max-height: 82vh;
+            border-radius: 12px;
+            box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .7);
+            object-fit: contain;
+        }
+        .oral-lb-figure figcaption {
+            color: #f4ecdd; font-family: "Noto Serif TC", serif;
+            font-size: 1rem; letter-spacing: .04em;
+        }
+        .oral-lb-btn {
+            position: absolute;
+            border: 0; cursor: pointer;
+            color: #fff; background: rgba(255, 255, 255, .12);
+            border: 1px solid rgba(255, 255, 255, .25);
+            display: grid; place-items: center;
+            border-radius: 50%;
+            transition: background .2s ease, transform .2s ease;
+        }
+        .oral-lb-btn:hover { background: rgba(255, 255, 255, .26); transform: scale(1.08); }
+        .oral-lb-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+        .oral-lb-close { top: 20px; right: 24px; width: 46px; height: 46px; font-size: 1.5rem; }
+        .oral-lb-nav { top: 50%; transform: translateY(-50%); width: 52px; height: 52px; font-size: 2rem; }
+        .oral-lb-nav:hover { transform: translateY(-50%) scale(1.08); }
+        .oral-lb-nav.prev { left: 20px; }
+        .oral-lb-nav.next { right: 20px; }
+
+        @media (max-width: 560px) {
+            .oral-grid { grid-template-columns: 1fr; }
+            .oral-lb-nav { width: 42px; height: 42px; font-size: 1.6rem; }
+            .oral-lb-nav.prev { left: 8px; }
+            .oral-lb-nav.next { right: 8px; }
+        }
     </style>
     <script>document.documentElement.classList.add("js-reveal")</script>
     <script defer src="script.js?v=20260705i"></script>
@@ -134,7 +273,28 @@
             </noscript>
         </section>
 
+        <!-- Oral Defense (shown only for classes that have defense photos; rendered by the script below) -->
+        <section class="oral-section reveal" data-oral-section hidden>
+            <div class="section-head">
+                <div class="eyebrow">Oral Defense</div>
+                <h2 style="font-size:1.6rem;letter-spacing:2px">Oral Defense</h2>
+                <p>Highlights from the Class of 115 master's thesis defense</p>
+            </div>
+            <div class="oral-grid" data-oral-grid></div>
+        </section>
+
     </main>
+
+    <!-- Oral defense photo lightbox -->
+    <div class="oral-lightbox" data-oral-lightbox role="dialog" aria-modal="true" aria-label="Oral defense photo viewer" hidden>
+        <button type="button" class="oral-lb-btn oral-lb-close" data-oral-close aria-label="Close">&times;</button>
+        <button type="button" class="oral-lb-btn oral-lb-nav prev" data-oral-prev aria-label="Previous">&#8249;</button>
+        <figure class="oral-lb-figure">
+            <img data-oral-img src="" alt="" />
+            <figcaption data-oral-caption></figcaption>
+        </figure>
+        <button type="button" class="oral-lb-btn oral-lb-nav next" data-oral-next aria-label="Next">&#8250;</button>
+    </div>
 
     <!-- Footer -->
     <footer class="site">
@@ -165,11 +325,11 @@
 
         const graduateData = {
             'Class of 115': [
-                { name: 'Keng Chi Zhang', job: 'TSMC', photoSrc: 'material/members/gengqi.webp', bgm: 'material/members/tyler.mp3', pop: 'material/tyler_pop.jpg', logo: 'material/embeded.png' },
-                { name: 'Shao Chen Jian', job: 'Plextor', photoSrc: 'material/members/shaochen.webp', bgm: 'material/members/shao.mp3', pop: 'material/shao_pop.webp' },
-                { name: 'Zhen Jie Xu', job: 'Lite-On', photoSrc: 'material/members/zhenjie.webp' },
-                { name: 'Wen Yao Wang', job: 'Micron Technology', photoSrc: 'material/members/wenyao.webp'},
-                { name: 'Jun Ting Liu', job: 'TSMC', photoSrc: 'material/members/liujunting.webp' },
+                { name: 'Keng Chi Zhang', job: 'TSMC', photoSrc: 'material/graduate/gengqi.webp', bgm: 'material/graduate/tyler.mp3', pop: 'material/tyler_pop.jpg', logo: 'material/embeded.png', oral: ['material/graduate/oral/zhang_geng_qi/IMG_3102.JPG', 'material/graduate/oral/zhang_geng_qi/IMG_3104.JPG'] },
+                { name: 'Shao Chen Jian', job: 'Plextor', photoSrc: 'material/graduate/shaochen.webp', bgm: 'material/graduate/shao.mp3', pop: 'material/shao_pop.webp', oral: ['material/graduate/oral/jian_shao_chen/IMG_3119.JPG', 'material/graduate/oral/jian_shao_chen/IMG_3122.JPG'] },
+                { name: 'Zhen Jie Xu', job: 'Lite-On', photoSrc: 'material/graduate/zhenjie.webp', oral: ['material/graduate/oral/xu_zheng_jie/IMG_3113.JPG', 'material/graduate/oral/xu_zheng_jie/IMG_3115.JPG'] },
+                { name: 'Wen Yao Wang', job: 'Micron Technology', photoSrc: 'material/graduate/wenyao.webp', oral: ['material/graduate/oral/wang_wen_yao/IMG_3127.JPG', 'material/graduate/oral/wang_wen_yao/IMG_3130.JPG'] },
+                { name: 'Jun Ting Liu', job: 'TSMC', photoSrc: 'material/graduate/liujunting.webp', oral: ['material/graduate/oral/liu_jun_ting/IMG_3095.JPG', 'material/graduate/oral/liu_jun_ting/IMG_3096.JPG'] },
             ],
             'Class of 114': [
                 { name: 'Xin Hao Fu', job: 'ASUS', photo: 'fuxinhao.webp' },
@@ -278,6 +438,96 @@
             panelEl.classList.add('grad-fade');
         };
 
+        // ===== Oral Defense gallery + lightbox =====
+        const oralSection = document.querySelector('[data-oral-section]');
+        const oralGrid = document.querySelector('[data-oral-grid]');
+        const lightbox = document.querySelector('[data-oral-lightbox]');
+        const lbImg = lightbox && lightbox.querySelector('[data-oral-img]');
+        const lbCaption = lightbox && lightbox.querySelector('[data-oral-caption]');
+        let oralPhotos = [];   // flat list: { src, caption } across all people in the current year
+        let lbIndex = 0;
+        let lbLastFocus = null;
+
+        const renderOral = (year) => {
+            if (!oralSection || !oralGrid) return;
+            const people = (graduateData[year] || []).filter(s => Array.isArray(s.oral) && s.oral.length);
+            if (!people.length) {
+                oralSection.hidden = true;
+                oralGrid.innerHTML = '';
+                oralPhotos = [];
+                return;
+            }
+            oralPhotos = [];
+            oralGrid.innerHTML = people.map((s, pi) => {
+                const shots = s.oral.map((src) => {
+                    const idx = oralPhotos.length;
+                    const caption = `${s.name} · Oral Defense`;
+                    oralPhotos.push({ src, caption });
+                    return `<button type="button" class="oral-shot" data-oral-index="${idx}" aria-label="Enlarge ${escapeHtml(s.name)} oral defense photo">
+                                <img src="${src}" alt="${escapeHtml(s.name)} oral defense" loading="lazy" decoding="async" onerror="this.closest('.oral-shot').style.display='none'" />
+                            </button>`;
+                }).join('');
+                return `<article class="oral-person">
+                            <div class="oral-person-head">
+                                <span class="oral-badge">${String(pi + 1).padStart(2, '0')}</span>
+                                <h3>${escapeHtml(s.name)}</h3>
+                                <span class="oral-role">Master</span>
+                            </div>
+                            <div class="oral-shots">${shots}</div>
+                        </article>`;
+            }).join('');
+            oralSection.hidden = false;
+        };
+
+        const showLbPhoto = (i) => {
+            if (!oralPhotos.length) return;
+            lbIndex = (i + oralPhotos.length) % oralPhotos.length;
+            const p = oralPhotos[lbIndex];
+            lbImg.src = p.src;
+            lbImg.alt = p.caption;
+            lbCaption.textContent = `${p.caption} (${lbIndex + 1} / ${oralPhotos.length})`;
+        };
+        const openLb = (i) => {
+            if (!lightbox) return;
+            lbLastFocus = document.activeElement;
+            lightbox.hidden = false;
+            void lightbox.offsetWidth;
+            lightbox.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+            showLbPhoto(i);
+            const closeBtn = lightbox.querySelector('[data-oral-close]');
+            if (closeBtn) closeBtn.focus();
+        };
+        const closeLb = () => {
+            if (!lightbox) return;
+            lightbox.classList.remove('is-open');
+            document.body.style.overflow = '';
+            setTimeout(() => { lightbox.hidden = true; lbImg.src = ''; }, 300);
+            if (lbLastFocus && typeof lbLastFocus.focus === 'function') lbLastFocus.focus();
+        };
+
+        if (oralGrid) {
+            oralGrid.addEventListener('click', (e) => {
+                const shot = e.target.closest('.oral-shot');
+                if (!shot) return;
+                openLb(Number(shot.dataset.oralIndex) || 0);
+            });
+        }
+        if (lightbox) {
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLb();
+            });
+            lightbox.querySelector('[data-oral-close]').addEventListener('click', closeLb);
+            lightbox.querySelector('[data-oral-prev]').addEventListener('click', () => showLbPhoto(lbIndex - 1));
+            lightbox.querySelector('[data-oral-next]').addEventListener('click', () => showLbPhoto(lbIndex + 1));
+            document.addEventListener('keydown', (e) => {
+                if (lightbox.hidden) return;
+                if (e.key === 'Escape') closeLb();
+                else if (e.key === 'ArrowLeft') showLbPhoto(lbIndex - 1);
+                else if (e.key === 'ArrowRight') showLbPhoto(lbIndex + 1);
+            });
+        }
+
         const selectYear = (year) => {
             buttons.forEach(btn => {
                 const active = btn.dataset.year === year;
@@ -287,6 +537,7 @@
             });
             panelEl.setAttribute('aria-labelledby', `grad-tab-${year}`);
             renderPanel(year);
+            renderOral(year);
         };
 
         const buttons = years.map(year => {

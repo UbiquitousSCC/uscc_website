@@ -540,22 +540,22 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.tabIndex = -1;
         overlay.innerHTML = `
             <div class="aespa-stage">
-                <img class="aespa-bg" src="material/members/aespa_bg.jpg" alt="aespa 舞台剪影背景" />
+                <img class="aespa-bg" src="material/graduate/aespa_bg.jpg" alt="aespa 舞台剪影背景" />
 
                 <div class="aespa-member" id="aespa-karina">
-                    <img src="material/members/karina.png" alt="KARINA" />
+                    <img src="material/graduate/karina.png" alt="KARINA" />
                     <span class="aespa-tag">KARINA</span>
                 </div>
                 <div class="aespa-member" id="aespa-winter">
-                    <img src="material/members/winter.png" alt="WINTER" />
+                    <img src="material/graduate/winter.png" alt="WINTER" />
                     <span class="aespa-tag">WINTER</span>
                 </div>
                 <div class="aespa-member" id="aespa-giselle">
-                    <img src="material/members/giselle.png" alt="GISELLE" />
+                    <img src="material/graduate/giselle.png" alt="GISELLE" />
                     <span class="aespa-tag">GISELLE</span>
                 </div>
                 <div class="aespa-member" id="aespa-ningning">
-                    <img src="material/members/ningning.png" alt="NINGNING" />
+                    <img src="material/graduate/ningning.png" alt="NINGNING" />
                     <span class="aespa-tag">NINGNING</span>
                 </div>
 
@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
             { t: 9500, el: 'aespa-card' },
         ];
 
-        const audio = new Audio(encodeURI("material/members/aenergy.mp3"));
+        const audio = new Audio(encodeURI("material/graduate/aenergy.mp3"));
         audio.preload = 'auto';
         audio.currentTime = 0;
         audio.play().catch(() => { /* autoplay may be blocked until the triggering keypress is accepted */ });
