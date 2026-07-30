@@ -507,7 +507,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <circle class="twice-qm-dot" cx="50" cy="135" r="7" />
             </svg>
             <div class="twice-photo-stage">
-                <img class="twice-photo" src="material/members/twice_answer.png" alt="" width="1920" height="1005" decoding="async" />
+                <img class="twice-photo" src="material/graduate/twice_answer.png" alt="" width="1920" height="1005" decoding="async" />
             </div>
             <div class="egg-hint twice-hint">Press <kbd>ESC</kbd> or click to close</div>
         `;
@@ -523,7 +523,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Kick off all child animations on the next frame (lets the initial state paint first).
         requestAnimationFrame(() => overlay.classList.add('twice-show'));
  
-        const audio = new Audio('material/members/easter.mp3');
+        const audio = new Audio('material/graduate/easter.mp3');
         audio.loop = false;
         audio.play().catch(() => { /* file missing or gesture required — fail silently */ });
 
